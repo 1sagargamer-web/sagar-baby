@@ -45,6 +45,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Background download (app band hone pe bhi chalta hai) -->
         <service
             android:name=".DownloadService"
