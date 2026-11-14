@@ -14,6 +14,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
@@ -37,20 +38,42 @@ class App : Application() {
                 ready.complete(false)
                 return@launch
             }
-            // Naye yt-dlp version ke liye check (sites badalti rehti hain).
-            // Internet na ho to chupchap skip.
-            try {
-                YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
-            } catch (_: Exception) {
-            }
+            // Engine turant ready — search/download ke liye update ka wait nahi
             ready.complete(true)
+
+            // yt-dlp ka naya version (sites badalti rehti hain): din me max 1 baar,
+            // thodi der baad, aur sirf jab koi download/search na chal raha ho.
+            val prefs = Prefs(this@App)
+            if (System.currentTimeMillis() - prefs.lastEngineUpdate > 24 * 60 * 60 * 1000L) {
+                delay(25_000)
+                val w = Engine.lock.writeLock()
+                if (w.tryLock()) {
+                    try {
+                        YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
+                        prefs.lastEngineUpdate = System.currentTimeMillis()
+                    } catch (_: Exception) {
+                    } finally {
+                        w.unlock()
+                    }
+                }
+            }
         }
     }
 
     private fun createChannel() {
-        val ch = NotificationChannel(CHANNEL_ID, "Sagar Saver updates", NotificationManager.IMPORTANCE_HIGH)
-        ch.description = "Owner ke messages aur naye updates"
-        getSystemService(NotificationManager::class.java).createNotificationChannel(ch)
+        val nm = getSystemService(NotificationManager::class.java)
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_ID, "Messages aur updates", NotificationManager.IMPORTANCE_HIGH)
+                .apply { description = "Owner ke messages aur naye updates" }
+        )
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_DOWNLOADS, "Download progress", NotificationManager.IMPORTANCE_LOW)
+                .apply { description = "Background me chal raha download"; setShowBadge(false) }
+        )
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_DONE, "Download complete", NotificationManager.IMPORTANCE_DEFAULT)
+                .apply { description = "Download poora hone pe" }
+        )
     }
 
     /** Har ~30 minute me owner ka message / naya update check karo */
@@ -64,5 +87,7 @@ class App : Application() {
 
     companion object {
         const val CHANNEL_ID = "sagar_updates"
+        const val CHANNEL_DOWNLOADS = "sagar_downloads"
+        const val CHANNEL_DONE = "sagar_done"
     }
 }

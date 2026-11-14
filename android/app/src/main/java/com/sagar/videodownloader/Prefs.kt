@@ -28,6 +28,15 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("asked_notif", false)
         set(v) = sp.edit().putBoolean("asked_notif", v).apply()
 
+    var lastEngineUpdate: Long
+        get() = sp.getLong("last_engine_update", 0)
+        set(v) = sp.edit().putLong("last_engine_update", v).apply()
+
+    /** Pichhle searches me kitna time laga (countdown ke andaaze ke liye) */
+    var avgFetchMs: Long
+        get() = sp.getLong("avg_fetch_ms", 6000)
+        set(v) = sp.edit().putLong("avg_fetch_ms", v).apply()
+
     var totalDownloads: Int
         get() = sp.getInt("total_downloads", 0)
         set(v) = sp.edit().putInt("total_downloads", v).apply()

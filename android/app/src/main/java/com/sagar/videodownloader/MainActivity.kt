@@ -3,49 +3,41 @@ package com.sagar.videodownloader
 import android.Manifest
 import android.app.Dialog
 import android.content.ClipboardManager
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.webkit.MimeTypeMap
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.sagar.videodownloader.databinding.ActivityMainBinding
 import com.yausername.youtubedl_android.YoutubeDL
-import com.yausername.youtubedl_android.YoutubeDLRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,8 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefs: Prefs
     private val app get() = application as App
 
-    private var downloadJob: Job? = null
-    private var processId: String? = null
     private var savedUri: Uri? = null
     private var savedMime: String = "video/*"
     private var quality = "best"
@@ -63,6 +53,12 @@ class MainActivity : AppCompatActivity() {
     private var activeDialog: Dialog? = null
     private var logoTaps = 0
     private var lastTapAt = 0L
+    private var tapToast: Toast? = null
+
+    private var chooserMode = false       // YouTube lambi video: quality poochni hai
+    private var currentTitle = ""
+    private var shownDoneUri: Uri? = null
+    private var countdownJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         setupActions()
         watchEngine()
         playIntro()
+        observeDownloads()
 
         handleShareIntent(intent)
     }
@@ -296,7 +293,6 @@ class MainActivity : AppCompatActivity() {
             b.maintenance.animate().alpha(1f).setDuration(400).start()
             Fx.spin(b.maintIcon, 5000)
         }
-        cancelDownload()
     }
 
     private fun hideMaintenance() {
@@ -323,10 +319,13 @@ class MainActivity : AppCompatActivity() {
         lastTapAt = now
         b.logo.animate().rotationBy(360f).setDuration(400).start()
         if (logoTaps in 4..6) {
-            Toast.makeText(this, "Owner Panel: ${7 - logoTaps} aur tap", Toast.LENGTH_SHORT).show()
+            tapToast?.cancel()
+            tapToast = Toast.makeText(this, "Owner Panel: ${7 - logoTaps} aur tap", Toast.LENGTH_SHORT)
+            tapToast?.show()
         }
         if (logoTaps >= 7) {
             logoTaps = 0
+            tapToast?.cancel()
             Fx.haptic(b.logo, strong = true)
             startActivity(Intent(this, AdminActivity::class.java))
         }
@@ -337,9 +336,9 @@ class MainActivity : AppCompatActivity() {
     private fun setupActions() {
         b.logo.setOnClickListener { onLogoTap() }
         b.pasteBtn.setOnClickListener { Fx.haptic(it); pasteFromClipboard() }
-        b.searchBtn.setOnClickListener { Fx.haptic(it); search() }
+        b.searchBtn.setOnClickListener { Fx.haptic(it); go() }
         b.urlInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) { search(); true } else false
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) { go(); true } else false
         }
         b.urlInput.doAfterTextChanged { b.clearBtn.isVisible = !it.isNullOrEmpty() }
         b.clearBtn.setOnClickListener { b.urlInput.setText("") }
@@ -349,8 +348,8 @@ class MainActivity : AppCompatActivity() {
         b.q480.setOnClickListener { selectQuality(b.q480, "480") }
         b.qAudio.setOnClickListener { selectQuality(b.qAudio, "audio") }
 
-        b.downloadBtn.setOnClickListener { Fx.haptic(it); startDownload() }
-        b.cancelBtn.setOnClickListener { cancelDownload() }
+        b.downloadBtn.setOnClickListener { Fx.haptic(it); startDownload(quality) }
+        b.cancelBtn.setOnClickListener { DownloadService.cancel(this) }
         b.openBtn.setOnClickListener { openFile() }
         b.shareBtn.setOnClickListener { shareFile() }
         b.maintRetry.setOnClickListener {
@@ -380,7 +379,7 @@ class MainActivity : AppCompatActivity() {
         b.urlInput.setText(url)
         lifecycleScope.launch {
             if (!introDone) delay(2000)
-            search()
+            go()
         }
     }
 
@@ -397,7 +396,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         b.urlInput.setText(url)
-        search()
+        go()
     }
 
     private fun currentUrl(): String? {
@@ -415,52 +414,112 @@ class MainActivity : AppCompatActivity() {
         b.searchBtn.isEnabled = !on
         b.searchSpinner.isVisible = on
         b.searchIcon.isVisible = !on
-        b.searchText.text = if (on) "Dhoondh rahe…" else "Video dhoondo"
+        if (!on) b.searchText.text = "Video dhoondo"
     }
 
-    // ================= Search =================
+    private fun isDownloading() = DownloadState.flow.value is Dl.Running
 
-    private fun search() {
+    // ================= Smart flow =================
+
+    /**
+     * YouTube ki normal video -> pehle info (duration) lo:
+     *     lambi (>60s) = quality poochho, chhoti = seedha download.
+     * Baaki sab (Instagram, Facebook, Shorts, ...) -> seedha download.
+     */
+    private fun go() {
         val url = currentUrl() ?: run {
             showMsg("Pehle video ka link daalo.", error = true)
             Fx.shake(b.linkCard)
             return
         }
-        if (downloadJob?.isActive == true) return
+        if (isDownloading()) {
+            showMsg("Ek download pehle se chal raha hai. Khatam hone do ya Cancel karo.", error = true)
+            return
+        }
         hideKeyboard()
         hideMsg()
+        DownloadState.flow.value = Dl.Idle
+        shownDoneUri = null
+        if (Engine.needsInfo(url)) fetchInfo(url) else startDirect(url)
+    }
+
+    /** Bina info ke seedha download (sabse fast) */
+    private fun startDirect(url: String) {
+        val (emoji, name) = Engine.platform(url)
+        chooserMode = false
+        currentTitle = ""
+        b.title.text = "$name video"
+        b.meta.text = "⚡ Seedha download ho raha hai"
+        b.siteBadge.text = "● $name"
+        b.durationBadge.isVisible = false
+        b.thumb.setImageDrawable(null)
+        b.thumbEmoji.text = emoji
+        b.thumbEmoji.isVisible = true
+        Fx.pulse(b.thumbEmoji, 1.12f, 900)
+        resetResultArea(showQuality = false)
+        if (!b.infoCard.isVisible) Fx.enter(b.infoCard)
+        startDownload("best")
+    }
+
+    private fun fetchInfo(url: String) {
         setSearching(true)
         b.infoCard.isVisible = false
         Fx.enter(b.skeleton)
-        Fx.blink(b.skeleton)
+        Fx.blink(b.skeletonBox)
+
+        val engineWarm = app.ready.isCompleted
+        val estimate = ((prefs.avgFetchMs + (if (engineWarm) 0 else 6000)) / 1000).toInt().coerceIn(2, 40)
+        startCountdown(estimate)
 
         lifecycleScope.launch {
             try {
                 if (!app.ready.await()) throw Exception("Engine start nahi hua: ${app.initError}")
-                val info = withContext(Dispatchers.IO) { YoutubeDL.getInstance().getInfo(url) }
+                val t1 = System.currentTimeMillis()
+                val info = withContext(Dispatchers.IO) {
+                    Engine.lock.readLock().lock()
+                    try {
+                        YoutubeDL.getInstance().getInfo(Engine.infoRequest(url))
+                    } finally {
+                        Engine.lock.readLock().unlock()
+                    }
+                }
+                // Agli baar ke countdown ke liye andaaza sudhaaro
+                val took = System.currentTimeMillis() - t1
+                prefs.avgFetchMs = (prefs.avgFetchMs * 2 + took) / 3
 
+                currentTitle = info.title ?: ""
                 b.title.text = info.title ?: "Video"
-                b.meta.text = listOfNotNull(info.uploader).filter { it.isNotBlank() }
-                    .joinToString(" • ").ifBlank { "Video mil gaya ✓" }
-                b.siteBadge.text = "● " + (info.extractorKey ?: "Video")
-                val duration = info.duration.takeIf { it > 0 }?.let { formatDuration(it) }
-                b.durationBadge.isVisible = duration != null
-                b.durationBadge.text = duration
+                b.meta.text = info.uploader?.takeIf { it.isNotBlank() } ?: "Video mil gaya ✓"
+                b.siteBadge.text = "● YouTube"
+                val duration = info.duration
+                b.durationBadge.isVisible = duration > 0
+                b.durationBadge.text = if (duration > 0) formatDuration(duration) else ""
                 b.thumb.setImageDrawable(null)
+                b.thumbEmoji.isVisible = false
 
-                resetResultArea()
-                b.skeleton.animate().cancel()
-                b.skeleton.alpha = 1f
+                stopCountdown()
+                b.skeletonBox.animate().cancel()
+                b.skeletonBox.alpha = 1f
                 b.skeleton.isVisible = false
+
+                val isLong = duration <= 0 || duration > 60
+                chooserMode = isLong
+                resetResultArea(showQuality = isLong)
                 Fx.enter(b.infoCard)
-                b.scroll.postDelayed({ b.scroll.smoothScrollTo(0, b.infoCard.top - 40) }, 250)
-
                 info.thumbnail?.let { loadThumbnail(it) }
+
+                if (isLong) {
+                    b.scroll.postDelayed({ b.scroll.smoothScrollTo(0, b.infoCard.top - 40) }, 250)
+                } else {
+                    b.meta.text = "⚡ Chhoti video — seedha download ho rahi hai"
+                    startDownload("best")
+                }
             } catch (e: Exception) {
-                b.skeleton.animate().cancel()
-                b.skeleton.alpha = 1f
+                stopCountdown()
+                b.skeletonBox.animate().cancel()
+                b.skeletonBox.alpha = 1f
                 b.skeleton.isVisible = false
-                showMsg(cleanError(e), error = true)
+                showMsg(Engine.cleanError(e), error = true)
                 Fx.shake(b.linkCard)
             } finally {
                 setSearching(false)
@@ -468,10 +527,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetResultArea() {
+    // ================= Countdown =================
+
+    private fun startCountdown(seconds: Int) {
+        countdownJob?.cancel()
+        countdownJob = lifecycleScope.launch {
+            var s = seconds
+            while (true) {
+                if (s > 0) {
+                    b.skeletonCount.text = s.toString()
+                    b.skeletonHint.text = "Video dhoondh rahe hain… lagbhag $s sec"
+                    b.searchText.text = "Dhoondh rahe… ${s}s"
+                } else {
+                    b.skeletonCount.text = "⏳"
+                    b.skeletonHint.text = "Bas thoda aur…"
+                    b.searchText.text = "Bas thoda aur…"
+                }
+                b.skeletonCount.scaleX = 1.35f; b.skeletonCount.scaleY = 1.35f; b.skeletonCount.alpha = 0.4f
+                b.skeletonCount.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(450)
+                    .setInterpolator(android.view.animation.OvershootInterpolator(2f)).start()
+                delay(1000)
+                s--
+            }
+        }
+    }
+
+    private fun stopCountdown() {
+        countdownJob?.cancel()
+        countdownJob = null
+    }
+
+    private fun resetResultArea(showQuality: Boolean) {
         b.progressBox.isVisible = false
         b.successBox.isVisible = false
-        b.downloadBtn.isVisible = true
+        b.qualityBox.isVisible = showQuality
         b.downloadBtn.isEnabled = true
         b.downloadBtn.alpha = 1f
     }
@@ -501,142 +590,117 @@ class MainActivity : AppCompatActivity() {
         return if (h > 0) "%d:%02d:%02d".format(h, m, s) else "%d:%02d".format(m, s)
     }
 
-    // ================= Download =================
+    // ================= Download (background service) =================
 
-    private fun startDownload() {
+    private fun startDownload(q: String) {
         val url = currentUrl() ?: return showMsg("Pehle video ka link daalo.", error = true)
-        if (downloadJob?.isActive == true) return
+        if (isDownloading()) return
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-            showMsg("Storage permission do, phir dobara Download dabao.", error = true)
+            showMsg("Storage permission do, phir dobara try karo.", error = true)
             return
         }
 
         hideMsg()
-        b.downloadBtn.isEnabled = false
-        b.downloadBtn.animate().alpha(0.4f).setDuration(200).start()
-        b.searchBtn.isEnabled = false
-        b.successBox.isVisible = false
-        b.progress.isIndeterminate = true
-        b.percentText.text = "…"
-        b.statusText.text = "Shuru ho raha hai…"
-        b.speedText.text = ""
-        b.cancelBtn.isVisible = true
-        Fx.enter(b.progressBox)
-        Fx.pulse(b.progressGlow, 1.12f, 1000)
-        b.scroll.postDelayed({ b.scroll.smoothScrollTo(0, b.scroll.getChildAt(0).height) }, 300)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        // Screen turant update ho, service baad me asli progress bhejega
+        DownloadState.flow.value = Dl.Running(url, currentTitle, 0, true, "Shuru ho raha hai…", "", 0)
+        try {
+            DownloadService.start(this, url, q, currentTitle)
+        } catch (e: Exception) {
+            DownloadState.flow.value = Dl.Failed(url, "Download shuru nahi hua: ${e.message}")
+        }
+    }
 
-        val id = UUID.randomUUID().toString()
-        processId = id
-        val tempDir = File(cacheDir, "dl/$id").apply { mkdirs() }
-        val q = quality
-
-        downloadJob = lifecycleScope.launch {
-            try {
-                if (!app.ready.await()) throw Exception("Engine start nahi hua: ${app.initError}")
-
-                val request = YoutubeDLRequest(url).apply {
-                    addOption("--no-playlist")
-                    addOption("--no-mtime")
-                    addOption("-o", tempDir.absolutePath + "/%(title).120B.%(ext)s")
-                    when (q) {
-                        "audio" -> {
-                            addOption("-f", "bestaudio/best")
-                            addOption("-x")
-                            addOption("--audio-format", "mp3")
-                            addOption("--audio-quality", "192K")
-                        }
-                        "best" -> {
-                            addOption("-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best")
-                            addOption("--merge-output-format", "mp4")
-                        }
-                        else -> {
-                            addOption(
-                                "-f",
-                                "bestvideo[height<=$q][ext=mp4]+bestaudio[ext=m4a]/" +
-                                    "bestvideo[height<=$q]+bestaudio/best[height<=$q]/best"
-                            )
-                            addOption("--merge-output-format", "mp4")
-                        }
-                    }
-                }
-
-                withContext(Dispatchers.IO) {
-                    YoutubeDL.getInstance().execute(request, id) { progress, eta, line ->
-                        runOnUiThread { onProgress(progress, eta, line) }
-                    }
-                }
-
-                b.progress.isIndeterminate = true
-                b.percentText.text = "💾"
-                b.statusText.text = "Gallery me save ho raha hai…"
-                b.speedText.text = ""
-                b.cancelBtn.isVisible = false
-
-                val (uri, name) = withContext(Dispatchers.IO) {
-                    val file = tempDir.listFiles()
-                        ?.filter { it.isFile && !it.name.endsWith(".part") && !it.name.endsWith(".ytdl") }
-                        ?.maxByOrNull { it.length() }
-                        ?: throw Exception("Download hua par file nahi mili.")
-                    saveToDownloads(file) to file.name
-                }
-
-                savedUri = uri
-                prefs.totalDownloads = prefs.totalDownloads + 1
-                showSuccess(name)
-            } catch (e: YoutubeDL.CanceledException) {
-                Fx.exit(b.progressBox)
-                showMsg("Download cancel kar diya.", error = true)
-            } catch (e: Exception) {
-                Fx.exit(b.progressBox)
-                if (downloadJob?.isCancelled == true) {
-                    showMsg("Download cancel kar diya.", error = true)
-                } else {
-                    showMsg(cleanError(e), error = true)
-                    b.scroll.post { b.scroll.smoothScrollTo(0, b.linkCard.top) }
-                }
-            } finally {
-                tempDir.deleteRecursively()
-                processId = null
-                b.downloadBtn.isEnabled = true
-                b.downloadBtn.animate().alpha(1f).setDuration(200).start()
-                b.searchBtn.isEnabled = true
-                b.progressGlow.animate().cancel()
-                window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    /** Service se aane wali progress ko screen pe dikhao (app wapas kholne pe bhi) */
+    private fun observeDownloads() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                DownloadState.flow.collect { render(it) }
             }
         }
     }
 
-    private fun onProgress(progress: Float, eta: Long, line: String) {
-        if (progress < 0f) {
-            b.progress.isIndeterminate = true
-            b.statusText.text = "Download ho raha hai…"
-            return
-        }
-        if (b.progress.isIndeterminate) b.progress.isIndeterminate = false
-        b.progress.setProgressCompat(progress.toInt(), true)
-        b.percentText.text = "${progress.toInt()}%"
-        if (progress >= 100f) {
-            b.statusText.text = "File taiyaar ho rahi hai…"
-            b.speedText.text = ""
-        } else {
-            b.statusText.text = "Download ho raha hai…"
-            val speed = Regex("at\\s+([\\d.]+\\s*[KMG]i?B/s)").find(line)?.groupValues?.get(1)
-            b.speedText.text = listOfNotNull(
-                speed?.let { "⚡ $it" },
-                eta.takeIf { it > 0 }?.let { "⏱ ${formatDuration(it.toInt())} bache" }
-            ).joinToString("   ")
+    private fun render(state: Dl) {
+        when (state) {
+            is Dl.Idle -> Unit
+
+            is Dl.Running -> {
+                if (!b.infoCard.isVisible) {
+                    // App dobara khola aur download chal raha hai
+                    val (emoji, name) = Engine.platform(state.url)
+                    if (b.urlInput.text.isNullOrBlank()) b.urlInput.setText(state.url)
+                    b.siteBadge.text = "● $name"
+                    b.thumbEmoji.text = emoji
+                    b.thumbEmoji.isVisible = b.thumb.drawable == null
+                    b.durationBadge.isVisible = false
+                    b.meta.text = "⬇️ Download chal raha hai"
+                    b.successBox.isVisible = false
+                    Fx.enter(b.infoCard)
+                }
+                if (state.title.isNotBlank() && b.title.text != state.title) b.title.text = state.title
+                b.qualityBox.isVisible = false
+                b.successBox.isVisible = false
+                b.searchBtn.isEnabled = false
+                if (!b.progressBox.isVisible) {
+                    b.cancelBtn.isVisible = true
+                    b.bgHint.isVisible = true
+                    Fx.enter(b.progressBox)
+                    Fx.pulse(b.progressGlow, 1.12f, 1000)
+                    b.scroll.postDelayed({ b.scroll.smoothScrollTo(0, b.scroll.getChildAt(0).height) }, 300)
+                }
+                if (state.indeterminate || state.percent >= 100) {
+                    if (!b.progress.isIndeterminate) b.progress.isIndeterminate = true
+                    b.percentText.text = if (state.percent >= 100) "💾" else "…"
+                } else {
+                    if (b.progress.isIndeterminate) b.progress.isIndeterminate = false
+                    b.progress.setProgressCompat(state.percent, true)
+                    b.percentText.text = "${state.percent}%"
+                }
+                b.statusText.text = state.status
+                b.cancelBtn.isVisible = state.percent < 100
+                b.speedText.text = listOfNotNull(
+                    state.speed.takeIf { it.isNotBlank() }?.let { "⚡ $it" },
+                    state.etaSec.takeIf { it > 0 }?.let { "⏱ ${DownloadService.fmt(it)} me ho jayega" }
+                ).joinToString("   ")
+            }
+
+            is Dl.Done -> {
+                savedUri = state.uri
+                savedMime = state.mime
+                b.searchBtn.isEnabled = true
+                if (shownDoneUri != state.uri) {
+                    shownDoneUri = state.uri
+                    if (!b.infoCard.isVisible) Fx.enter(b.infoCard)
+                    b.qualityBox.isVisible = false
+                    if (state.title.isNotBlank()) b.title.text = state.title
+                    showSuccess(state.name)
+                }
+            }
+
+            is Dl.Failed -> {
+                b.searchBtn.isEnabled = true
+                Fx.exit(b.progressBox) { if (chooserMode) b.qualityBox.isVisible = true }
+                showMsg(state.message, error = true)
+                b.scroll.post { b.scroll.smoothScrollTo(0, b.linkCard.top) }
+                DownloadState.flow.value = Dl.Idle
+            }
+
+            is Dl.Cancelled -> {
+                b.searchBtn.isEnabled = true
+                Fx.exit(b.progressBox) { if (chooserMode) b.qualityBox.isVisible = true }
+                showMsg("Download cancel kar diya.", error = true)
+                DownloadState.flow.value = Dl.Idle
+            }
         }
     }
 
     private fun showSuccess(name: String) {
+        b.progressGlow.animate().cancel()
         Fx.exit(b.progressBox) {
-            b.downloadBtn.isVisible = false
             b.savedText.text = "Downloads/SagarSaver/$name"
             Fx.enter(b.successBox)
             Fx.pop(b.successCircle, 120)
@@ -644,52 +708,6 @@ class MainActivity : AppCompatActivity() {
             b.successCheck.animate().rotation(0f).setStartDelay(250).setDuration(500).start()
             Fx.haptic(b.successCircle, strong = true)
             b.scroll.postDelayed({ b.scroll.smoothScrollTo(0, b.scroll.getChildAt(0).height) }, 200)
-        }
-    }
-
-    private fun cancelDownload() {
-        processId?.let { YoutubeDL.getInstance().destroyProcessById(it) }
-        downloadJob?.cancel()
-    }
-
-    /** File ko phone ke Downloads/SagarSaver folder me copy karo */
-    private fun saveToDownloads(file: File): Uri {
-        val ext = file.extension.lowercase()
-        val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
-            ?: if (ext == "mp3" || ext == "m4a") "audio/*" else "video/*"
-        savedMime = mime
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues().apply {
-                put(MediaStore.Downloads.DISPLAY_NAME, file.name)
-                put(MediaStore.Downloads.MIME_TYPE, mime)
-                put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/SagarSaver")
-                put(MediaStore.Downloads.IS_PENDING, 1)
-            }
-            val resolver = contentResolver
-            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
-                ?: throw Exception("Downloads folder me file nahi bana paaye.")
-            resolver.openOutputStream(uri)?.use { out -> file.inputStream().use { it.copyTo(out) } }
-                ?: throw Exception("Downloads folder me likh nahi paaye.")
-            values.clear()
-            values.put(MediaStore.Downloads.IS_PENDING, 0)
-            resolver.update(uri, values, null, null)
-            return uri
-        } else {
-            @Suppress("DEPRECATION")
-            val dir = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                "SagarSaver"
-            ).apply { mkdirs() }
-            var dest = File(dir, file.name)
-            var n = 1
-            while (dest.exists()) {
-                dest = File(dir, "${file.nameWithoutExtension} ($n).${file.extension}")
-                n++
-            }
-            file.copyTo(dest)
-            MediaScannerConnection.scanFile(this, arrayOf(dest.absolutePath), arrayOf(mime), null)
-            return FileProvider.getUriForFile(this, "$packageName.fileprovider", dest)
         }
     }
 
@@ -718,20 +736,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     // ================= Messages =================
-
-    private fun cleanError(e: Exception): String {
-        val msg = e.message ?: return "Kuch gadbad ho gayi."
-        val errLine = msg.lines().lastOrNull { it.contains("ERROR") } ?: msg.lines().firstOrNull() ?: msg
-        val clean = errLine.replace("ERROR: ", "").trim()
-        return when {
-            clean.contains("Unsupported URL", true) -> "😕 Ye link support nahi hai. Video ka seedha link daalo."
-            clean.contains("Unable to download", true) || clean.contains("resolve host", true) ->
-                "📶 Internet check karo, phir dobara try karo.\n($clean)"
-            clean.contains("Private", true) || clean.contains("login", true) ->
-                "🔒 Ye video private hai ya login maangta hai.\n($clean)"
-            else -> "⚠️ " + clean.take(400)
-        }
-    }
 
     private fun showMsg(text: String, error: Boolean) {
         b.msg.text = text
