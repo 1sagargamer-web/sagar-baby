@@ -22,4 +22,7 @@ sealed class Dl {
 
 object DownloadState {
     val flow = MutableStateFlow<Dl>(Dl.Idle)
+
+    /** Jo video download ho rahi hai uski photo (local file path) */
+    val thumb = MutableStateFlow<String?>(null)
 }

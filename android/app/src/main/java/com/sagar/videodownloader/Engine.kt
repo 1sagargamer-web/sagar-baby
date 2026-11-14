@@ -61,6 +61,8 @@ object Engine {
         addOption("--fragment-retries", "5")
         addOption("--concurrent-fragments", "4")
         addOption("-o", dir.absolutePath + "/%(title).120B.%(ext)s")
+        // Video ki photo bhi (card me dikhane ke liye) — video se pehle aati hai
+        addOption("--write-thumbnail")
         when (quality) {
             "audio" -> {
                 addOption("-f", "bestaudio/best")
@@ -82,6 +84,8 @@ object Engine {
             }
         }
     }
+
+    val IMAGE_EXT = setOf("jpg", "jpeg", "webp", "png", "heic")
 
     fun mimeOf(file: File): String {
         val ext = file.extension.lowercase()

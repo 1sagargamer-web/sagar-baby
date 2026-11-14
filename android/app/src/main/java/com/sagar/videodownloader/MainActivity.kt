@@ -648,6 +648,32 @@ class MainActivity : AppCompatActivity() {
                 DownloadState.flow.collect { render(it) }
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                DownloadState.thumb.collect { path -> if (path != null) showThumb(path) }
+            }
+        }
+    }
+
+    private var shownThumb: String? = null
+
+    /** Download ho rahi video ki photo card me dikhao */
+    private fun showThumb(path: String) {
+        if (path == shownThumb) return
+        lifecycleScope.launch {
+            val bmp = withContext(Dispatchers.IO) {
+                runCatching {
+                    val opts = BitmapFactory.Options().apply { inSampleSize = 1 }
+                    BitmapFactory.decodeFile(path, opts)
+                }.getOrNull()
+            } ?: return@launch
+            shownThumb = path
+            b.thumbEmoji.animate().cancel()
+            b.thumbEmoji.isVisible = false
+            b.thumb.alpha = 0f
+            b.thumb.setImageBitmap(bmp)
+            b.thumb.animate().alpha(1f).setDuration(500).start()
+        }
     }
 
     private fun render(state: Dl) {

@@ -75,6 +75,10 @@ class DownloadService : Service() {
         processId = id
         val tempDir = File(cacheDir, "dl/$id").apply { mkdirs() }
         var title = initialTitle
+        var thumbFound = false
+        var lastThumbCheck = 0L
+        DownloadState.thumb.value = null
+        File(cacheDir, "thumbs").apply { deleteRecursively(); mkdirs() }
 
         job = scope.launch {
             acquireWakeLock()
@@ -89,6 +93,21 @@ class DownloadService : Service() {
                         val request = Engine.downloadRequest(url, quality, tempDir)
                         Engine.lock.read {
                             YoutubeDL.getInstance().execute(request, id) { progress, eta, line ->
+                                // Photo aa gayi? to screen pe dikhao
+                                val now = System.currentTimeMillis()
+                                if (!thumbFound && now - lastThumbCheck > 400) {
+                                    lastThumbCheck = now
+                                    tempDir.listFiles()
+                                        ?.firstOrNull { it.isFile && it.extension.lowercase() in Engine.IMAGE_EXT && it.length() > 0 }
+                                        ?.let { img ->
+                                            runCatching {
+                                                val dest = File(cacheDir, "thumbs/$id.${img.extension}")
+                                                img.copyTo(dest, overwrite = true)
+                                                thumbFound = true
+                                                DownloadState.thumb.value = dest.absolutePath
+                                            }
+                                        }
+                                }
                                 if (title.isBlank()) {
                                     Regex("Destination: (.+)").find(line)?.groupValues?.get(1)?.let {
                                         title = File(it.trim()).nameWithoutExtension
@@ -116,7 +135,10 @@ class DownloadService : Service() {
                 notifyProgress(title, "Save ho raha hai…", 100, true, 0, force = true)
 
                 val file = tempDir.listFiles()
-                    ?.filter { it.isFile && !it.name.endsWith(".part") && !it.name.endsWith(".ytdl") }
+                    ?.filter {
+                        it.isFile && !it.name.endsWith(".part") && !it.name.endsWith(".ytdl") &&
+                            it.extension.lowercase() !in Engine.IMAGE_EXT
+                    }
                     ?.maxByOrNull { it.length() }
                     ?: throw Exception("Download hua par file nahi mili.")
                 val mime = Engine.mimeOf(file)
