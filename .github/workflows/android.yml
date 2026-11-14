@@ -13,6 +13,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      KS_B64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
     defaults:
       run:
         working-directory: android
@@ -26,7 +28,17 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Signing key (GitHub Secrets se)
+        if: env.KS_B64 != ''
+        run: |
+          echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          echo "SIGNING_KEYSTORE_PATH=$RUNNER_TEMP/release.keystore" >> "$GITHUB_ENV"
+
       - name: Build APK
+        env:
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --no-daemon --stacktrace
@@ -34,26 +46,28 @@ jobs:
       - name: Rename APKs
         run: |
           mkdir -p ../out
-          cp app/build/outputs/apk/release/app-arm64-v8a-release.apk ../out/VideoDownloader-arm64.apk
-          cp app/build/outputs/apk/release/app-armeabi-v7a-release.apk ../out/VideoDownloader-arm32.apk
+          cp app/build/outputs/apk/release/app-arm64-v8a-release.apk ../out/SagarSaver-arm64.apk
+          cp app/build/outputs/apk/release/app-armeabi-v7a-release.apk ../out/SagarSaver-arm32.apk
           ls -lh ../out
 
       - uses: actions/upload-artifact@v4
         with:
-          name: VideoDownloader-apk
+          name: SagarSaver-apk
           path: out/*.apk
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: apk-${{ github.run_number }}
-          name: Video Downloader v1.0.${{ github.run_number }}
+          name: Sagar Saver v2.0.${{ github.run_number }}
           target_commitish: ${{ github.sha }}
           make_latest: true
           files: out/*.apk
           body: |
+            ## 👑 Sagar Saver — All-in-One Video Downloader
+
             **Kaunsa APK download karein?**
-            - `VideoDownloader-arm64.apk` — zyadatar phones (2017 ke baad wale). **Yahi pehle try karo.**
-            - `VideoDownloader-arm32.apk` — sirf agar arm64 install na ho (bahut purane phones).
+            - `SagarSaver-arm64.apk` — zyadatar phones (2017 ke baad wale). **Yahi pehle try karo.**
+            - `SagarSaver-arm32.apk` — sirf agar arm64 install na ho (bahut purane phones).
 
             Install karte waqt "Unknown sources / Install unknown apps" allow karna padega.

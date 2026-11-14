@@ -1,11 +1,17 @@
 <resources>
-    <color name="bg">#0F1115</color>
-    <color name="card">#181B22</color>
-    <color name="border">#2A2F3A</color>
-    <color name="text">#E8EAF0</color>
-    <color name="muted">#9AA1B2</color>
-    <color name="accent">#FF4D4D</color>
-    <color name="accent2">#FF7A45</color>
-    <color name="ok">#3ECF8E</color>
-    <color name="err">#FF6B6B</color>
+    <color name="bg">#07060D</color>
+    <color name="bg2">#0E0B1A</color>
+    <color name="glass">#12FFFFFF</color>
+    <color name="glass_stroke">#22FFFFFF</color>
+    <color name="text">#F5F3FF</color>
+    <color name="muted">#A09CB5</color>
+    <color name="dim">#6E6A85</color>
+    <color name="violet">#7C3AED</color>
+    <color name="pink">#EC4899</color>
+    <color name="amber">#F59E0B</color>
+    <color name="gold">#FCD34D</color>
+    <color name="ok">#34D399</color>
+    <color name="err">#F87171</color>
+    <color name="accent">#7C3AED</color>
+    <color name="accent2">#EC4899</color>
 </resources>

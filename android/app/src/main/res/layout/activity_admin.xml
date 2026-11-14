@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <View
+        android:id="@+id/blob1"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="-140dp"
+        android:layout_marginEnd="-160dp"
+        android:background="@drawable/bg_blob_amber" />
+
+    <View
+        android:id="@+id/blob2"
+        android:layout_width="380dp"
+        android:layout_height="380dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="-160dp"
+        android:layout_marginBottom="-100dp"
+        android:background="@drawable/bg_blob_violet" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/backBtn"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_btn_glass"
+                    android:gravity="center"
+                    android:text="←"
+                    android:textColor="@color/text"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="👑 Owner Panel"
+                        android:textColor="@color/gold"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/adminSub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sirf Sagar ke liye"
+                        android:textColor="@color/muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/busy"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:indeterminateTint="@color/pink"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/adminMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <!-- Login -->
+            <LinearLayout
+                android:id="@+id/loginCard"
+                style="@style/AdminCard"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/AdminCardTitle"
+                    android:text="🔐 Owner Login" />
+
+                <TextView
+                    style="@style/AdminHint"
+                    android:text="GitHub ka token daalo. Ye token sirf aapke phone me save rahega.\n\nToken kaise banayein:\n1. github.com → Settings → Developer settings\n2. Personal access tokens → Fine-grained tokens → Generate new token\n3. Repository access: Only select → sagar-baby\n4. Permissions → Contents: Read and write\n5. Generate karke token yahan paste karo" />
+
+                <EditText
+                    android:id="@+id/tokenInput"
+                    style="@style/AdminInput"
+                    android:hint="github_pat_…"
+                    android:inputType="textPassword" />
+
+                <TextView
+                    android:id="@+id/loginBtn"
+                    style="@style/GradientBtn"
+                    android:text="🔓  Login karo" />
+            </LinearLayout>
+
+            <!-- Panel -->
+            <LinearLayout
+                android:id="@+id/panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Stats -->
+                <LinearLayout
+                    style="@style/AdminCard"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/statInstalled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/text"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            style="@style/Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="IS PHONE PE" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/statLatest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/pink"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            style="@style/Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LATEST APK" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/statMaint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/ok"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            style="@style/Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="APP STATUS" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Broadcast -->
+                <LinearLayout style="@style/AdminCard">
+
+                    <TextView
+                        style="@style/AdminCardTitle"
+                        android:text="📢 Sabko message bhejo" />
+
+                    <TextView
+                        style="@style/AdminHint"
+                        android:text="Jisne bhi app install kiya hai, use app kholne pe ye message dikhega aur notification bhi aayega." />
+
+                    <TextView
+                        android:id="@+id/currentMsg"
+                        style="@style/AdminHint"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/gold" />
+
+                    <EditText
+                        android:id="@+id/msgTitle"
+                        style="@style/AdminInput"
+                        android:hint="Title (jaise: Happy Diwali 🪔)"
+                        android:inputType="textCapSentences" />
+
+                    <EditText
+                        android:id="@+id/msgBody"
+                        style="@style/AdminInput"
+                        android:gravity="top"
+                        android:hint="Message likho…"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:minLines="3" />
+
+                    <TextView
+                        android:id="@+id/sendMsgBtn"
+                        style="@style/GradientBtn"
+                        android:text="🚀  Sabko bhejo" />
+
+                    <TextView
+                        android:id="@+id/clearMsgBtn"
+                        style="@style/GlassBtn"
+                        android:layout_marginTop="10dp"
+                        android:text="Message hatao" />
+                </LinearLayout>
+
+                <!-- Maintenance -->
+                <LinearLayout style="@style/AdminCard">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/AdminCardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="🛠 Maintenance mode" />
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/maintSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/AdminHint"
+                        android:text="ON karne pe sabke liye app band ho jayega aur ye message dikhega. Aapke (owner) phone pe app chalta rahega." />
+
+                    <EditText
+                        android:id="@+id/maintTitleInput"
+                        style="@style/AdminInput"
+                        android:hint="Title (jaise: App update ho raha hai)"
+                        android:inputType="textCapSentences" />
+
+                    <EditText
+                        android:id="@+id/maintMsgInput"
+                        style="@style/AdminInput"
+                        android:gravity="top"
+                        android:hint="Message (jaise: 1 ghante me wapas aayenge 🙏)"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:minLines="2" />
+
+                    <TextView
+                        android:id="@+id/saveMaintBtn"
+                        style="@style/GradientBtn"
+                        android:text="💾  Save karo" />
+                </LinearLayout>
+
+                <!-- Update -->
+                <LinearLayout style="@style/AdminCard">
+
+                    <TextView
+                        style="@style/AdminCardTitle"
+                        android:text="🚀 Update" />
+
+                    <TextView
+                        style="@style/AdminHint"
+                        android:text="Naya APK release hote hi sabko 'Update' ka option dikhne lagta hai. Neeche wale button se purane version wale logon ko update karne pe majboor kar sakte ho (bina update kiye app nahi chalega)." />
+
+                    <EditText
+                        android:id="@+id/updateNoteInput"
+                        style="@style/AdminInput"
+                        android:gravity="top"
+                        android:hint="Update me kya naya hai? (optional)"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:minLines="2" />
+
+                    <TextView
+                        android:id="@+id/currentForce"
+                        style="@style/AdminHint"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/gold" />
+
+                    <TextView
+                        android:id="@+id/saveNoteBtn"
+                        style="@style/GlassBtn"
+                        android:text="💾  Sirf note save karo" />
+
+                    <TextView
+                        android:id="@+id/forceUpdateBtn"
+                        style="@style/GradientBtn"
+                        android:layout_marginTop="10dp"
+                        android:text="⚡  Sabko latest version pe update karwao" />
+
+                    <TextView
+                        android:id="@+id/unforceBtn"
+                        style="@style/GlassBtn"
+                        android:layout_marginTop="10dp"
+                        android:text="Force update band karo" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/logoutBtn"
+                    style="@style/GlassBtn"
+                    android:layout_marginTop="20dp"
+                    android:text="🚪  Owner logout"
+                    android:textColor="@color/err" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

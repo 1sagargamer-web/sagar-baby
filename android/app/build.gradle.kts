@@ -12,7 +12,27 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
-        versionName = "1.0." + (System.getenv("GITHUB_RUN_NUMBER") ?: "0")
+        versionName = "2.0." + (System.getenv("GITHUB_RUN_NUMBER") ?: "0")
+
+        // Owner panel / remote config ke liye
+        buildConfigField("String", "REPO_OWNER", "\"1sagargamer-web\"")
+        buildConfigField("String", "REPO_NAME", "\"sagar-baby\"")
+        buildConfigField("String", "CONFIG_BRANCH", "\"main\"")
+        buildConfigField("String", "CONFIG_PATH", "\"config/sagar-saver.json\"")
+    }
+
+    // Fixed key GitHub Secrets se aati hai (repo me kabhi commit mat karna).
+    // Secret na ho to debug key se sign hota hai.
+    val ksPath = System.getenv("SIGNING_KEYSTORE_PATH")
+    signingConfigs {
+        if (ksPath != null) {
+            create("sagar") {
+                storeFile = file(ksPath)
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            }
+        }
     }
 
     // Har phone type ke liye alag (chhota) APK banega
@@ -28,8 +48,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            // Testing ke liye debug key se sign
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName(if (ksPath != null) "sagar" else "debug")
         }
     }
 
@@ -44,7 +63,10 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -56,4 +78,5 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
 }

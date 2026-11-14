@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+<LinearLayout
+    android:id="@+id/dialogCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_glow" />
+
+        <TextView
+            android:id="@+id/dEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="44sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/dTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:textColor="@color/text"
+        android:textSize="21sp" />
+
+    <ScrollView
+        android:id="@+id/dScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/dBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/muted"
+            android:textColorLink="@color/pink"
+            android:textIsSelectable="true"
+            android:textSize="15sp" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/dPrimary"
+        style="@style/GradientBtn"
+        android:layout_marginTop="22dp" />
+
+    <TextView
+        android:id="@+id/dSecondary"
+        style="@style/GlassBtn"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+</LinearLayout>
+</FrameLayout>
