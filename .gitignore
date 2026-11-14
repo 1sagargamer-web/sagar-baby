@@ -2,3 +2,7 @@ downloads/
 __pycache__/
 venv/
 .venv/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
