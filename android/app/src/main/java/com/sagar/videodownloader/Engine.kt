@@ -44,13 +44,7 @@ object Engine {
         }
     }
 
-    private fun YoutubeDLRequest.withCookies(ctx: Context) {
-        val f = Cookies.file(ctx)
-        if (f.exists() && f.length() > 0) addOption("--cookies", f.absolutePath)
-    }
-
-    fun infoRequest(ctx: Context, url: String) = YoutubeDLRequest(url).apply {
-        withCookies(ctx)
+    fun infoRequest(url: String) = YoutubeDLRequest(url).apply {
         addOption("--no-playlist")
         addOption("--no-warnings")
         addOption("--socket-timeout", "15")
@@ -58,8 +52,7 @@ object Engine {
         addOption("--extractor-args", "youtube:skip=hls,dash,translated_subs")
     }
 
-    fun downloadRequest(ctx: Context, url: String, quality: String, dir: File) = YoutubeDLRequest(url).apply {
-        withCookies(ctx)
+    fun downloadRequest(url: String, quality: String, dir: File) = YoutubeDLRequest(url).apply {
         addOption("--no-playlist")
         addOption("--no-mtime")
         addOption("--no-warnings")

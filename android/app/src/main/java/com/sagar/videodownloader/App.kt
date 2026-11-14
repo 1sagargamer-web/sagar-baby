@@ -44,12 +44,12 @@ class App : Application() {
             // yt-dlp ka naya version (sites badalti rehti hain): din me max 1 baar,
             // thodi der baad, aur sirf jab koi download/search na chal raha ho.
             val prefs = Prefs(this@App)
-            if (System.currentTimeMillis() - prefs.lastEngineUpdate > 12 * 60 * 60 * 1000L) {
-                delay(8_000)
+            if (System.currentTimeMillis() - prefs.lastEngineUpdate > 24 * 60 * 60 * 1000L) {
+                delay(25_000)
                 val w = Engine.lock.writeLock()
                 if (w.tryLock()) {
                     try {
-                        YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.NIGHTLY)
+                        YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
                         prefs.lastEngineUpdate = System.currentTimeMillis()
                     } catch (_: Exception) {
                     } finally {

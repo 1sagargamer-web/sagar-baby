@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -61,21 +60,12 @@ class MainActivity : AppCompatActivity() {
     private var shownDoneUri: Uri? = null
     private var countdownJob: Job? = null
 
-    /** Login screen se wapas aane pe apne aap dobara try */
-    private val loginLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { r ->
-            refreshAccountsBtn()
-            if (r.resultCode == RESULT_OK && !currentUrl().isNullOrBlank()) go()
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
         prefs = Prefs(this)
-        // taaza login cookies yt-dlp ko do (sirf agar pehle login kiya tha)
-        if (Cookies.file(this).exists()) runCatching { Cookies.export(this) }
 
         applyInsets()
         setupLook()
@@ -362,8 +352,6 @@ class MainActivity : AppCompatActivity() {
         b.cancelBtn.setOnClickListener { DownloadService.cancel(this) }
         b.openBtn.setOnClickListener { openFile() }
         b.shareBtn.setOnClickListener { shareFile() }
-        b.accountsBtn.setOnClickListener { showAccounts() }
-        refreshAccountsBtn()
         b.maintRetry.setOnClickListener {
             Fx.spin(b.maintIcon, 800)
             checkRemote()
@@ -490,7 +478,7 @@ class MainActivity : AppCompatActivity() {
                 val info = withContext(Dispatchers.IO) {
                     Engine.lock.readLock().lock()
                     try {
-                        YoutubeDL.getInstance().getInfo(Engine.infoRequest(this@MainActivity, url))
+                        YoutubeDL.getInstance().getInfo(Engine.infoRequest(url))
                     } finally {
                         Engine.lock.readLock().unlock()
                     }
@@ -696,14 +684,9 @@ class MainActivity : AppCompatActivity() {
             is Dl.Failed -> {
                 b.searchBtn.isEnabled = true
                 Fx.exit(b.progressBox) { if (chooserMode) b.qualityBox.isVisible = true }
+                showMsg(state.message, error = true)
+                b.scroll.post { b.scroll.smoothScrollTo(0, b.linkCard.top) }
                 DownloadState.flow.value = Dl.Idle
-                val site = Cookies.forUrl(state.url)
-                if (site != null && Cookies.needsLogin(state.message)) {
-                    askLogin(site)
-                } else {
-                    showMsg(state.message, error = true)
-                    b.scroll.post { b.scroll.smoothScrollTo(0, b.linkCard.top) }
-                }
             }
 
             is Dl.Cancelled -> {
@@ -750,51 +733,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share karo"))
         } catch (_: Exception) {
         }
-    }
-
-    // ================= Instagram / Facebook login =================
-
-    private fun askLogin(site: Cookies.Site) {
-        val already = Cookies.isLoggedIn(site)
-        activeDialog?.dismiss()
-        activeDialog = Fx.dialog(
-            this, "🔐",
-            if (already) "${site.name} login dobara karo" else "${site.name} login chahiye",
-            if (already)
-                "${site.name} ne video dene se mana kar diya. Ek baar dobara login karo, phir download apne aap shuru ho jayega."
-            else
-                "${site.name} ab bina login ke video download nahi karne deta.\n\n" +
-                    "Bas ek baar apne ${site.name} account se login karo — login sirf aapke phone me save rahega. " +
-                    "Uske baad ${site.name} ki saari videos seedha download hongi ⚡",
-            "${site.emoji}  ${site.name} login karo", { loginLauncher.launch(LoginActivity.intent(this, site)) },
-            "Abhi nahi", { showMsg("${site.name} video ke liye login zaroori hai. Neeche \"🔐 login\" button se kabhi bhi kar sakte ho.", error = true) },
-        )
-    }
-
-    private fun refreshAccountsBtn() {
-        val done = if (!Cookies.file(this).exists()) emptyList()
-        else Cookies.ALL.filter { Cookies.isLoggedIn(it) }
-        b.accountsBtn.text = if (done.isEmpty()) "🔐  Instagram / Facebook login"
-        else "🔐  Logged in: " + done.joinToString(", ") { it.name } + " ✓"
-    }
-
-    private fun showAccounts() {
-        val sites = Cookies.ALL
-        val labels = sites.map { "${it.emoji}  ${it.name}  —  " + if (Cookies.isLoggedIn(it)) "Login hai ✓ (dobara karo)" else "Login karo" } +
-            "🚪  Sab accounts se logout"
-        com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
-            .setTitle("🔐 Accounts")
-            .setItems(labels.toTypedArray()) { _, which ->
-                if (which < sites.size) {
-                    loginLauncher.launch(LoginActivity.intent(this, sites[which]))
-                } else {
-                    Cookies.logoutAll(this)
-                    refreshAccountsBtn()
-                    Toast.makeText(this, "Sab accounts se logout ho gaya", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Band karo", null)
-            .show()
     }
 
     // ================= Messages =================

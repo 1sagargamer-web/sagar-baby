@@ -83,7 +83,7 @@ class DownloadService : Service() {
                 val app = application as App
                 if (!app.ready.await()) throw Exception("Engine start nahi hua: ${app.initError}")
 
-                val request = Engine.downloadRequest(this@DownloadService, url, quality, tempDir)
+                val request = Engine.downloadRequest(url, quality, tempDir)
                 Engine.lock.read {
                     YoutubeDL.getInstance().execute(request, id) { progress, eta, line ->
                         if (title.isBlank()) {
