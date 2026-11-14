@@ -2,7 +2,17 @@
 
 Video ka link paste karo → quality chuno → download. YouTube, Instagram, Facebook, X/Twitter, Vimeo aur 1000+ sites support karta hai ([yt-dlp](https://github.com/yt-dlp/yt-dlp) ki madad se).
 
-## Features
+## 📱 Android APK (phone ke liye)
+
+**Download:** https://github.com/1sagargamer-web/sagar-baby/releases/latest/download/VideoDownloader-arm64.apk
+
+- Purane phone pe install na ho to `VideoDownloader-arm32.apk` lo: https://github.com/1sagargamer-web/sagar-baby/releases/latest
+- Install karte waqt "Install unknown apps" allow karo.
+- YouTube/Instagram/Facebook app me **Share → Video Downloader** se bhi link bhej sakte ho.
+- Files `Downloads/VideoDownloader` folder me save hoti hain.
+- Android code `android/` folder me hai. `android/` me kuch bhi badlo to GitHub Actions naya APK bana ke release kar deta hai.
+
+## Features (website version)
 - Link daalte hi video ka title, thumbnail aur duration dikhta hai
 - Quality choose karo: Best, 1080p, 720p, 480p, 360p
 - 🎵 Sirf audio (MP3) bhi nikal sakte ho
