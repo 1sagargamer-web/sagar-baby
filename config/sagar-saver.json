@@ -1,0 +1,17 @@
+{
+  "maintenance": {
+    "enabled": false,
+    "title": "",
+    "message": ""
+  },
+  "message": {
+    "id": 0,
+    "show": false,
+    "title": "",
+    "body": ""
+  },
+  "update": {
+    "minVersion": 0,
+    "note": ""
+  }
+}
