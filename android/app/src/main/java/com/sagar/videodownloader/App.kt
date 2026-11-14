@@ -39,18 +39,15 @@ class App : Application() {
                 ready.complete(false)
                 return@launch
             }
-            // Pehle jaisa: engine (yt-dlp) update hone ke baad hi ready.
-            // Lekin din me sirf 1 baar — baaki time app turant ready.
-            val prefs = Prefs(this@App)
-            if (System.currentTimeMillis() - prefs.lastEngineUpdate > 24 * 60 * 60 * 1000L) {
-                updatingEngine = true
-                try {
-                    YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
-                    prefs.lastEngineUpdate = System.currentTimeMillis()
-                } catch (_: Exception) {
-                }
-                updatingEngine = false
+            // Pehle jaisa: har baar app khulne pe engine (yt-dlp) update, phir ready.
+            // Internet na ho to chupchap skip.
+            updatingEngine = true
+            try {
+                YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
+                Prefs(this@App).lastEngineUpdate = System.currentTimeMillis()
+            } catch (_: Exception) {
             }
+            updatingEngine = false
             ready.complete(true)
         }
     }

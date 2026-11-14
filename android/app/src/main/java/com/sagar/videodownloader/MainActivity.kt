@@ -346,7 +346,10 @@ class MainActivity : AppCompatActivity() {
         b.urlInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) { go(); true } else false
         }
-        b.urlInput.doAfterTextChanged { b.clearBtn.isVisible = !it.isNullOrEmpty() }
+        b.urlInput.doAfterTextChanged {
+            b.clearBtn.isVisible = !it.isNullOrEmpty()
+            autoStartIfLink()
+        }
         b.clearBtn.setOnClickListener { b.urlInput.setText("") }
 
         b.qBest.setOnClickListener { selectQuality(b.qBest, "best") }
@@ -420,7 +423,7 @@ class MainActivity : AppCompatActivity() {
         b.searchBtn.isEnabled = !on
         b.searchSpinner.isVisible = on
         b.searchIcon.isVisible = !on
-        if (!on) b.searchText.text = "Video dhoondo"
+        if (!on) b.searchText.text = "Download karo"
     }
 
     private fun isDownloading() = DownloadState.flow.value is Dl.Running
@@ -446,7 +449,23 @@ class MainActivity : AppCompatActivity() {
         hideMsg()
         DownloadState.flow.value = Dl.Idle
         shownDoneUri = null
-        if (Engine.needsInfo(url)) fetchInfo(url) else startDirect(url)
+        lastAutoUrl = url
+        // Koi quality/download button nahi — seedha best quality me download
+        startDirect(url)
+    }
+
+    private var lastAutoUrl: String? = null
+    private var autoJob: Job? = null
+
+    /** Keyboard se link paste kiya -> thoda ruk ke apne aap download shuru */
+    private fun autoStartIfLink() {
+        autoJob?.cancel()
+        val url = extractUrl(b.urlInput.text?.toString().orEmpty()) ?: return
+        if (url == lastAutoUrl || !introDone) return
+        autoJob = lifecycleScope.launch {
+            delay(700)
+            if (url != lastAutoUrl && !isDownloading()) go()
+        }
     }
 
     /** Bina info ke seedha download (sabse fast) */

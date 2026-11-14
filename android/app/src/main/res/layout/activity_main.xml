@@ -354,13 +354,13 @@
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
                                 android:layout_marginEnd="8dp"
-                                android:src="@drawable/ic_search" />
+                                android:src="@drawable/ic_download" />
 
                             <TextView
                                 android:id="@+id/searchText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Video dhoondo"
+                                android:text="Download karo"
                                 android:textColor="#FFFFFF"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
