@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Downloader</title>
+  <style>
+    :root {
+      --bg: #0f1115; --card: #181b22; --border: #2a2f3a; --text: #e8eaf0;
+      --muted: #9aa1b2; --accent: #ff4d4d; --accent-2: #ff7a45; --ok: #3ecf8e; --err: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #2a1520 0%, var(--bg) 55%); color: var(--text);
+      display: flex; justify-content: center; padding: 40px 16px;
+    }
+    .wrap { width: 100%; max-width: 640px; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    h1 span { background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { color: var(--muted); margin: 0 0 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+    .row { display: flex; gap: 8px; }
+    input[type=text] {
+      flex: 1; min-width: 0; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+      background: #0f1115; color: var(--text); font-size: 16px; outline: none;
+    }
+    input[type=text]:focus { border-color: var(--accent); }
+    button {
+      padding: 14px 18px; border: 0; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #fff; white-space: nowrap;
+    }
+    button.ghost { background: #252a35; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .preview { display: none; gap: 14px; align-items: flex-start; }
+    .preview img { width: 160px; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; background: #000; flex-shrink: 0; }
+    .preview h3 { margin: 0 0 6px; font-size: 16px; line-height: 1.35; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .opt { padding: 9px 14px; border-radius: 999px; border: 1px solid var(--border); background: #0f1115;
+      color: var(--text); cursor: pointer; font-size: 14px; font-weight: 500; }
+    .opt.active { border-color: var(--accent); background: #2a1519; }
+    .bar { height: 10px; background: #0f1115; border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
+    .bar > div { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .3s; }
+    .status { margin-top: 10px; font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+    .msg { padding: 12px 14px; border-radius: 10px; font-size: 14px; display: none; margin-top: 12px; word-break: break-word; }
+    .msg.err { display: block; background: #2a1414; color: var(--err); border: 1px solid #4a2020; }
+    .msg.ok { display: block; background: #12261d; color: var(--ok); border: 1px solid #1f4a35; }
+    .note { color: var(--muted); font-size: 12px; text-align: center; margin-top: 18px; }
+    .warn { color: #f0b85a; font-size: 13px; margin-top: 10px; }
+    @media (max-width: 520px) {
+      .row { flex-direction: column; }
+      .preview { flex-direction: column; }
+      .preview img { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎬 <span>Video Downloader</span></h1>
+  <p class="sub">Video ka link paste karo aur download karo — YouTube, Instagram, Facebook, X/Twitter aur 1000+ sites.</p>
+
+  <div class="card">
+    <div class="row">
+      <input id="url" type="text" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+      <button id="pasteBtn" class="ghost" title="Clipboard se paste">📋 Paste</button>
+      <button id="fetchBtn">Search</button>
+    </div>
+    {% if not has_ffmpeg %}
+    <div class="warn">⚠️ ffmpeg install nahi hai — HD (720p se upar) aur MP3 kaam nahi karenge. README dekho.</div>
+    {% endif %}
+    <div id="msg" class="msg"></div>
+  </div>
+
+  <div class="card" id="infoCard" style="display:none">
+    <div class="preview" id="preview">
+      <img id="thumb" alt="">
+      <div>
+        <h3 id="title"></h3>
+        <div class="meta" id="meta"></div>
+      </div>
+    </div>
+
+    <div class="opts" id="opts"></div>
+    <button id="dlBtn" style="width:100%">⬇️ Download</button>
+
+    <div id="progressBox" style="display:none; margin-top:16px">
+      <div class="bar"><div id="barFill"></div></div>
+      <div class="status"><span id="statusText">Shuru ho raha hai…</span><span id="speedText"></span></div>
+    </div>
+  </div>
+
+  <p class="note">Sirf wahi videos download karo jinka aapko haq hai ya jo personal use ke liye allowed hain.</p>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let quality = "best";
+
+function showMsg(text, type = "err") {
+  const m = $("msg");
+  m.className = "msg " + type;
+  m.textContent = text;
+}
+function clearMsg() { $("msg").className = "msg"; }
+
+async function post(path, body) {
+  const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || "Kuch gadbad ho gayi");
+  return data;
+}
+
+function buildOptions(heights) {
+  const choices = [{ q: "best", label: "⭐ Best Quality" }];
+  [1080, 720, 480, 360].forEach(h => {
+    if (heights.some(x => x >= h)) choices.push({ q: String(h), label: h + "p" });
+  });
+  choices.push({ q: "audio", label: "🎵 Sirf Audio" });
+  const box = $("opts");
+  box.innerHTML = "";
+  quality = "best";
+  choices.forEach(c => {
+    const b = document.createElement("button");
+    b.className = "opt" + (c.q === quality ? " active" : "");
+    b.textContent = c.label;
+    b.onclick = () => {
+      quality = c.q;
+      box.querySelectorAll(".opt").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+    };
+    box.appendChild(b);
+  });
+}
+
+$("pasteBtn").onclick = async () => {
+  try { $("url").value = (await navigator.clipboard.readText()).trim(); $("fetchBtn").click(); }
+  catch { showMsg("Clipboard access nahi mila — link khud paste karo (Ctrl+V)."); }
+};
+
+$("url").addEventListener("keydown", e => { if (e.key === "Enter") $("fetchBtn").click(); });
+
+$("fetchBtn").onclick = async () => {
+  const url = $("url").value.trim();
+  if (!url) return showMsg("Pehle video ka link daalo.");
+  clearMsg();
+  $("fetchBtn").disabled = true;
+  $("fetchBtn").textContent = "Dhoond rahe…";
+  $("infoCard").style.display = "none";
+  try {
+    const info = await post("/api/info", { url });
+    $("thumb").src = info.thumbnail || "";
+    $("thumb").style.display = info.thumbnail ? "" : "none";
+    $("title").textContent = info.title || "Video";
+    $("meta").textContent = [info.site, info.uploader, info.duration].filter(Boolean).join(" • ");
+    $("preview").style.display = "flex";
+    $("progressBox").style.display = "none";
+    $("dlBtn").disabled = false;
+    buildOptions(info.heights || []);
+    $("infoCard").style.display = "block";
+  } catch (e) {
+    showMsg(e.message);
+  } finally {
+    $("fetchBtn").disabled = false;
+    $("fetchBtn").textContent = "Search";
+  }
+};
+
+$("dlBtn").onclick = async () => {
+  const url = $("url").value.trim();
+  clearMsg();
+  $("dlBtn").disabled = true;
+  $("progressBox").style.display = "block";
+  $("barFill").style.width = "0%";
+  $("statusText").textContent = "Shuru ho raha hai…";
+  $("speedText").textContent = "";
+  try {
+    const { job_id } = await post("/api/download", { url, quality });
+    poll(job_id);
+  } catch (e) {
+    showMsg(e.message);
+    $("dlBtn").disabled = false;
+  }
+};
+
+async function poll(jobId) {
+  try {
+    const r = await fetch("/api/progress/" + jobId);
+    const j = await r.json();
+    if (j.status === "error") {
+      showMsg(j.error || "Download fail ho gaya.");
+      $("dlBtn").disabled = false;
+      return;
+    }
+    $("barFill").style.width = (j.percent || 0) + "%";
+    if (j.status === "downloading") {
+      $("statusText").textContent = `Download ho raha hai… ${j.percent}%`;
+      $("speedText").textContent = [j.speed, j.eta && "ETA " + j.eta].filter(Boolean).join(" • ");
+    } else if (j.status === "processing") {
+      $("statusText").textContent = "File taiyaar ho rahi hai…";
+      $("speedText").textContent = "";
+    }
+    if (j.status === "done") {
+      $("statusText").textContent = "✅ Ho gaya!";
+      $("speedText").textContent = "";
+      showMsg("Download complete: " + j.filename, "ok");
+      window.location.href = "/api/file/" + jobId;   // file browser me save hogi
+      $("dlBtn").disabled = false;
+      return;
+    }
+    setTimeout(() => poll(jobId), 800);
+  } catch {
+    setTimeout(() => poll(jobId), 1500);
+  }
+}
+</script>
+</body>
+</html>
