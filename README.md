@@ -2,15 +2,31 @@
 
 Video ka link paste karo → quality chuno → download. YouTube, Instagram, Facebook, X/Twitter, Vimeo aur 1000+ sites support karta hai ([yt-dlp](https://github.com/yt-dlp/yt-dlp) ki madad se).
 
-## 📱 Android APK (phone ke liye)
+## 📱 Sagar Saver — Android APK
 
-**Download:** https://github.com/1sagargamer-web/sagar-baby/releases/latest/download/VideoDownloader-arm64.apk
+**Download:** https://github.com/1sagargamer-web/sagar-baby/releases/latest/download/SagarSaver-arm64.apk
 
-- Purane phone pe install na ho to `VideoDownloader-arm32.apk` lo: https://github.com/1sagargamer-web/sagar-baby/releases/latest
-- Install karte waqt "Install unknown apps" allow karo.
-- YouTube/Instagram/Facebook app me **Share → Video Downloader** se bhi link bhej sakte ho.
-- Files `Downloads/VideoDownloader` folder me save hoti hain.
-- Android code `android/` folder me hai. `android/` me kuch bhi badlo to GitHub Actions naya APK bana ke release kar deta hai.
+- Purane phone pe install na ho to `SagarSaver-arm32.apk` lo: https://github.com/1sagargamer-web/sagar-baby/releases/latest
+- YouTube/Instagram/Facebook app me **Share → Sagar Saver** se bhi link bhej sakte ho.
+- Files `Downloads/SagarSaver` folder me save hoti hain.
+
+### 👑 Owner Panel (sirf Sagar ke liye)
+App me upar **logo pe 7 baar jaldi-jaldi tap** karo → Owner Panel khulega.
+
+Pehli baar GitHub token chahiye (sirf aapke phone me save hota hai):
+1. github.com → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token
+2. Repository access: **Only select repositories → sagar-baby**
+3. Permissions → Repository permissions → **Contents: Read and write**
+4. Token copy karke Owner Panel me paste karo
+
+Owner Panel se:
+- 📢 **Sabko message** — app kholne pe popup + notification
+- 🛠 **Maintenance mode** — sabke liye app band (owner ke phone pe chalta rahega)
+- 🚀 **Force update** — purane version wale bina update kiye app nahi chala payenge
+
+Settings `main` branch ki `config/sagar-saver.json` file me save hoti hain. Users tak pahunchne me ~5 minute lag sakte hain.
+
+**Naya update kaise dein:** `android/` folder me code badlo aur push karo → GitHub Actions naya APK bana ke release kar dega → sabko app me "Update" button dikhega.
 
 ## Features (website version)
 - Link daalte hi video ka title, thumbnail aur duration dikhta hai
