@@ -83,15 +83,32 @@ class DownloadService : Service() {
                 val app = application as App
                 if (!app.ready.await()) throw Exception("Engine start nahi hua: ${app.initError}")
 
-                val request = Engine.downloadRequest(url, quality, tempDir)
-                Engine.lock.read {
-                    YoutubeDL.getInstance().execute(request, id) { progress, eta, line ->
-                        if (title.isBlank()) {
-                            Regex("Destination: (.+)").find(line)?.groupValues?.get(1)?.let {
-                                title = File(it.trim()).nameWithoutExtension
+                var retried = false
+                while (true) {
+                    try {
+                        val request = Engine.downloadRequest(url, quality, tempDir)
+                        Engine.lock.read {
+                            YoutubeDL.getInstance().execute(request, id) { progress, eta, line ->
+                                if (title.isBlank()) {
+                                    Regex("Destination: (.+)").find(line)?.groupValues?.get(1)?.let {
+                                        title = File(it.trim()).nameWithoutExtension
+                                    }
+                                }
+                                onProgress(url, title, progress, eta, line)
                             }
                         }
-                        onProgress(url, title, progress, eta, line)
+                        break
+                    } catch (e: YoutubeDL.CanceledException) {
+                        throw e
+                    } catch (e: Exception) {
+                        // Site ne kuch badla? Engine update karke ek baar dobara try
+                        if (retried || !Engine.looksOutdated(e.message.orEmpty())) throw e
+                        retried = true
+                        DownloadState.flow.value = Dl.Running(url, title, 0, true, "Engine update karke dobara try kar rahe…", "", 0)
+                        notifyProgress(title.ifBlank { "Video" }, "Engine update ho raha hai…", 0, true, 0, force = true)
+                        if (!app.updateEngineNow()) throw e
+                        tempDir.listFiles()?.forEach { it.deleteRecursively() }
+                        DownloadState.flow.value = Dl.Running(url, title, 0, true, "Dobara shuru ho raha hai…", "", 0)
                     }
                 }
 

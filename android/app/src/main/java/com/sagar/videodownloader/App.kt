@@ -14,7 +14,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
@@ -38,27 +39,49 @@ class App : Application() {
                 ready.complete(false)
                 return@launch
             }
-            // Engine turant ready — search/download ke liye update ka wait nahi
-            ready.complete(true)
-
-            // yt-dlp ka naya version (sites badalti rehti hain): din me max 1 baar,
-            // thodi der baad, aur sirf jab koi download/search na chal raha ho.
+            // Pehle jaisa: engine (yt-dlp) update hone ke baad hi ready.
+            // Lekin din me sirf 1 baar — baaki time app turant ready.
             val prefs = Prefs(this@App)
             if (System.currentTimeMillis() - prefs.lastEngineUpdate > 24 * 60 * 60 * 1000L) {
-                delay(25_000)
-                val w = Engine.lock.writeLock()
-                if (w.tryLock()) {
-                    try {
-                        YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
-                        prefs.lastEngineUpdate = System.currentTimeMillis()
-                    } catch (_: Exception) {
-                    } finally {
-                        w.unlock()
-                    }
+                updatingEngine = true
+                try {
+                    YoutubeDL.getInstance().updateYoutubeDL(this@App, YoutubeDL.UpdateChannel.STABLE)
+                    prefs.lastEngineUpdate = System.currentTimeMillis()
+                } catch (_: Exception) {
                 }
+                updatingEngine = false
             }
+            ready.complete(true)
         }
     }
+
+    @Volatile
+    var updatingEngine = false
+
+    private val updateMutex = Mutex()
+
+    /**
+     * Download fail hua (site ne kuch badla) -> engine abhi update karo.
+     * true = naya version aaya, dobara try karne layak.
+     */
+    suspend fun updateEngineNow(): Boolean = updateMutex.withLock {
+        val prefs = Prefs(this)
+        if (System.currentTimeMillis() - lastForcedUpdate < 10 * 60 * 1000L) return@withLock false
+        lastForcedUpdate = System.currentTimeMillis()
+        val w = Engine.lock.writeLock()
+        w.lock()
+        try {
+            val st = YoutubeDL.getInstance().updateYoutubeDL(this, YoutubeDL.UpdateChannel.STABLE)
+            prefs.lastEngineUpdate = System.currentTimeMillis()
+            st == YoutubeDL.UpdateStatus.DONE
+        } catch (_: Exception) {
+            false
+        } finally {
+            w.unlock()
+        }
+    }
+
+    private var lastForcedUpdate = 0L
 
     private fun createChannel() {
         val nm = getSystemService(NotificationManager::class.java)

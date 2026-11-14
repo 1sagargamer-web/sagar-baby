@@ -126,6 +126,16 @@ object Engine {
         }
     }
 
+    /** Aisa error jo aksar purane yt-dlp ki wajah se aata hai */
+    fun looksOutdated(message: String): Boolean {
+        val m = message.lowercase()
+        return listOf(
+            "login required", "rate-limit", "unable to extract", "no video formats",
+            "http error 403", "http error 400", "not available", "requested format",
+            "unable to download json", "unsupported url",
+        ).any { it in m }
+    }
+
     fun cleanError(e: Throwable): String {
         val msg = e.message ?: return "Kuch gadbad ho gayi."
         val errLine = msg.lines().lastOrNull { it.contains("ERROR") } ?: msg.lines().firstOrNull() ?: msg

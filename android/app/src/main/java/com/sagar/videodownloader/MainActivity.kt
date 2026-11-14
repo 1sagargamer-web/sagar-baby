@@ -196,6 +196,12 @@ class MainActivity : AppCompatActivity() {
     private fun watchEngine() {
         Fx.blink(b.engineDot)
         lifecycleScope.launch {
+            while (!app.ready.isCompleted) {
+                b.engineText.text = if (app.updatingEngine) "Engine update ho raha hai…" else "Engine start ho raha hai…"
+                delay(400)
+            }
+        }
+        lifecycleScope.launch {
             val ok = app.ready.await()
             b.engineDot.animate().cancel()
             b.engineDot.alpha = 1f
@@ -468,7 +474,8 @@ class MainActivity : AppCompatActivity() {
         Fx.blink(b.skeletonBox)
 
         val engineWarm = app.ready.isCompleted
-        val estimate = ((prefs.avgFetchMs + (if (engineWarm) 0 else 6000)) / 1000).toInt().coerceIn(2, 40)
+        val estimate = ((prefs.avgFetchMs + (if (engineWarm) 0 else if (app.updatingEngine) 12000 else 4000)) / 1000)
+            .toInt().coerceIn(2, 40)
         startCountdown(estimate)
 
         lifecycleScope.launch {
