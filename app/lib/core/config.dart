@@ -23,7 +23,7 @@ class AppConfig {
   static const githubConfigUrl =
       'https://raw.githubusercontent.com/1sagargamer-web/sagar-baby/main/config/sagar-vaani.json';
 
-  /// Naya APK hamesha isi link pe milega (GitHub Releases).
+  /// Naya APK hamesha isi link pe milega (GitHub Releases, fixed tag - Sagar Saver se alag).
   static const defaultUpdateUrl =
-      'https://github.com/1sagargamer-web/sagar-baby/releases/latest/download/SagarVaani.apk';
+      'https://github.com/1sagargamer-web/sagar-baby/releases/download/sagar-vaani-latest/SagarVaani.apk';
 }

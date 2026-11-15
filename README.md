@@ -68,8 +68,10 @@ https://aistudio.google.com → **Get API key → Create API key** → copy kark
 
 ### Step 5 — APK lo
 - Har push pe GitHub **Actions** APK banata hai → **Releases** mein `SagarVaani.apk`.
-- `main` branch pe push = "Latest" release. Users ka update link hamesha ye hai:
-  `https://github.com/1sagargamer-web/sagar-baby/releases/latest/download/SagarVaani.apk`
+- `SagarVaani.apk` = lagbhag sab phone (arm64), `SagarVaani-arm32.apk` = purane phone.
+- `main` branch pe push hote hi `sagar-vaani-latest` release update hota hai. Users ka update link hamesha ye hai:
+  `https://github.com/1sagargamer-web/sagar-baby/releases/download/sagar-vaani-latest/SagarVaani.apk`
+  (Sagar Saver ke releases se alag hai, dono apps ka link kabhi nahi takrayega.)
 
 ### Naya update kaise bhejein
 1. Code `main` pe push → naya release banega (build number = release ke naam mein).

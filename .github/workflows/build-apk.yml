@@ -1,8 +1,10 @@
 name: Build Sagar Vaani APK
 
 # Har push pe naya APK banta hai.
-#  - main branch  -> "Latest" release (users ka update link isi pe hai)
+#  - main branch  -> release + "sagar-vaani-latest" (users ka update link isi pe hai)
 #  - baaki branch -> pre-release (testing ke liye)
+# Note: is repo mein Sagar Saver ke releases bhi hain, isliye Sagar Vaani
+# "Latest" release nahi chheenta - apna alag fixed tag use karta hai.
 on:
   push:
     paths:
@@ -79,23 +81,46 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          flutter build apk --release --build-number=${{ github.run_number }} $DEFINES
+          # arm64 = aaj ke lagbhag sab phone, arm32 = purane phone (chhota size)
+          flutter build apk --release --target-platform android-arm64 --build-number=${{ github.run_number }} $DEFINES
           cp build/app/outputs/flutter-apk/app-release.apk SagarVaani.apk
+          flutter build apk --release --target-platform android-arm --build-number=${{ github.run_number }} $DEFINES
+          cp build/app/outputs/flutter-apk/app-release.apk SagarVaani-arm32.apk
+          ls -lh *.apk
 
       - uses: actions/upload-artifact@v4
         with:
           name: SagarVaani-${{ github.run_number }}
-          path: app/SagarVaani.apk
+          path: app/SagarVaani*.apk
 
-      - name: GitHub Release
+      - name: GitHub Release (is build ka)
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
+          tag_name: sagar-vaani-v1.0.${{ github.run_number }}
           name: Sagar Vaani v1.0.${{ github.run_number }} (build ${{ github.run_number }})
           target_commitish: ${{ github.sha }}
           prerelease: ${{ github.ref != 'refs/heads/main' }}
-          make_latest: ${{ github.ref == 'refs/heads/main' }}
+          make_latest: false
           body: |
-            Build number: **${{ github.run_number }}**
+            **Build number: ${{ github.run_number }}**
+            - `SagarVaani.apk` → lagbhag sab phone (arm64)
+            - `SagarVaani-arm32.apk` → purane phone
             Owner panel → App Update → "Latest build no." mein `${{ github.run_number }}` daalo, sab users ko update dikh jayega.
-          files: app/SagarVaani.apk
+          files: |
+            app/SagarVaani.apk
+            app/SagarVaani-arm32.apk
+
+      - name: Users ka fixed update link (sirf main)
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: sagar-vaani-latest
+          name: Sagar Vaani (Latest APK)
+          make_latest: false
+          overwrite_files: true
+          body: |
+            Hamesha naya Sagar Vaani APK. Abhi: build **${{ github.run_number }}**
+            https://github.com/${{ github.repository }}/releases/download/sagar-vaani-latest/SagarVaani.apk
+          files: |
+            app/SagarVaani.apk
+            app/SagarVaani-arm32.apk
