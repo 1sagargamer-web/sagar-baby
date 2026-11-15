@@ -7,11 +7,13 @@ class AppConfig {
   static const appName = 'Sagar Vaani';
   static const tagline = 'Har page, Sagar ki awaaz mein';
 
-  static const fbApiKey = String.fromEnvironment('FB_API_KEY');
-  static const fbAppId = String.fromEnvironment('FB_APP_ID');
-  static const fbSenderId = String.fromEnvironment('FB_SENDER_ID');
-  static const fbProjectId = String.fromEnvironment('FB_PROJECT_ID');
-  static const fbStorageBucket = String.fromEnvironment('FB_STORAGE_BUCKET');
+  // Firebase project "sagar-vaani" (google-services.json se). Ye values public hoti hain,
+  // suraksha Firestore rules se hoti hai. GitHub secret GOOGLE_SERVICES_JSON ho to wo use hota hai.
+  static const fbApiKey = String.fromEnvironment('FB_API_KEY', defaultValue: 'AIzaSyBiAv_uuQxi8gJFo2tsmiXNbiKGV-5KGOo');
+  static const fbAppId = String.fromEnvironment('FB_APP_ID', defaultValue: '1:294146008592:android:a9c182d23e830c731d0c95');
+  static const fbSenderId = String.fromEnvironment('FB_SENDER_ID', defaultValue: '294146008592');
+  static const fbProjectId = String.fromEnvironment('FB_PROJECT_ID', defaultValue: 'sagar-vaani');
+  static const fbStorageBucket = String.fromEnvironment('FB_STORAGE_BUCKET', defaultValue: 'sagar-vaani.firebasestorage.app');
 
   static bool get firebaseConfigured =>
       fbApiKey.isNotEmpty && fbAppId.isNotEmpty && fbProjectId.isNotEmpty;

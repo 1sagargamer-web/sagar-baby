@@ -68,7 +68,7 @@ jobs:
             rm /tmp/gs.json
             echo "Firebase config mila ✓"
           else
-            echo "::warning::GOOGLE_SERVICES_JSON secret nahi hai - login/owner panel band rahega"
+            echo "GOOGLE_SERVICES_JSON secret nahi hai - app/lib/core/config.dart wali Firebase values use hongi"
           fi
           if [ -n "$SERVER_URL" ]; then DEFINES="$DEFINES --dart-define=SERVER_URL=$SERVER_URL"; fi
           echo "DEFINES=$DEFINES" >> "$GITHUB_ENV"
