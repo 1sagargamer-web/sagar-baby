@@ -226,13 +226,47 @@ def tts(req: TTSReq, user: User = Depends(current_user)):
 # --------------------------------------------------------------------------------------
 # Gemini helpers (OCR + AI)
 # --------------------------------------------------------------------------------------
+_model_name = GEMINI_MODEL
+
+
+def _pick_available_model() -> Optional[str]:
+    """Purana model band ho jaye to apne aap koi naya 'flash' model chun lo."""
+    try:
+        r = httpx.get(
+            "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200",
+            headers={"x-goog-api-key": GEMINI_API_KEY},
+            timeout=30,
+        )
+        models = [
+            m["name"].split("/", 1)[-1]
+            for m in r.json().get("models", [])
+            if "generateContent" in m.get("supportedGenerationMethods", [])
+        ]
+    except Exception:
+        return None
+    bad = ("lite", "image", "tts", "live", "audio", "embed", "exp", "preview", "thinking")
+    good = sorted(m for m in models if "flash" in m and not any(b in m for b in bad))
+    if good:
+        return good[-1]
+    return models[0] if models else None
+
+
 def gemini(parts: list, temperature: float = 0.2) -> str:
+    global _model_name
     if not GEMINI_API_KEY:
         raise HTTPException(500, "Server pe GEMINI_API_KEY set nahi hai")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
     body = {"contents": [{"role": "user", "parts": parts}], "generationConfig": {"temperature": temperature}}
-    for attempt in range(3):
+    switched = False
+    for attempt in range(4):
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{_model_name}:generateContent"
         r = httpx.post(url, json=body, headers={"x-goog-api-key": GEMINI_API_KEY}, timeout=120)
+        if r.status_code == 404 and not switched:
+            new = _pick_available_model()
+            if new and new != _model_name:
+                print(f"[ai] model {_model_name} nahi mila, ab {new} use hoga")
+                _model_name = new
+                switched = True
+                continue
         if r.status_code == 429 or r.status_code >= 500:
             time.sleep(2 * (attempt + 1))
             continue
@@ -346,6 +380,7 @@ def health():
         "voice_sample": Path(VOICE_SAMPLE).exists(),
         "voice_loaded": _model is not None,
         "ai": bool(GEMINI_API_KEY),
+        "ai_model": _model_name,
         "firebase": _fb_ready,
     }
 
