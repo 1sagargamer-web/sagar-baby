@@ -68,6 +68,30 @@ def fetch_private_voice():
 
 fetch_private_voice()
 
+
+def normalize_voice():
+    """Phone ki recording (m4a/mp3/aac) ko saaf WAV mein badlo."""
+    global VOICE_SAMPLE
+    src = Path(VOICE_SAMPLE)
+    if not src.exists():
+        return
+    out = CACHE_DIR / "voice_ref.wav"
+    try:
+        import subprocess
+
+        subprocess.run(
+            ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-ac", "1", "-ar", "24000",
+             "-af", "silenceremove=start_periods=1:start_threshold=-45dB,loudnorm", "-t", "30", str(out)],
+            check=True,
+        )
+        VOICE_SAMPLE = str(out)
+        print("[voice] sample normalised")
+    except Exception as e:
+        print("[voice] ffmpeg convert failed, original use hoga:", e)
+
+
+normalize_voice()
+
 app = FastAPI(title=APP_NAME)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
