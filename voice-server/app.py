@@ -12,6 +12,10 @@ Secrets environment variables se aate hain (kabhi code mein mat likhna):
   FIREBASE_SERVICE_ACCOUNT  - Firebase service account JSON (poora JSON text). Optional,
                               par isse login check + block + push kaam karta hai.
   VOICE_SAMPLE              - aapki awaaz ki recording ka path (default voice/sagar.wav)
+  VOICE_REPO                - (recommended) private Hugging Face dataset jisme recording hai,
+                              jaise "username/sagar-voice". Isse aapki awaaz public nahi hoti.
+  VOICE_FILE                - us repo mein file ka naam (default sagar.wav)
+  HF_TOKEN                  - Hugging Face token (private repo padhne ke liye)
 """
 
 import base64
@@ -39,6 +43,30 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 CACHE_DIR = Path(os.getenv("CACHE_DIR", "/tmp/vaani-cache"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 MAX_TTS_CHARS = int(os.getenv("MAX_TTS_CHARS", "1200"))
+
+
+
+def fetch_private_voice():
+    """Private HF repo se voice sample download karo (public Space mein awaaz na rakhni pade)."""
+    global VOICE_SAMPLE
+    repo = os.getenv("VOICE_REPO", "").strip()
+    if not repo:
+        return
+    try:
+        from huggingface_hub import hf_hub_download
+
+        VOICE_SAMPLE = hf_hub_download(
+            repo_id=repo,
+            filename=os.getenv("VOICE_FILE", "sagar.wav"),
+            repo_type=os.getenv("VOICE_REPO_TYPE", "dataset"),
+            token=os.getenv("HF_TOKEN"),
+        )
+        print("[voice] private sample ready")
+    except Exception as e:
+        print("[voice] private sample download failed:", e)
+
+
+fetch_private_voice()
 
 app = FastAPI(title=APP_NAME)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])

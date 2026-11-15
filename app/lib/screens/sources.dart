@@ -24,7 +24,7 @@ class Sources {
     }
     final doc = context.read<LibraryStore>().create(text.trim(), source, title: title);
     context.read<Backend>().log('page_$source', doc.title);
-    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ReaderScreen(doc: doc, autoPlay: false)));
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ReaderScreen(doc: doc, autoPlay: true)));
   }
 
   static String _errText(Object e) => e is ApiException ? e.message : 'Text nahi nikal paya. Dobara try karein.';

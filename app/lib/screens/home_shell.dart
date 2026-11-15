@@ -26,17 +26,18 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _tab = 0;
   bool _noticeOpen = false;
+  late final Backend _backend = context.read<Backend>();
 
   @override
   void initState() {
     super.initState();
-    context.read<Backend>().addListener(_checkNotice);
+    _backend.addListener(_checkNotice);
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkNotice());
   }
 
   @override
   void dispose() {
-    context.read<Backend>().removeListener(_checkNotice);
+    _backend.removeListener(_checkNotice);
     super.dispose();
   }
 

@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
                 height: 56,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(shape: BoxShape.circle, gradient: VColors.brand),
-                child: Text(name.characters.first.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w800)),
+                child: Text(initial(name), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w800)),
               ),
               const SizedBox(width: 14),
               Expanded(

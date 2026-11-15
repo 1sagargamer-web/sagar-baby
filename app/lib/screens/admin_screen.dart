@@ -282,7 +282,7 @@ class _UsersState extends State<_Users> {
                     child: Row(children: [
                       CircleAvatar(
                         backgroundColor: blocked ? VColors.coral : VColors.ocean,
-                        child: Text(('${d['name'] ?? '?'}').characters.first.toUpperCase(), style: const TextStyle(color: Colors.white)),
+                        child: Text(initial(d['name']?.toString()), style: const TextStyle(color: Colors.white)),
                       ),
                       const SizedBox(width: 12),
                       Expanded(

@@ -6,6 +6,11 @@ import 'package:material_ui/material_ui.dart';
 
 import '../core/theme.dart';
 
+String initial(String? name) {
+  final n = (name ?? '').trim();
+  return n.isEmpty ? '?' : n.characters.first.toUpperCase();
+}
+
 bool isDark(BuildContext c) => Theme.of(c).brightness == Brightness.dark;
 
 void toast(BuildContext context, String msg) {

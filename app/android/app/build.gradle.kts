@@ -62,3 +62,8 @@ kotlin {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Phone pe (offline) Hindi OCR ke liye
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
+}

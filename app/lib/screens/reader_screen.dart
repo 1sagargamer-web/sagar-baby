@@ -240,7 +240,6 @@ class _ReaderScreenState extends State<ReaderScreen> {
   Widget build(BuildContext context) {
     final lib = context.watch<LibraryStore>();
     final scale = context.select<SettingsStore, double>((s) => s.fontScale);
-    final player = context.watch<VoicePlayer>();
     final modes = [
       ViewMode.original,
       if (doc.translation != null) ViewMode.translation,
@@ -435,7 +434,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
                     top: false,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: PlayerPanel(onPlay: _onPlay, isMine: _isMine(player), onDownload: _download),
+                      child: Consumer<VoicePlayer>(
+                        builder: (_, player, __) => PlayerPanel(onPlay: _onPlay, isMine: _isMine(player), onDownload: _download),
+                      ),
                     ),
                   ).animate().slideY(begin: 1, duration: 500.ms, curve: Curves.easeOutCubic),
                 ),
