@@ -14,7 +14,7 @@ $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $RepoRaw = 'https://raw.githubusercontent.com/1sagargamer-web/sagar-baby/main'
-$NoCache = "?t=$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())"  # GitHub ki purani (cached) file na aaye'
+$NoCache = "?t=$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())"  # GitHub ki purani (cached) file na aaye
 $Root = Join-Path $env:LOCALAPPDATA 'SagarVaani'
 New-Item -ItemType Directory -Force -Path $Root | Out-Null
 
