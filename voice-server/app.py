@@ -173,7 +173,7 @@ def get_model():
             import torch
             from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 
-            device = "cuda" if torch.cuda.is_available() else "cpu"
+            device = os.getenv("VAANI_DEVICE") or ("cuda" if torch.cuda.is_available() else "cpu")
             if device == "cpu":
                 torch.set_num_threads(max(1, os.cpu_count() or 1))
             print(f"[tts] loading model on {device} ...")
@@ -432,6 +432,8 @@ def _device_name() -> str:
     try:
         import torch
 
+        if os.getenv("VAANI_DEVICE") == "cpu":
+            return "CPU"
         return torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
     except Exception:
         return "?"

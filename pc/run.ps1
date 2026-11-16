@@ -66,7 +66,11 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # torchaudio ka blocked native hissa hatao (Smart App Control) - pc_check isko khud karta hai
-& $py (Join-Path $server 'pc_check.py') | Out-Null
+$check = (& $py (Join-Path $server 'pc_check.py') 2>&1 | Out-String)
+if ($check -match 'GPU_BLOCKED') {
+    Say 'GPU ki files Windows ne rok di - server CPU pe chalega (thoda dheere).' Yellow
+    $env:VAANI_DEVICE = 'cpu'
+}
 
 # ------------------------------------------------------------------ settings
 $env:GEMINI_API_KEY = $cfg.gemini
