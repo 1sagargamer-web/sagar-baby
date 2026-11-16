@@ -39,7 +39,7 @@ $cfgPath = Join-Path $Root 'config.json'
 $old = $null
 if (Test-Path $cfgPath) { $old = Get-Content $cfgPath -Raw | ConvertFrom-Json }
 
-function Ask($label, $prefix, $current) {
+function Ask($label, $prefixes, $current) {
     if ($current) {
         $ans = Read-Host "$label pehle se saved hai. Badalna hai? (Enter = nahi, ya nayi value paste karo)"
         if ([string]::IsNullOrWhiteSpace($ans)) { return $current }
@@ -48,13 +48,20 @@ function Ask($label, $prefix, $current) {
     while ($true) {
         $ans = Read-Host "$label paste karo (right-click = paste), phir Enter"
         $ans = "$ans".Trim()
-        if ($ans.StartsWith($prefix)) { return $ans }
-        Say "Ye sahi nahi lag raha. $label '$prefix' se shuru hota hai. Dobara try karo." Yellow
+        if ($ans.Length -lt 20 -or $ans.Contains(' ')) {
+            Say "Ye $label nahi lag raha (bahut chhota ya beech mein space). Dobara paste karo." Yellow
+            continue
+        }
+        $ok = $false
+        foreach ($p in $prefixes) { if ($ans.StartsWith($p)) { $ok = $true } }
+        if (-not $ok) { Say "Note: $label aam taur pe '$($prefixes -join "' ya '")' se shuru hota hai, par isse bhi try karte hain." Yellow }
+        return $ans
     }
 }
 
-$gemini = Ask 'Gemini API key' 'AIza' $(if ($old) { $old.gemini } else { $null })
-$hf = Ask 'Hugging Face token' 'hf_' $(if ($old) { $old.hf } else { $null })
+# Gemini keys: purani 'AIza...', nayi 'AQ....'
+$gemini = Ask 'Gemini API key' @('AIza', 'AQ.') $(if ($old) { $old.gemini } else { $null })
+$hf = Ask 'Hugging Face token' @('hf_') $(if ($old) { $old.hf } else { $null })
 
 $fbFile = Join-Path $Root 'firebase-key.json'
 if (-not (Test-Path $fbFile)) {
