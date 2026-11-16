@@ -62,6 +62,8 @@ function Ask($label, $prefixes, $current) {
 # Gemini keys: purani 'AIza...', nayi 'AQ....'
 $gemini = Ask 'Gemini API key' @('AIza', 'AQ.') $(if ($old) { $old.gemini } else { $null })
 $hf = Ask 'Hugging Face token' @('hf_') $(if ($old) { $old.hf } else { $null })
+# keys turant save (setup beech mein ruke to dobara na poochhe)
+([ordered]@{ gemini = $gemini; hf = $hf; voiceRepo = 'sagar5582/sagar-voice'; voiceFile = 'sagar.mp3' } | ConvertTo-Json) | Set-Content -Path $cfgPath -Encoding UTF8
 
 $fbFile = Join-Path $Root 'firebase-key.json'
 if (-not (Test-Path $fbFile)) {
@@ -174,14 +176,18 @@ try {
 if ($LASTEXITCODE -ne 0) { Fail 'AI packages install nahi hue' }
 
 Say 'Check kar raha hoon ki Windows sab files chalne de raha hai...'
-$test = & $py -c "import numpy, torch, torchaudio, librosa, soundfile, lameenc, fastapi; import chatterbox.mtl_tts; print('ALL_OK GPU=' + str(torch.cuda.is_available()))" 2>&1
+$chk = Join-Path $Root 'pc_check.py'
+try {
+    Invoke-WebRequest "$RepoRaw/voice-server/pc_check.py" -OutFile $chk -UseBasicParsing -ErrorAction Stop
+} catch { Fail "check script download nahi hui: $($_.Exception.Message)" }
+$test = & $py $chk 2>&1
 $testText = ($test | Out-String)
+Write-Host $testText
 if ($testText -notmatch 'ALL_OK') {
-    Write-Host $testText -ForegroundColor Red
-    if ($testText -match '4551|Application Control|blocked|DLL load failed') { SmartAppControlHelp }
+    if ($testText -match 'SMART_APP_CONTROL_BLOCKED') { SmartAppControlHelp }
     Fail 'AI packages load nahi hue'
 }
-Say ("Sab theek: " + ($testText.Trim() -split "`n" | Select-Object -Last 1)) Green
+Say 'Sab packages theek chal rahe hain.' Green
 
 # ------------------------------------------------------------------ 4. Cloudflare tunnel tool
 Step 4 'Free internet link tool (Cloudflare) aa raha hai'
