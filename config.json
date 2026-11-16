@@ -1,0 +1,792 @@
+{
+  "herName": "Baby",
+  "intro": {
+    "title": "Hey {baby} 💕",
+    "text": "Mere paas tumhare liye ek bahut zaroori sawal hai...",
+    "button": "Ha bolo"
+  },
+  "questions": [
+    {
+      "text": "Do you love me? 💖",
+      "options": [
+        {
+          "label": "Yes 😍",
+          "action": "happy"
+        },
+        {
+          "label": "No 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Ek baar aur soch lo 🥺",
+      "options": [
+        {
+          "label": "Haan soch liya ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Soch liya, nahi banana boyfriend 😒",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Mujhe pata tha 😌 Love you baby ❤️"
+    },
+    {
+      "text": "Pakka? Itna cute boyfriend aur kahan milega? 🥹",
+      "options": [
+        {
+          "label": "Achha theek hai, love you ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Haan pakka nhi banana 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Yayy! Love you baby ❤️"
+    },
+    {
+      "text": "Roz good morning bolunga ☀️ aur chocolate bhi dunga 🍫",
+      "options": [
+        {
+          "label": "Deal! Love you ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Phir bhi nahi 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Chocolate pakki 🍫 Love you baby ❤️"
+    },
+    {
+      "text": "Tumhari saari baatein sununga, kabhi naraz nahi karunga 🤞",
+      "options": [
+        {
+          "label": "Aww okay ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Nahi 🙅‍♀️",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Promise pakka 🤞 Love you baby ❤️"
+    },
+    {
+      "text": "Main ro dunga sach mein 😭",
+      "options": [
+        {
+          "label": "Mat ro, love you ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Ro lo 😜",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Ab main khush hoon 🥰 Love you baby ❤️"
+    },
+    {
+      "text": "Tumhari smile meri favourite cheez hai 😊 ek baar smile karke Yes bolo na",
+      "options": [
+        {
+          "label": "😊 Yes!",
+          "action": "happy"
+        },
+        {
+          "label": "Nahi smile karungi 😐",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Ye smile hamesha aise hi rakhna 😍"
+    },
+    {
+      "text": "Tumhare liye Maggi bana dunga, sirf 2 minute mein 🍜",
+      "options": [
+        {
+          "label": "Deal, Maggi wala pyaar ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Maggi khud bana lungi 😏",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "2 minute mein pyaar ready 🍜❤️"
+    },
+    {
+      "text": "Roz raat ko good night bolke sulaunga 🌙",
+      "options": [
+        {
+          "label": "Aww okay 🥰",
+          "action": "happy"
+        },
+        {
+          "label": "Mujhe khud neend aa jati hai 😴",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Good night kisses pakke 🌙😘"
+    },
+    {
+      "text": "Main tumhara personal photographer ban jaunga 📸",
+      "options": [
+        {
+          "label": "Haan perfect 📸❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Meri photos achhi nahi aati 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Har photo mein tum hi queen 👑"
+    },
+    {
+      "text": "Shopping pe saare bags main uthaunga 🛍️",
+      "options": [
+        {
+          "label": "Ab baat bani 😍",
+          "action": "happy"
+        },
+        {
+          "label": "Bags kam padenge 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Bags bhi, dil bhi tumhara 🛍️❤️"
+    },
+    {
+      "text": "Tum gussa karogi to sorry main pehle bolunga 🙇‍♂️",
+      "options": [
+        {
+          "label": "Promise? Okay ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Gussa to karungi 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Sorry bolne mein expert hoon 😌❤️"
+    },
+    {
+      "text": "Baby aapko kya chahiye batao ",
+      "options": [
+        {
+          "label": "Momoj 😍",
+          "action": "happy"
+        },
+        {
+          "label": "Kuch nhi 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Golgappe unlimited khilaunga 😋",
+      "options": [
+        {
+          "label": "Yesss golgappe 😍",
+          "action": "happy"
+        },
+        {
+          "label": "Diet pe hoon 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Teekha paani bhi, meetha pyaar bhi 😋❤️"
+    },
+    {
+      "text": "Mere jaisa loyal kahin nahi milega 🐶",
+      "options": [
+        {
+          "label": "Sach hai ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Dhoond lungi 🔍",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Hamesha tumhara hi rahunga 🐶❤️"
+    },
+    {
+      "text": "Tumhare saare drame bhi pyaar se jhel lunga 🎭",
+      "options": [
+        {
+          "label": "Haha okay deal 😂❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Main drama nahi karti 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Drama queen, meri queen 👑"
+    },
+    {
+      "text": "Ek baar sirf 'Haan' bolke dekho, kuch nahi hoga 🤭",
+      "options": [
+        {
+          "label": "Haan 🙈",
+          "action": "happy"
+        },
+        {
+          "label": "Nahi bolungi 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Dekha kuch nahi hua, bas pyaar ho gaya 🙈❤️"
+    },
+    {
+      "text": "Ice cream share karunga, bada wala piece tumhara 🍦",
+      "options": [
+        {
+          "label": "Okay 🥰",
+          "action": "happy"
+        },
+        {
+          "label": "Poori ice cream chahiye 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Poori ice cream bhi tumhari 🍦❤️"
+    },
+    {
+      "text": "Tumhare liye gaana gaunga, chahe besura hi sahi 🎤",
+      "options": [
+        {
+          "label": "Gaao gaao 😂❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Kaan dard karenge 🙉",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Tum hi meri sargam ho 🎶"
+    },
+    {
+      "text": "Oye tum jada bhao kha rhi ho",
+      "options": [
+        {
+          "label": "Ok jaan maan gyi",
+          "action": "happy"
+        },
+        {
+          "label": "Ha to kya karoge ",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Tumhari mummy ko bhi impress kar lunga 😎",
+      "options": [
+        {
+          "label": "Accha ji 😏❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Unko impress karna mushkil hai 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Mummy ji ka favourite 😎❤️"
+    },
+    {
+      "text": "Long drive pe chalenge, window seat tumhari 🚗",
+      "options": [
+        {
+          "label": "Chalo chalo 🥰",
+          "action": "happy"
+        },
+        {
+          "label": "Petrol mehnga hai 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Tum saath ho to raasta bhi khoobsurat 🚗❤️"
+    },
+    {
+      "text": "Main bina baat ke bhi tumhe yaad karta hoon 🥹",
+      "options": [
+        {
+          "label": "Aww main bhi ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Kuch kaam karo 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Har pal tumhari yaad 🥹❤️"
+    },
+    {
+      "text": "Tumhara power bank ban jaunga, kabhi low nahi hone dunga 🔋",
+      "options": [
+        {
+          "label": "Hahaha okay ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Mere paas charger hai 😏",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Full charge pyaar 🔋❤️"
+    },
+    {
+      "text": "Ek hug ke badle ek chocolate, deal? 🤗🍫",
+      "options": [
+        {
+          "label": "Deal 🤗",
+          "action": "happy"
+        },
+        {
+          "label": "Sirf chocolate do 😋",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Hug + chocolate dono pakke 🤗🍫"
+    },
+    {
+      "text": "Tumhe kabhi bore nahi hone dunga, jokes ready hain 😜",
+      "options": [
+        {
+          "label": "Sunao 😂❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Tumhare jokes PJ hote hain 😑",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "PJ hi sahi, pyaar sachcha 😜❤️"
+    },
+    {
+      "text": "Maan jao baar baar bol rha hu ",
+      "options": [
+        {
+          "label": "Ha maan gyi baby",
+          "action": "happy"
+        },
+        {
+          "label": "Nahi maanungi",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Har fight mein main haar jaunga, promise 🏳️",
+      "options": [
+        {
+          "label": "Ye hui na baat 😎❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Fight to hogi 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Tumse haarna bhi accha lagta hai 🏳️❤️"
+    },
+    {
+      "text": "Dekho main kitna cute face bana raha hoon 🥺👉👈",
+      "options": [
+        {
+          "label": "Aww so cute, okay ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Bilkul cute nahi 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Mera cute face sirf tumhare liye 🥺❤️"
+    },
+    {
+      "text": "Tumhari pasand ki movie dekhenge, popcorn mera treat 🍿",
+      "options": [
+        {
+          "label": "Movie date fix 🎬❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Horror dekhenge 👻",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Darr lage to main hoon na 🍿❤️"
+    },
+    {
+      "text": "Tumhe pata hai tum kitni pyaari ho? 😍",
+      "options": [
+        {
+          "label": "Haan pata hai 😌❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Nahi pata 🤷‍♀️",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Duniya ki sabse pyaari ho tum 😍"
+    },
+    {
+      "text": "Main tumhare bina adhoora hoon, jaise chai bina biscuit ☕",
+      "options": [
+        {
+          "label": "Chai-biscuit jodi ☕❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Biscuit ke bina chai pee lo 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Hum chai aur biscuit ☕🍪❤️"
+    },
+    {
+      "text": "Tumhare liye roz phool launga 🌹",
+      "options": [
+        {
+          "label": "Aww 🌹❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Allergy hai 🤧",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Tum khud ek phool ho 🌹"
+    },
+    {
+      "text": "Itna handsome boy nhi milega aapko",
+      "options": [
+        {
+          "label": "Accha ji ok ",
+          "action": "happy"
+        },
+        {
+          "label": "Chahiye bhi nhi ",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Haan bol do, pure mohalle mein mithai baatunga 🍬",
+      "options": [
+        {
+          "label": "Haha okay 🍬❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Mithai mujhe do 😋",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Mithai bhi tumhari, main bhi tumhara 🍬❤️"
+    },
+    {
+      "text": "Din bhar sirf tumse baat karna chahta hoon 📱",
+      "options": [
+        {
+          "label": "Main bhi ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Mujhe neend aati hai 😴",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Din bhar, raat bhar, sirf tum 📱❤️"
+    },
+    {
+      "text": "Tumhare bina dil ka network weak ho jata hai 📶",
+      "options": [
+        {
+          "label": "Lo full network 📶❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Recharge karao 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Ab dil ka network full 📶❤️"
+    },
+    {
+      "text": "Jab tum hasti ho to sab theek lagta hai 😊",
+      "options": [
+        {
+          "label": "Aww 😊❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Main hasti hi nahi 😐",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Bas aise hi haste raho 😊❤️"
+    },
+    {
+      "text": "Tumhari har selfie mein photobomb karunga 🤳",
+      "options": [
+        {
+          "label": "Haha okay 🤳❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Block kar dungi 😤",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Har selfie mein hum dono 🤳❤️"
+    },
+    {
+      "text": "Mere dil mein sirf ek seat hai, aur wo tumhari hai 💺",
+      "options": [
+        {
+          "label": "Seat booked ❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Seat tod dungi 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Window seat tumhari 💺❤️"
+    },
+    {
+      "text": "Oyeee tum mujhe reject karke pachtaoge ",
+      "options": [
+        {
+          "label": "Ok baby i ♥️ you",
+          "action": "happy"
+        },
+        {
+          "label": "Ha pher bhi nhi karungi ",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Oye ziddi, ab to maan jao 😤❤️",
+      "options": [
+        {
+          "label": "Maan gayi 🙈",
+          "action": "happy"
+        },
+        {
+          "label": "Ziddi hi sahi 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Ziddi meri jaan 😤❤️"
+    },
+    {
+      "text": "Yes bolo to 100 kisses pakki 😘",
+      "options": [
+        {
+          "label": "Yes 😘",
+          "action": "happy"
+        },
+        {
+          "label": "Sirf 100? 😏",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Chalo 1000 kisses 😘😘"
+    },
+    {
+      "text": "Tumhara favourite khana banana seekh lunga 👨‍🍳",
+      "options": [
+        {
+          "label": "Wow chef ji 😍",
+          "action": "happy"
+        },
+        {
+          "label": "Kitchen jala doge 🔥",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Masterchef sirf tumhare liye 👨‍🍳❤️"
+    },
+    {
+      "text": "Kabhi chhod ke nahi jaunga, pinky promise 🤙",
+      "options": [
+        {
+          "label": "Pinky promise 🤙❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Promise tod doge 🙄",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Pinky promise forever 🤙❤️"
+    },
+    {
+      "text": "Bhagwan se roz tumhe hi maangta hoon 🙏",
+      "options": [
+        {
+          "label": "Mil gayi na 🥰",
+          "action": "happy"
+        },
+        {
+          "label": "Kuch aur maango 😜",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Dua qubool ho gayi 🙏❤️"
+    },
+    {
+      "text": "Socho na, hum dono saath mein kitne cute lagenge 👫",
+      "options": [
+        {
+          "label": "Sach mein 🥰",
+          "action": "happy"
+        },
+        {
+          "label": "Main akeli cute hoon 💅",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Duniya ki sabse cute jodi 👫❤️"
+    },
+    {
+      "text": "Maan jao Banaras guma dunga ",
+      "options": [
+        {
+          "label": "Ok jaan chalo",
+          "action": "happy"
+        },
+        {
+          "label": "Akele chali jaungi ",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Tumhare liye taare tod ke la dunga ✨",
+      "options": [
+        {
+          "label": "Filmy 😂❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Taare mat todo 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Taare nahi, dil laya hoon ✨❤️"
+    },
+    {
+      "text": "Na sun sun ke thak gaya hoon 😩 ab haan bol do",
+      "options": [
+        {
+          "label": "Accha baba haan 😂❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Aur thako 😜",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Finally! 😩❤️"
+    },
+    {
+      "text": "Ek last baar dil se socho... sirf dil se 💓",
+      "options": [
+        {
+          "label": "Dil bol raha hai Yes 💓",
+          "action": "happy"
+        },
+        {
+          "label": "Dil bhi No bol raha 😝",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Dil ki baat sunni chahiye 💓"
+    },
+    {
+      "text": "Theek hai, ghutno pe baith ke pooch raha hoon 🧎‍♂️💍",
+      "options": [
+        {
+          "label": "Haan 😭❤️",
+          "action": "happy"
+        },
+        {
+          "label": "Utho, naatak mat karo 😂",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Ab main uth sakta hoon 😭❤️"
+    },
+    {
+      "text": "Last chance! Do you love me? 💍",
+      "options": [
+        {
+          "label": "YES 😍❤️",
+          "action": "happy"
+        },
+        {
+          "label": "No",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️ Hamesha 💞"
+    },
+    {
+      "text": "Yaar ab to tumko maanta hi padega ",
+      "options": [
+        {
+          "label": "Ha jaan maan to gyi",
+          "action": "happy"
+        },
+        {
+          "label": "Kaise aisa kya karoge ",
+          "action": "next"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    },
+    {
+      "text": "Ek option chuno tumhare mammi kasam ",
+      "options": [
+        {
+          "label": "I love you baby",
+          "action": "happy"
+        },
+        {
+          "label": "Option A Done",
+          "action": "happy"
+        }
+      ],
+      "happyMessage": "Love you baby ❤️"
+    }
+  ],
+  "happyTitle": "Yayyy! Kar diya na divana 🥰",
+  "finalMessage": "Tum meri duniya ho, {name} 💞",
+  "replayButton": "Ab chat me aake love you bolo ",
+  "sadMessage": "Please ek baar aur soch lo 😢",
+  "sadButton": "Theek hai, phir se poocho 🥺",
+  "song": {
+    "url": ""
+  },
+  "sadSong": {
+    "url": ""
+  },
+  "voice": true
+}

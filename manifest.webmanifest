@@ -1,0 +1,12 @@
+{
+  "name": "For You 💖",
+  "short_name": "For You",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1d0716",
+  "theme_color": "#3a0d2a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
