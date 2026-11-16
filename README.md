@@ -21,7 +21,8 @@ Android app jo koi bhi page (camera scan, photo, PDF, text, website) padh ke **S
 | Folder | Kya hai |
 |---|---|
 | `app/` | Flutter Android app |
-| `voice-server/` | Voice (Chatterbox, open-source) + AI server, Hugging Face Space pe free chalega |
+| `voice-server/` | Voice (Chatterbox, open-source) + AI server |
+| `pc/` | Windows PC pe server ka ek-line setup (`install.ps1`) aur launcher (`run.ps1`) |
 | `firebase/firestore.rules` | Database security rules |
 | `config/sagar-vaani.json` | Firebase na ho to isi file se maintenance/notice/update control |
 | `.github/workflows/build-apk.yml` | Har push pe APK banata hai → GitHub Releases |
@@ -50,21 +51,22 @@ Mujhe (Claude ko) jo `SagarVaani-signing-secrets.txt` mila hai, usme ke 4 secret
 ### Step 3 — Gemini key (OCR + AI, free)
 https://aistudio.google.com → **Get API key → Create API key** → copy karke rakho (Step 4 mein lagegi).
 
-### Step 4 — Voice server (Hugging Face, free)
-1. https://huggingface.co pe account banao.
-2. **Apni awaaz record karo:** 20–30 second, shaant kamre mein, normal speed mein kuch padho (Hindi + thodi English). File ka naam `sagar.wav` (ya `sagar.mp3`).
-3. **New Dataset** → naam `sagar-voice` → **Private** ✅ → `sagar.wav` upload karo.
-4. **Settings → Access Tokens → New token (Read)** → copy.
-5. **New Space** → naam `sagar-vaani-voice` → SDK: **Docker** → Blank → **Public**.
-   `voice-server/` folder ki files (`app.py`, `requirements.txt`, `Dockerfile`, `README.md`) Space mein upload karo.
-6. Space → **Settings → Variables and secrets** → ye secrets daalo:
-   `GEMINI_API_KEY`, `HF_TOKEN`, `VOICE_REPO` = `aapka-username/sagar-voice`, (mp3 ho to `VOICE_FILE` = `sagar.mp3`),
-   aur Firebase → Project settings → Service accounts → **Generate new private key** ka poora JSON → `FIREBASE_SERVICE_ACCOUNT`.
-7. Build hone do (10–20 min). Space URL hoga: `https://aapka-username-sagar-vaani-voice.hf.space`
-8. App → **Owner → Control → Voice Server URL** mein ye URL daal ke Save. *(Ya GitHub secret `SERVER_URL` bana do, naye APK mein default ho jayega.)*
-9. Owner → Dashboard → **Server check karo**: sab ✅ hona chahiye.
+### Step 4 — Voice server apne Windows PC pe (free)
+> Hugging Face ab Docker Spaces ke paise leta hai, isliye server aapke PC pe chalta hai.
+> Awaaz ki recording private Hugging Face dataset `sagar5582/sagar-voice` (file `sagar.mp3`) mein hai.
 
-> ⚠️ **Speed ki sachchai:** free Hugging Face CPU pe awaaz banne mein har line ke kuch second (kabhi 10–30 sec) lagte hain. Pehla hissa bante hi app bolna shuru kar deta hai, aur baaki peeche se banta rehta hai. Bahut tez chahiye to apne PC (NVIDIA GPU) pe server chala ke Cloudflare tunnel ka URL daal do (`voice-server/README.md` dekho), ye bhi free hai.
+1. PC pe **Start → "PowerShell"** likho → kholo.
+2. Ye ek line paste karo (right-click = paste) aur Enter:
+   ```
+   irm https://raw.githubusercontent.com/1sagargamer-web/sagar-baby/main/pc/install.ps1 | iex
+   ```
+3. Jo poochhe wo do: Gemini key, Hugging Face token, Firebase key file
+   (Firebase → Project settings → Service accounts → *Generate new private key*).
+4. Setup khud: Python, AI model (NVIDIA GPU ho to GPU wala), free Cloudflare link, Desktop + Startup shortcut.
+5. Server chalu hote hi uska link **apne aap app mein** pahunch jata hai (Firebase `config/app.serverUrl`).
+   PC on hone pe server khud start hota hai. Desktop pe **"Sagar Vaani Server"** se bhi chala sakte ho.
+
+PC band = app ki awaaz band (app mein seedha message dikhta hai). Photo OCR tab bhi phone pe chalta hai.
 
 ### Step 5 — APK lo
 - Har push pe GitHub **Actions** APK banata hai → **Releases** mein `SagarVaani.apk`.

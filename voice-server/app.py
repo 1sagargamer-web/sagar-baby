@@ -16,6 +16,9 @@ Secrets environment variables se aate hain (kabhi code mein mat likhna):
                               jaise "username/sagar-voice". Isse aapki awaaz public nahi hoti.
   VOICE_FILE                - us repo mein file ka naam (default sagar.wav)
   HF_TOKEN                  - Hugging Face token (private repo padhne ke liye)
+  FIREBASE_SERVICE_ACCOUNT_FILE - service account JSON file ka path (PC setup isi ko use karta hai)
+  CLOUDFLARED               - cloudflared.exe ka path. Set ho to server khud internet link banata hai
+                              aur uska URL Firebase (config/app.serverUrl) mein daal deta hai.
 """
 
 import base64
@@ -24,6 +27,8 @@ import io
 import json
 import os
 import re
+import shutil
+import subprocess
 import threading
 import time
 from pathlib import Path
@@ -69,6 +74,18 @@ def fetch_private_voice():
 fetch_private_voice()
 
 
+def ffmpeg_exe() -> str:
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    try:
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return "ffmpeg"
+
+
 def normalize_voice():
     """Phone ki recording (m4a/mp3/aac) ko saaf WAV mein badlo."""
     global VOICE_SAMPLE
@@ -77,10 +94,8 @@ def normalize_voice():
         return
     out = CACHE_DIR / "voice_ref.wav"
     try:
-        import subprocess
-
         subprocess.run(
-            ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-ac", "1", "-ar", "24000",
+            [ffmpeg_exe(), "-y", "-loglevel", "error", "-i", str(src), "-ac", "1", "-ar", "24000",
              "-af", "silenceremove=start_periods=1:start_threshold=-45dB,loudnorm", "-t", "30", str(out)],
             check=True,
         )
@@ -102,6 +117,9 @@ _fb_ready = False
 _firestore = None
 try:
     _sa = os.getenv("FIREBASE_SERVICE_ACCOUNT", "").strip()
+    _sa_file = os.getenv("FIREBASE_SERVICE_ACCOUNT_FILE", "").strip()
+    if not _sa and _sa_file and Path(_sa_file).exists():
+        _sa = Path(_sa_file).read_text(encoding="utf-8")
     if _sa:
         import firebase_admin
         from firebase_admin import auth as fb_auth
@@ -406,11 +424,87 @@ def health():
         "ai": bool(GEMINI_API_KEY),
         "ai_model": _model_name,
         "firebase": _fb_ready,
+        "device": _device_name(),
     }
+
+
+def _device_name() -> str:
+    try:
+        import torch
+
+        return torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
+    except Exception:
+        return "?"
+
+
+# --------------------------------------------------------------------------------------
+# PC mode: free Cloudflare tunnel + URL apne aap app tak
+# --------------------------------------------------------------------------------------
+PUBLIC_URL = ""
+TUNNEL_RE = re.compile(r"https://[a-z0-9-]+\.trycloudflare\.com")
+
+
+def register_url(url: str, online: bool = True):
+    global PUBLIC_URL
+    PUBLIC_URL = url
+    print("\n" + "=" * 60)
+    print(f"  Server ka internet link:  {url}")
+    if _fb_ready:
+        try:
+            _firestore.document("config/app").set(
+                {"serverUrl": url, "serverOnline": online, "serverSeen": time.time()}, merge=True
+            )
+            print("  App mein apne aap set ho gaya (Firebase) - kuch copy nahi karna")
+        except Exception as e:
+            print("  Firebase mein save nahi hua:", e)
+            print("  Ye link app -> Owner -> Control -> Voice Server URL mein daal do")
+    else:
+        print("  Ye link app -> Owner -> Control -> Voice Server URL mein daal do")
+    print("=" * 60 + "\n", flush=True)
+
+
+def start_tunnel():
+    exe = os.getenv("CLOUDFLARED", "").strip()
+    if not exe:
+        return
+    port = os.getenv("PORT", "7860")
+
+    def loop():
+        while True:
+            try:
+                p = subprocess.Popen(
+                    [exe, "tunnel", "--no-autoupdate", "--url", f"http://127.0.0.1:{port}"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                )
+                for line in p.stderr:
+                    m = TUNNEL_RE.search(line)
+                    if m and m.group(0) != PUBLIC_URL:
+                        register_url(m.group(0))
+                p.wait()
+            except Exception as e:
+                print("[tunnel] error:", e)
+            print("[tunnel] link toot gaya, 5 second mein dobara bana raha hoon...", flush=True)
+            time.sleep(5)
+
+    threading.Thread(target=loop, daemon=True).start()
+
+
+@app.on_event("shutdown")
+def mark_offline():
+    if _fb_ready and PUBLIC_URL:
+        try:
+            _firestore.document("config/app").set({"serverOnline": False}, merge=True)
+        except Exception:
+            pass
 
 
 @app.on_event("startup")
 def warmup():
+    start_tunnel()
     # Model ko background mein load karo taaki pehla user wait na kare
     if os.getenv("PRELOAD", "1") == "1" and Path(VOICE_SAMPLE).exists():
         threading.Thread(target=lambda: _safe(get_model), daemon=True).start()
