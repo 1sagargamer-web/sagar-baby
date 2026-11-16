@@ -224,6 +224,11 @@ class _ServerHealthState extends State<_ServerHealth> {
           row('Voice model ready', _h!['voice_loaded'] == true),
           row('AI (Gemini) key set', _h!['ai'] == true),
           row('Firebase (login check + push)', _h!['firebase'] == true),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Chal raha hai: ${_h!['device'] ?? '?'}  •  AI: ${_h!['ai_model'] ?? '?'}',
+                style: TextStyle(fontSize: 12, color: Theme.of(context).hintColor)),
+          ),
         ],
         if (_err != null) Text(_err!, style: const TextStyle(color: VColors.coral)),
         const SizedBox(height: 10),

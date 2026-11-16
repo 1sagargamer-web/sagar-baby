@@ -245,7 +245,9 @@ class VoicePlayer extends ChangeNotifier {
   }
 
   /// Text ko vakyon ke hisaab se ~320 akshar ke tukdon mein todo.
-  static List<String> splitText(String text, {int limit = 320}) {
+  /// Pehla tukda chhota (jaldi bolna shuru ho), baaki ~220 akshar
+  /// (har tukda ~100 second ke andar ban jaye, internet link ki limit).
+  static List<String> splitText(String text, {int limit = 220, int firstLimit = 140}) {
     final t = text.replaceAll(RegExp(r'[ \t]+'), ' ').replaceAll(RegExp(r'\n{2,}'), '\n').trim();
     final sentences = t.split(RegExp(r'(?<=[.!?।॥\n])\s+'));
     final out = <String>[];
@@ -253,9 +255,10 @@ class VoicePlayer extends ChangeNotifier {
     for (var s in sentences) {
       s = s.trim();
       if (s.isEmpty) continue;
-      while (s.length > limit) {
-        var cut = s.lastIndexOf(RegExp(r'[,\s]'), limit);
-        if (cut < 60) cut = limit;
+      final lim = out.isEmpty ? firstLimit : limit;
+      while (s.length > lim) {
+        var cut = s.lastIndexOf(RegExp(r'[,\s]'), lim);
+        if (cut < 60) cut = lim;
         if (cur.isNotEmpty) {
           out.add(cur);
           cur = '';
@@ -263,7 +266,7 @@ class VoicePlayer extends ChangeNotifier {
         out.add(s.substring(0, cut).trim());
         s = s.substring(cut).trim();
       }
-      if (cur.length + s.length + 1 <= limit) {
+      if (cur.length + s.length + 1 <= (out.isEmpty ? firstLimit : limit)) {
         cur = cur.isEmpty ? s : '$cur $s';
       } else {
         if (cur.isNotEmpty) out.add(cur);

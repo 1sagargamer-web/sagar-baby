@@ -1,0 +1,9 @@
+# PC (Windows) setup ke liye - torch alag se (GPU/CPU ke hisaab se) install hota hai
+chatterbox-tts==0.1.7
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20
+httpx==0.28.1
+lameenc==1.8.1
+firebase-admin==6.6.0
+imageio-ffmpeg>=0.5.1

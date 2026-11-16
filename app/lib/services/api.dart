@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -39,16 +40,39 @@ class Api {
     }
   }
 
+  static const offlineMsg = 'Sagar ki awaaz wala server abhi band hai (PC off hai). Thodi der baad try karein.';
+
+  /// Internet / server band hone ki galti ko seedhi bhasha mein badlo.
+  Future<T> _guard<T>(Future<T> Function() f) async {
+    try {
+      return await f();
+    } on ApiException {
+      rethrow;
+    } on TimeoutException {
+      throw ApiException('Server ne time pe jawab nahi diya. Dobara try karein.');
+    } on SocketException {
+      throw ApiException(offlineMsg);
+    } on http.ClientException {
+      throw ApiException(offlineMsg);
+    } on HandshakeException {
+      throw ApiException(offlineMsg);
+    }
+  }
+
   String _err(http.Response r) {
     try {
       final d = jsonDecode(utf8.decode(r.bodyBytes));
       if (d is Map && d['detail'] != null) return d['detail'].toString();
     } catch (_) {}
+    if (r.statusCode == 530 || r.statusCode == 1033 || r.statusCode == 404) return offlineMsg;
+    if (r.statusCode == 524) return 'Awaaz banne mein zyada time laga. Dobara try karein.';
     if (r.statusCode == 503 || r.statusCode == 502) return 'Server abhi jaag raha hai, 1 minute baad try karein';
     return 'Server error (${r.statusCode})';
   }
 
-  Future<Uint8List> tts(String text, {String lang = 'auto'}) async {
+  Future<Uint8List> tts(String text, {String lang = 'auto'}) => _guard(() => _tts(text, lang: lang));
+
+  Future<Uint8List> _tts(String text, {String lang = 'auto'}) async {
     _check();
     final r = await http
         .post(Uri.parse('$base/tts'), headers: await _headers(), body: jsonEncode({'text': text, 'lang': lang}))
@@ -57,7 +81,9 @@ class Api {
     return r.bodyBytes;
   }
 
-  Future<String> ocr(List<File> files) async {
+  Future<String> ocr(List<File> files) => _guard(() => _ocr(files));
+
+  Future<String> _ocr(List<File> files) async {
     _check();
     final req = http.MultipartRequest('POST', Uri.parse('$base/ocr'))..headers.addAll(await _headers(json: false));
     for (final f in files) {
@@ -68,7 +94,10 @@ class Api {
     return (jsonDecode(utf8.decode(res.bodyBytes))['text'] ?? '').toString();
   }
 
-  Future<String> ai(String action, String text, {String? question, String? targetLang, List<Map<String, String>>? history}) async {
+  Future<String> ai(String action, String text, {String? question, String? targetLang, List<Map<String, String>>? history}) =>
+      _guard(() => _ai(action, text, question: question, targetLang: targetLang, history: history));
+
+  Future<String> _ai(String action, String text, {String? question, String? targetLang, List<Map<String, String>>? history}) async {
     _check();
     final r = await http
         .post(
@@ -87,14 +116,18 @@ class Api {
     return (jsonDecode(utf8.decode(r.bodyBytes))['text'] ?? '').toString();
   }
 
-  Future<void> push(String title, String body) async {
+  Future<void> push(String title, String body) => _guard(() => _push(title, body));
+
+  Future<void> _push(String title, String body) async {
     _check();
     final r = await http.post(Uri.parse('$base/admin/push'),
         headers: await _headers(), body: jsonEncode({'title': title, 'body': body}));
     if (r.statusCode != 200) throw ApiException(_err(r));
   }
 
-  Future<Map<String, dynamic>> health() async {
+  Future<Map<String, dynamic>> health() => _guard(_health);
+
+  Future<Map<String, dynamic>> _health() async {
     _check();
     final r = await http.get(Uri.parse('$base/health')).timeout(const Duration(seconds: 60));
     if (r.statusCode != 200) throw ApiException(_err(r));
