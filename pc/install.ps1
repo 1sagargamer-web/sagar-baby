@@ -14,6 +14,7 @@ $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $RepoRaw = 'https://raw.githubusercontent.com/1sagargamer-web/sagar-baby/main'
+$NoCache = "?t=$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())"  # GitHub ki purani (cached) file na aaye
 $Root = Join-Path $env:LOCALAPPDATA 'SagarVaani'
 New-Item -ItemType Directory -Force -Path $Root | Out-Null
 
@@ -170,7 +171,7 @@ if ($LASTEXITCODE -ne 0) { Fail 'PyTorch install nahi hua' }
 Say 'Baaki AI packages install ho rahe hain...'
 $req = Join-Path $env:TEMP 'sagar-requirements-pc.txt'
 try {
-    Invoke-WebRequest "$RepoRaw/voice-server/requirements-pc.txt" -OutFile $req -UseBasicParsing -ErrorAction Stop
+    Invoke-WebRequest "$RepoRaw/voice-server/requirements-pc.txt$NoCache" -OutFile $req -UseBasicParsing -ErrorAction Stop
 } catch { Fail "requirements download nahi hui: $($_.Exception.Message)" }
 & $uv pip install --python $py -r $req
 if ($LASTEXITCODE -ne 0) { Fail 'AI packages install nahi hue' }
@@ -178,7 +179,7 @@ if ($LASTEXITCODE -ne 0) { Fail 'AI packages install nahi hue' }
 Say 'Check kar raha hoon ki Windows sab files chalne de raha hai...'
 $chk = Join-Path $Root 'pc_check.py'
 try {
-    Invoke-WebRequest "$RepoRaw/voice-server/pc_check.py" -OutFile $chk -UseBasicParsing -ErrorAction Stop
+    Invoke-WebRequest "$RepoRaw/voice-server/pc_check.py$NoCache" -OutFile $chk -UseBasicParsing -ErrorAction Stop
 } catch { Fail "check script download nahi hui: $($_.Exception.Message)" }
 $test = & $py $chk 2>&1
 $testText = ($test | Out-String)
@@ -212,7 +213,7 @@ $cfg = [ordered]@{
 }
 ($cfg | ConvertTo-Json) | Set-Content -Path $cfgPath -Encoding UTF8
 try {
-    Invoke-WebRequest "$RepoRaw/pc/run.ps1" -OutFile (Join-Path $Root 'run.ps1') -UseBasicParsing -ErrorAction Stop
+    Invoke-WebRequest "$RepoRaw/pc/run.ps1$NoCache" -OutFile (Join-Path $Root 'run.ps1') -UseBasicParsing -ErrorAction Stop
 } catch { Fail "run.ps1 download nahi hua: $($_.Exception.Message)" }
 Say 'Saved.' Green
 
