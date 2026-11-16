@@ -1,0 +1,39 @@
+rules_version = '2';
+// Sagar Vaani - Firestore security rules
+// Firebase Console -> Firestore Database -> Rules mein ye poora paste karke "Publish" dabao.
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(db)/documents/admins/$(request.auth.uid));
+    }
+
+    // Maintenance / notice / update / server URL - sab padh sakte hain, sirf owner badal sakta hai
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Owner list (console se khud add karna hai)
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.get('blocked', false) == false;
+      // User khud ko unblock nahi kar sakta
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['blocked']));
+      allow delete: if isAdmin();
+    }
+
+    match /activity/{id} {
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow read, delete: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "maintenance": {
+    "enabled": false,
+    "title": "",
+    "message": ""
+  },
+  "notice": {
+    "id": 0,
+    "show": false,
+    "title": "",
+    "body": ""
+  },
+  "update": {
+    "latestVersion": 0,
+    "minVersion": 0,
+    "url": "",
+    "note": ""
+  },
+  "serverUrl": ""
+}
