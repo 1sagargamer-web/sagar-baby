@@ -108,11 +108,45 @@ Say "uv ready: $uv" Green
 
 # ------------------------------------------------------------------ 3. Python + PyTorch
 Step 3 'Python + AI engine (PyTorch) - ye sabse lamba step hai'
+
+function SmartAppControlHelp {
+    Write-Host ''
+    Write-Host 'Windows ki "Smart App Control" setting AI ki files ko rok rahi hai.' -ForegroundColor Red
+    Write-Host 'Ise theek karne ke 2 raaste hain - Claude ko ye screenshot bhejo, wo bata dega.' -ForegroundColor Yellow
+    Fail 'Smart App Control ne file block ki'
+}
+
+# Official python.org Python (Microsoft isko pehchanta hai - signed hai)
+$sysPy = Join-Path $env:LOCALAPPDATA 'Programs\Python\Python311\python.exe'
+if (-not (Test-Path $sysPy)) {
+    Say 'python.org se official Python 3.11 aa raha hai...'
+    $pyInst = Join-Path $env:TEMP 'python-3.11.9-amd64.exe'
+    try {
+        Invoke-WebRequest 'https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe' -OutFile $pyInst -UseBasicParsing -ErrorAction Stop
+    } catch { Fail "Python download nahi hua: $($_.Exception.Message)" }
+    $p = Start-Process $pyInst -ArgumentList '/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=0 Include_test=0 Include_doc=0 Shortcuts=0' -Wait -PassThru
+    Remove-Item $pyInst -Force -ErrorAction SilentlyContinue
+    if (-not (Test-Path $sysPy)) { Fail "Python install nahi hua (code $($p.ExitCode))" }
+}
+$out = & $sysPy -c "import sys; print(sys.version)" 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Say "$out" Red
+    if ("$out" -match '4551|Application Control') { SmartAppControlHelp }
+    Fail 'Python chal nahi raha'
+}
+Say "Python ready: $out" Green
+
 $venv = Join-Path $Root 'venv'
 $py = Join-Path $venv 'Scripts\python.exe'
+$marker = Join-Path $venv 'official-python.txt'
+if ((Test-Path $venv) -and -not (Test-Path $marker)) {
+    # purana (block hua) venv hatao
+    Remove-Item $venv -Recurse -Force -ErrorAction SilentlyContinue
+}
 if (-not (Test-Path $py)) {
-    & $uv venv --python 3.11 $venv
-    if ($LASTEXITCODE -ne 0) { Fail 'Python install nahi hua' }
+    & $sysPy -m venv $venv
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $py)) { Fail 'Python venv nahi bana' }
+    Set-Content $marker 'ok'
 }
 
 $hasNvidia = $false
@@ -130,7 +164,24 @@ if ($hasNvidia) {
 }
 & $uv pip install --python $py 'torch==2.6.0' 'torchaudio==2.6.0' --index-url $torchIndex
 if ($LASTEXITCODE -ne 0) { Fail 'PyTorch install nahi hua' }
-& $py -c "import torch; print('PyTorch OK, GPU:', torch.cuda.is_available())"
+
+Say 'Baaki AI packages install ho rahe hain...'
+$req = Join-Path $env:TEMP 'sagar-requirements-pc.txt'
+try {
+    Invoke-WebRequest "$RepoRaw/voice-server/requirements-pc.txt" -OutFile $req -UseBasicParsing -ErrorAction Stop
+} catch { Fail "requirements download nahi hui: $($_.Exception.Message)" }
+& $uv pip install --python $py -r $req
+if ($LASTEXITCODE -ne 0) { Fail 'AI packages install nahi hue' }
+
+Say 'Check kar raha hoon ki Windows sab files chalne de raha hai...'
+$test = & $py -c "import numpy, torch, torchaudio, librosa, soundfile, lameenc, fastapi; import chatterbox.mtl_tts; print('ALL_OK GPU=' + str(torch.cuda.is_available()))" 2>&1
+$testText = ($test | Out-String)
+if ($testText -notmatch 'ALL_OK') {
+    Write-Host $testText -ForegroundColor Red
+    if ($testText -match '4551|Application Control|blocked|DLL load failed') { SmartAppControlHelp }
+    Fail 'AI packages load nahi hue'
+}
+Say ("Sab theek: " + ($testText.Trim() -split "`n" | Select-Object -Last 1)) Green
 
 # ------------------------------------------------------------------ 4. Cloudflare tunnel tool
 Step 4 'Free internet link tool (Cloudflare) aa raha hai'
