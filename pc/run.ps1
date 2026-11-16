@@ -65,6 +65,9 @@ if ($LASTEXITCODE -ne 0) {
     return
 }
 
+# torchaudio ka blocked native hissa hatao (Smart App Control) - pc_check isko khud karta hai
+& $py (Join-Path $server 'pc_check.py') | Out-Null
+
 # ------------------------------------------------------------------ settings
 $env:GEMINI_API_KEY = $cfg.gemini
 $env:HF_TOKEN = $cfg.hf
