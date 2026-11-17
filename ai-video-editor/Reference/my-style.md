@@ -52,8 +52,9 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   Change the text with `"watermark": "..."` in script.json.
 
 ## Sagar's recordings
-- Sagar often says each line twice. Split the takes, score each (Whisper confidence, clipping, noise) and use the
-  best one; run `adeclip,highpass=f=70` on it and save as `Raw/<reel>-sagar-<n>.wav`.
+- Sagar often says each line 2+ times. Run `python3 scripts/pick_takes.py Raw/<file> "<hi text>" Raw/<reel>-sagar-<n>.wav`:
+  it splits the takes, scores them (Whisper confidence, completeness, clipping), saves the best de-clipped, and
+  prints the scores to report to Sagar.
 
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).

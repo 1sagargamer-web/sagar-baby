@@ -11,7 +11,8 @@
         "brows": "sad",
         "mouth": "closed",
         "pose": "pray"
-      }
+      },
+      "audio": "Raw/ep02-sagar-1.wav"
     },
     {
       "who": "krishna",
@@ -37,7 +38,8 @@
         "brows": "normal",
         "mouth": "smirk",
         "pose": "thumb"
-      }
+      },
+      "audio": "Raw/ep02-sagar-2.wav"
     },
     {
       "who": "krishna",
@@ -60,7 +62,8 @@
         "tears": true,
         "sweat": true
       },
-      "shake": true
+      "shake": true,
+      "audio": "Raw/ep02-sagar-3.wav"
     }
   ]
 }
