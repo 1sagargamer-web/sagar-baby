@@ -52,6 +52,18 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
 - Title cards (black background): same font, one word or short phrase, centred, 0.5-1 s each.
 - Hindi words in Roman letters (Hinglish).
 
+## Commentary script (from the reference transcripts)
+- **Opening line is a question** (first 5-8 s): "Kya aapne kabhi socha hai ki agar 24 ghante panel use karein to ID
+  ka kya hoga?" / "Kya is baar Garena detect kar payegi?"
+- Then **stakes + tease the ending**: "End mein jo hua na bhai, wo bilkul miss mat karna, abhi spoiler nahi
+  dunga." Optional one-line recap of the last video ("pichhli video mein...").
+- Then "chalo fatafat start karte hain" and straight into gameplay within ~30 s.
+- During gameplay: short live reactions ("bhai bhai bhai", "dekho", "ye peeche se aa raha hai"), explain what is
+  happening on screen, keep talking; silence longer than ~3 s gets music/SFX or a cut.
+- Speaking speed in the references: about 120-200 words per minute, i.e. fast and energetic.
+- Our own addition (awareness): the voice says *why it is wrong / risky* at least once per match and fully at the
+  end. Never "panel kahan milega wo bhi bataunga" (ref2 does this; we never do).
+
 ## Voice
 - Sagar's own voice, **cloned** from his recording (Chatterbox, `channels/gaming/voices/sagar-ref.wav`,
   private, never in git). Option chosen by Sagar: **(pending, A / B / C sent on 2026-11-17)**.
