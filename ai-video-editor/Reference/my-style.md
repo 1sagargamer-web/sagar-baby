@@ -31,8 +31,8 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 - Camera: push-in on the punchline, shake on the shock. No fast cuts; it is one continuous shot.
 
 ## Sound
-- Voices are the main sound. Music only if Sagar gives a royalty-free track, or he adds trending audio in
-  Instagram himself. Mix around -14 LUFS.
+- Voices are the main sound. Music only if Sagar gives a royalty-free track, or Sagar adds trending audio in
+  Instagram. Mix around -14 LUFS.
 
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
