@@ -20,3 +20,4 @@ agent/
 # Generated voice files (rebuilt by make_reel.py)
 projects/*/assets/audio/
 Reference/*.transcript.json
+__pycache__/
