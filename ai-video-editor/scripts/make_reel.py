@@ -104,8 +104,8 @@ def build(script_path: Path) -> None:
 
     # ---- per-frame face states -> keyframes -------------------------------------------------
     defaults = {
-        "sagar": {"eyes": "open", "mouth": "closed", "pose": "none", "sweat": False},
-        "krishna": {"eyes": "open", "mouth": "closed"},
+        "sagar": {"eyes": "open", "brows": "normal", "mouth": "closed", "pose": "none", "sweat": False, "tears": False},
+        "krishna": {"eyes": "open", "brows": "normal", "mouth": "closed", "pose": "none", "sweat": False, "tears": False},
     }
     nframes = int(total * FPS) + 1
     keys = {"sagar": [], "krishna": []}
@@ -121,12 +121,13 @@ def build(script_path: Path) -> None:
             talking = next((l for l in lines if l["who"] == who and l["start"] <= ft < l["start"] + l["dur"]), None)
             if talking and mouth != "o":
                 k = int(round((ft - talking["start"]) * FPS))
-                mouth = "open" if k < len(talking["env"]) and talking["env"][k] else "closed"
+                if k < len(talking["env"]) and talking["env"][k]:
+                    mouth = "open"  # between syllables the mouth rests in the expression's shape
             # blink every ~3.2 s (offset per character) while the eyes are open
             period, off = (3.2, 1.1) if who == "sagar" else (3.7, 2.3)
             if eyes == "open" and ((ft - off) % period) < 0.13 and ft > off:
                 eyes = "closed"
-            state = (eyes, mouth, face.get("pose", "none"), bool(face.get("sweat", False)))
+            state = (eyes, face["brows"], mouth, face["pose"], bool(face["sweat"]), bool(face["tears"]))
             if state != last:
                 keys[who].append([round(ft, 3), *state])
                 last = state
@@ -237,19 +238,21 @@ TEMPLATE = """<!doctype html>
       const D = {data};
       const tl = gsap.timeline({{ paused: true }});
       const parts = {{
-        sagar: {{ eyes: ["open", "closed", "shock"], mouth: ["closed", "open", "o"], p: "sg" }},
-        krishna: {{ eyes: ["open", "closed", "half"], mouth: ["closed", "open"], p: "kr" }},
+        sagar: {{ p: "sg", eyes: ["open", "closed", "shock"], brows: ["normal", "sad", "angry"],
+          mouth: ["closed", "open", "o", "sad", "smirk"], arms: ["pray", "thumb"], sweat: true, tears: true }},
+        krishna: {{ p: "kr", eyes: ["open", "closed", "half"], brows: [], mouth: ["closed", "open"], arms: [],
+          sweat: false, tears: false }},
       }};
-      // face keyframes: show exactly one eye group and one mouth group at a time
+      // face keyframes: show exactly one group of each kind at a time
       for (const who of ["sagar", "krishna"]) {{
         const P = parts[who];
-        for (const [t, eyes, mouth, pose, sweat] of D.keys[who]) {{
+        for (const [t, eyes, brows, mouth, pose, sweat, tears] of D.keys[who]) {{
           for (const e of P.eyes) tl.set(`#${{P.p}}-eyes-${{e}}`, {{ opacity: e === eyes ? 1 : 0 }}, t);
+          for (const b of P.brows) tl.set(`#${{P.p}}-brows-${{b}}`, {{ opacity: b === brows ? 1 : 0 }}, t);
           for (const m of P.mouth) tl.set(`#${{P.p}}-mouth-${{m}}`, {{ opacity: m === mouth ? 1 : 0 }}, t);
-          if (who === "sagar") {{
-            tl.set("#sg-arms-pray", {{ opacity: pose === "pray" ? 1 : 0 }}, t);
-            tl.set("#sg-sweat", {{ opacity: sweat ? 1 : 0 }}, t);
-          }}
+          for (const a of P.arms) tl.set(`#${{P.p}}-arms-${{a}}`, {{ opacity: a === pose ? 1 : 0 }}, t);
+          if (P.sweat) tl.set(`#${{P.p}}-sweat`, {{ opacity: sweat ? 1 : 0 }}, t);
+          if (P.tears) tl.set(`#${{P.p}}-tears`, {{ opacity: tears ? 1 : 0 }}, t);
         }}
       }}
       // idle breathing (head leads, body follows, different rates per character)

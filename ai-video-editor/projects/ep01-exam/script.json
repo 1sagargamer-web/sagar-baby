@@ -6,33 +6,50 @@
       "who": "sagar",
       "hi": "हे प्रभु, कल मेरा एग्ज़ाम है, बस आशीर्वाद दे दो!",
       "caption": "Hey Prabhu, kal mera exam hai, bas aashirwad de do!",
-      "face": {"eyes": "closed", "pose": "pray"}
+      "face": {
+        "eyes": "closed",
+        "pose": "pray"
+      }
     },
     {
       "who": "krishna",
       "hi": "आशीर्वाद ज़रूर मिलेगा वत्स... पहले ये बताओ, सिलेबस कितना हुआ?",
       "caption": "Aashirwad zaroor milega Vatsa... pehle ye batao, syllabus kitna hua?",
-      "face": {"eyes": "open"},
+      "face": {
+        "eyes": "open"
+      },
       "pause_before": 0.4
     },
     {
       "who": "sagar",
       "hi": "प्रभु, इंडेक्स पूरा पढ़ लिया है!",
       "caption": "Prabhu, index poora padh liya hai!",
-      "face": {"eyes": "open"}
+      "face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
     },
     {
       "who": "krishna",
       "hi": "तो ठीक है... आशीर्वाद भी इंडेक्स जितना ही मिलेगा।",
       "caption": "Toh theek hai... aashirwad bhi index jitna hi milega.",
-      "face": {"eyes": "half"},
+      "face": {
+        "eyes": "half"
+      },
       "punch": true
     },
     {
       "who": "sagar",
       "hi": "प्रभु!!",
       "caption": "PRABHU!!",
-      "face": {"eyes": "shock", "mouth": "o", "sweat": true},
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
       "shake": true
     }
   ]
