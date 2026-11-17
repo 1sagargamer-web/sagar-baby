@@ -37,8 +37,8 @@
         "mouth": "smirk",
         "pose": "thumb"
       },
-      "exaggeration": 0.65,
-      "keep_audio": true
+      "keep_audio": true,
+      "exaggeration": 0.5
     },
     {
       "who": "krishna",
@@ -61,8 +61,8 @@
         "sweat": true
       },
       "shake": true,
-      "exaggeration": 0.8,
-      "keep_audio": true
+      "keep_audio": true,
+      "exaggeration": 0.7
     }
   ]
 }

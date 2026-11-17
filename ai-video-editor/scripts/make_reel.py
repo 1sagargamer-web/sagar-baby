@@ -40,7 +40,7 @@ TTS_PY = HERE / ".venv-tts" / "bin" / "python"
 # Sagar: cloned from Sagar's own recording (voices/sagar-ref.wav, private, not in git).
 VOICES = {
     "krishna": {"ref": HERE / "voices" / "bhagwan-ref.wav", "exaggeration": 0.45, "cfg": 0.4, "seed": 7},
-    "sagar": {"ref": HERE / "voices" / "sagar-ref.wav", "exaggeration": 0.55, "cfg": 0.45, "seed": 11},
+    "sagar": {"ref": HERE / "voices" / "sagar-ref.wav", "exaggeration": 0.4, "cfg": 0.3, "temperature": 0.8, "seed": 11},
 }
 # Trim silence at both ends and level to -16 LUFS
 CLEAN = (
@@ -57,6 +57,31 @@ def clean(src: Path, out: Path) -> None:
     )
 
 
+def drop_stray_tail(wav: Path, gap: float = 0.45, max_blip: float = 0.6) -> None:
+    """TTS sometimes adds a short noise after the line ends. Cut short sound islands that come after a pause."""
+    data, rate = sf.read(str(wav))
+    hop = int(rate * 0.02)
+    db = np.array([20 * np.log10(np.sqrt(np.mean(data[i:i + hop] ** 2)) + 1e-9) for i in range(0, len(data), hop)])
+    loud = db > -40
+    islands, start = [], None
+    for i, v in enumerate(loud):
+        if v and start is None:
+            start = i
+        if not v and start is not None:
+            islands.append([start, i]); start = None
+    if start is not None:
+        islands.append([start, len(loud)])
+    while len(islands) > 1:
+        s, e = islands[-1]
+        if (s - islands[-2][1]) * 0.02 >= gap and (e - s) * 0.02 <= max_blip:
+            islands.pop()
+        else:
+            break
+    if islands:
+        end = min(len(data), (islands[-1][1] * hop) + int(rate * 0.15))
+        sf.write(str(wav), data[:end], rate)
+
+
 def synth(who: str, jobs: list[dict]) -> None:
     """jobs: [{"text", "out", "exaggeration"?}] spoken in the character's fixed voice."""
     if not jobs:
@@ -69,11 +94,13 @@ def synth(who: str, jobs: list[dict]) -> None:
     batch.write_text(json.dumps(raw, ensure_ascii=False))
     subprocess.run(
         [str(TTS_PY), str(HERE / "scripts" / "clone_voice.py"), str(v["ref"]), "--batch", str(batch),
-         "--exaggeration", str(v["exaggeration"]), "--cfg", str(v["cfg"]), "--seed", str(v["seed"])],
+         "--exaggeration", str(v["exaggeration"]), "--cfg", str(v["cfg"]), "--seed", str(v["seed"]),
+         "--temperature", str(v.get("temperature", 0.8))],
         check=True,
     )
     for j, r in zip(jobs, raw):
         clean(Path(r["out"]), Path(j["out"]))
+        drop_stray_tail(Path(j["out"]))
         Path(r["out"]).unlink()
     batch.unlink()
 
