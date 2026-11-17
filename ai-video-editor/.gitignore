@@ -21,3 +21,4 @@ agent/
 projects/*/assets/audio/
 Reference/*.transcript.json
 __pycache__/
+.venv-tts/
