@@ -1,0 +1,39 @@
+{
+  "title": "Result wala demo",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "हे भगवान, इस बार मेरा रिज़ल्ट अच्छा आ जाए, प्लीज़!",
+      "caption": "Hey Bhagwan, is baar mera result accha aa jaye, please!",
+      "face": {"eyes": "closed", "pose": "pray"}
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, पढ़ाई की थी?",
+      "caption": "Vatsa, padhai ki thi?",
+      "face": {"eyes": "open"},
+      "pause_before": 0.5
+    },
+    {
+      "who": "sagar",
+      "hi": "पढ़ाई तो नहीं की प्रभु, पर भरोसा पूरा आप पर है!",
+      "caption": "Padhai toh nahi ki Prabhu... par bharosa poora aap par hai!",
+      "face": {"eyes": "open", "sweat": true}
+    },
+    {
+      "who": "krishna",
+      "hi": "तो भरोसा रखो वत्स, अगले साल पक्का पास होगे।",
+      "caption": "Toh bharosa rakho Vatsa... agle saal pakka pass hoge.",
+      "face": {"eyes": "half"},
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "क्या?!",
+      "caption": "KYA?!",
+      "face": {"eyes": "shock", "mouth": "o", "sweat": true},
+      "shake": true
+    }
+  ]
+}

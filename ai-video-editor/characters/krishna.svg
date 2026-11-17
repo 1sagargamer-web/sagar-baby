@@ -1,0 +1,93 @@
+<svg id="kr" viewBox="0 0 600 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bhagwan (Krishna ji). Original design for this channel. Part ids are used by the builder:
+       kr-eyes-open / kr-eyes-closed / kr-eyes-half, kr-mouth-closed / kr-mouth-open, kr-head, kr-body, kr-halo -->
+  <defs>
+    <radialGradient id="kr-halo-g">
+      <stop offset="0" stop-color="#fff8d6" stop-opacity="0.95" />
+      <stop offset="0.55" stop-color="#ffd35c" stop-opacity="0.5" />
+      <stop offset="1" stop-color="#ffd35c" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle id="kr-halo" cx="300" cy="400" r="300" fill="url(#kr-halo-g)" />
+  <g id="kr-body" stroke="#1f2c4d" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- long hair behind -->
+    <path d="M168 380 C140 520 150 640 196 720 L404 720 C450 640 460 520 432 380 Z" fill="#1c1830" />
+    <!-- torso -->
+    <path d="M140 1000 C140 740 190 610 300 600 C410 610 460 740 460 1000 Z" fill="#4f86d9" />
+    <!-- dhoti -->
+    <path d="M150 870 L450 870 L460 1000 L140 1000 Z" fill="#f6c531" />
+    <!-- sash -->
+    <path d="M196 620 C250 740 350 820 452 840 L446 896 C336 876 232 800 172 662 Z" fill="#ef7f2c" />
+    <!-- flute tucked in the sash -->
+    <g transform="rotate(-14 330 905)">
+      <rect x="215" y="893" width="230" height="22" rx="11" fill="#9a5a2c" />
+      <circle cx="300" cy="904" r="4" fill="#3b2412" stroke="none" />
+      <circle cx="330" cy="904" r="4" fill="#3b2412" stroke="none" />
+      <circle cx="360" cy="904" r="4" fill="#3b2412" stroke="none" />
+    </g>
+    <!-- neck -->
+    <rect x="268" y="540" width="64" height="80" rx="22" fill="#4f86d9" />
+    <!-- necklace -->
+    <path d="M232 622 C258 708 342 708 368 622" fill="none" stroke="#f2b632" stroke-width="13" />
+    <circle cx="300" cy="696" r="13" fill="#e2453c" stroke="#a3601a" stroke-width="4" />
+  </g>
+  <g id="kr-head" stroke="#1f2c4d" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- ears + earrings -->
+    <ellipse cx="170" cy="432" rx="20" ry="30" fill="#4f86d9" />
+    <ellipse cx="430" cy="432" rx="20" ry="30" fill="#4f86d9" />
+    <circle cx="166" cy="478" r="13" fill="#f2b632" stroke="#a3601a" stroke-width="4" />
+    <circle cx="434" cy="478" r="13" fill="#f2b632" stroke="#a3601a" stroke-width="4" />
+    <!-- face -->
+    <ellipse cx="300" cy="420" rx="134" ry="144" fill="#4f86d9" />
+    <!-- hair front -->
+    <path d="M166 420 C160 320 220 278 300 278 C380 278 440 320 434 420 C420 362 372 336 300 340 C228 336 180 362 166 420 Z" fill="#1c1830" />
+    <!-- crown -->
+    <path d="M186 332 L414 332 L404 296 L196 296 Z" fill="#f2b632" stroke="#a3601a" />
+    <path d="M196 296 L220 236 L246 296 L272 220 L300 188 L328 220 L354 296 L380 236 L404 296 Z" fill="#f6c531" stroke="#a3601a" />
+    <circle cx="300" cy="262" r="15" fill="#e2453c" stroke="#a3601a" stroke-width="4" />
+    <circle cx="232" cy="314" r="7" fill="#2f9e5b" stroke="none" />
+    <circle cx="368" cy="314" r="7" fill="#2f9e5b" stroke="none" />
+    <!-- peacock feather -->
+    <path d="M356 250 C372 210 386 170 400 128" fill="none" stroke="#2c6b3f" stroke-width="5" />
+    <ellipse cx="404" cy="128" rx="30" ry="52" transform="rotate(18 404 128)" fill="#2f9e5b" stroke="#1d5a35" />
+    <ellipse cx="406" cy="122" rx="17" ry="26" transform="rotate(18 406 122)" fill="#1f5fbf" stroke="#f2b632" stroke-width="4" />
+    <ellipse cx="407" cy="120" rx="7" ry="11" transform="rotate(18 407 120)" fill="#0f2350" stroke="none" />
+    <!-- tilak -->
+    <path d="M287 352 L293 386 L307 386 L313 352" fill="none" stroke="#fff4dc" stroke-width="6" />
+    <path d="M300 356 L300 382" fill="none" stroke="#e2453c" stroke-width="5" />
+    <!-- eyebrows -->
+    <path d="M220 394 Q250 380 280 392" fill="none" stroke-width="7" />
+    <path d="M320 392 Q350 380 380 394" fill="none" stroke-width="7" />
+    <!-- eyes -->
+    <g id="kr-eyes-open">
+      <ellipse cx="250" cy="436" rx="23" ry="26" fill="#ffffff" />
+      <ellipse cx="350" cy="436" rx="23" ry="26" fill="#ffffff" />
+      <circle cx="253" cy="440" r="13" fill="#15122a" stroke="none" />
+      <circle cx="353" cy="440" r="13" fill="#15122a" stroke="none" />
+      <circle cx="258" cy="434" r="4.5" fill="#ffffff" stroke="none" />
+      <circle cx="358" cy="434" r="4.5" fill="#ffffff" stroke="none" />
+    </g>
+    <g id="kr-eyes-half" opacity="0">
+      <path d="M227 432 Q250 452 273 432 Z" fill="#ffffff" />
+      <path d="M327 432 Q350 452 373 432 Z" fill="#ffffff" />
+      <circle cx="252" cy="439" r="8" fill="#15122a" stroke="none" />
+      <circle cx="352" cy="439" r="8" fill="#15122a" stroke="none" />
+      <path d="M224 432 L276 432" fill="none" stroke-width="7" />
+      <path d="M324 432 L376 432" fill="none" stroke-width="7" />
+    </g>
+    <g id="kr-eyes-closed" opacity="0" fill="none">
+      <path d="M227 438 Q250 454 273 438" />
+      <path d="M327 438 Q350 454 373 438" />
+    </g>
+    <!-- nose + cheeks -->
+    <path d="M298 462 Q290 482 304 486" fill="none" stroke-width="5" />
+    <ellipse cx="220" cy="486" rx="20" ry="11" fill="#f39bb0" opacity="0.45" stroke="none" />
+    <ellipse cx="380" cy="486" rx="20" ry="11" fill="#f39bb0" opacity="0.45" stroke="none" />
+    <!-- mouth -->
+    <path id="kr-mouth-closed" d="M268 508 Q300 532 332 508" fill="none" />
+    <g id="kr-mouth-open" opacity="0">
+      <path d="M266 504 Q300 560 334 504 Q300 516 266 504 Z" fill="#6e1b2a" />
+      <path d="M284 530 Q300 548 316 530 Q300 524 284 530 Z" fill="#e8677b" stroke="none" />
+    </g>
+  </g>
+</svg>

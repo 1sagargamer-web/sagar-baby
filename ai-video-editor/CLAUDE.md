@@ -47,3 +47,15 @@ skills are already committed in `.agents/skills/` (reinstall with `npx skills ad
 - Always show a short plan with timestamps and wait for the owner's OK before building.
 - After the render: check duration with ffprobe, look at frames, then list every change made.
 - Draw inspiration from reference reels, never copy their exact fonts, graphics, logos, music or text.
+
+## Cartoon reels (Bhagwan + Sagar)
+
+**Read `Reference/my-style.md` before every edit.**
+
+- Characters: `characters/krishna.svg`, `characters/sagar.svg` (same art every video).
+- Bhagwan's fixed voice: `scripts/god_voice.py` (Kokoro model in `models/kokoro/`, not in git; download
+  `kokoro-v1.0.onnx` and `voices-v1.0.bin` from github.com/thewh1teagle/kokoro-onnx releases `model-files-v1.0`).
+- Build a reel: `python3 scripts/make_reel.py projects/<name>/script.json`, then in that folder run the
+  HyperFrames `check`, `snapshot`, and `render --quality looks --fps 30 -o ../../Export/<name>-v1.mp4`.
+- Sagar's lines use his own recordings (`"audio"` in script.json); without one, a placeholder AI voice is
+  used and that must be said clearly.

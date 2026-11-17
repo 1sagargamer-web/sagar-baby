@@ -16,3 +16,7 @@ models/
 
 # Copy of the skills made by the installer for a different agent (Claude uses .agents/skills)
 agent/
+
+# Generated voice files (rebuilt by make_reel.py)
+projects/*/assets/audio/
+Reference/*.transcript.json

@@ -1,0 +1,64 @@
+<svg id="sg" viewBox="0 0 600 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sagar (the owner). Placeholder look until a photo is shared. Part ids used by the builder:
+       sg-eyes-open / sg-eyes-closed / sg-eyes-shock, sg-mouth-closed / sg-mouth-open / sg-mouth-o,
+       sg-arms-pray, sg-sweat, sg-head, sg-body -->
+  <g id="sg-body" stroke="#2b1d14" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- t-shirt -->
+    <path d="M140 1000 C140 740 190 610 300 600 C410 610 460 740 460 1000 Z" fill="#2bb3a3" />
+    <path d="M178 770 C168 850 164 930 168 1000" fill="none" stroke="#1d7f74" />
+    <path d="M422 770 C432 850 436 930 432 1000" fill="none" stroke="#1d7f74" />
+    <!-- neck + collar -->
+    <rect x="270" y="540" width="60" height="80" rx="22" fill="#f1c29c" />
+    <path d="M252 606 Q300 664 348 606" fill="#f1c29c" />
+  </g>
+  <g id="sg-arms-pray" opacity="0" stroke="#2b1d14" stroke-width="6" stroke-linejoin="round">
+    <path d="M168 760 C186 884 258 904 296 852 L296 770 C268 808 228 806 204 742 Z" fill="#2bb3a3" />
+    <path d="M432 760 C414 884 342 904 304 852 L304 770 C332 808 372 806 396 742 Z" fill="#2bb3a3" />
+    <path d="M280 866 C272 800 284 728 300 710 C316 728 328 800 320 866 Z" fill="#f1c29c" />
+    <path d="M300 718 L300 864" fill="none" />
+  </g>
+  <g id="sg-head" stroke="#2b1d14" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- ears -->
+    <ellipse cx="172" cy="432" rx="19" ry="29" fill="#f1c29c" />
+    <ellipse cx="428" cy="432" rx="19" ry="29" fill="#f1c29c" />
+    <!-- face -->
+    <ellipse cx="300" cy="420" rx="130" ry="140" fill="#f1c29c" />
+    <!-- hair -->
+    <path d="M226 286 L246 236 L270 278 L294 226 L316 276 L340 234 L356 286 Z" fill="#1b1b1b" />
+    <path d="M168 424 C150 304 220 258 300 258 C390 258 455 304 432 424 C426 372 402 344 372 334 C350 364 300 368 250 348 C230 364 200 384 168 424 Z" fill="#1b1b1b" />
+    <!-- eyebrows -->
+    <path id="sg-brows" d="M222 380 Q250 366 278 380 M322 380 Q350 366 378 380" fill="none" stroke-width="7" />
+    <!-- eyes -->
+    <g id="sg-eyes-open">
+      <ellipse cx="250" cy="428" rx="22" ry="25" fill="#ffffff" />
+      <ellipse cx="350" cy="428" rx="22" ry="25" fill="#ffffff" />
+      <circle cx="252" cy="432" r="12" fill="#1b1b1b" stroke="none" />
+      <circle cx="352" cy="432" r="12" fill="#1b1b1b" stroke="none" />
+      <circle cx="256" cy="427" r="4" fill="#ffffff" stroke="none" />
+      <circle cx="356" cy="427" r="4" fill="#ffffff" stroke="none" />
+    </g>
+    <g id="sg-eyes-closed" opacity="0" fill="none">
+      <path d="M228 430 Q250 446 272 430" />
+      <path d="M328 430 Q350 446 372 430" />
+    </g>
+    <g id="sg-eyes-shock" opacity="0">
+      <ellipse cx="248" cy="426" rx="31" ry="35" fill="#ffffff" />
+      <ellipse cx="352" cy="426" rx="31" ry="35" fill="#ffffff" />
+      <circle cx="248" cy="428" r="6" fill="#1b1b1b" stroke="none" />
+      <circle cx="352" cy="428" r="6" fill="#1b1b1b" stroke="none" />
+    </g>
+    <!-- nose + cheeks -->
+    <path d="M298 452 Q290 472 302 476" fill="none" stroke-width="5" />
+    <ellipse cx="222" cy="482" rx="18" ry="10" fill="#f08a8a" opacity="0.35" stroke="none" />
+    <ellipse cx="378" cy="482" rx="18" ry="10" fill="#f08a8a" opacity="0.35" stroke="none" />
+    <!-- mouth -->
+    <path id="sg-mouth-closed" d="M272 504 Q300 518 328 504" fill="none" />
+    <g id="sg-mouth-open" opacity="0">
+      <path d="M270 498 Q300 552 330 498 Q300 508 270 498 Z" fill="#6b1e24" />
+      <path d="M286 524 Q300 540 314 524 Q300 518 286 524 Z" fill="#e8677b" stroke="none" />
+    </g>
+    <ellipse id="sg-mouth-o" opacity="0" cx="300" cy="516" rx="17" ry="24" fill="#6b1e24" />
+    <!-- sweat -->
+    <path id="sg-sweat" opacity="0" d="M446 318 C462 346 468 362 456 374 C446 382 432 374 434 360 C436 346 442 334 446 318 Z" fill="#8fd3ff" stroke="#3a7fb0" stroke-width="4" />
+  </g>
+</svg>
