@@ -1,0 +1,18 @@
+# Raw footage and finished videos are large; keep them out of git
+Raw/*
+!Raw/.gitkeep
+Export/*
+!Export/.gitkeep
+!Export/test.mp4
+
+# Reference video copies (notes like my-style.md are kept)
+Reference/*.mp4
+Reference/*.mov
+
+# HyperFrames working data
+.hyperframes/
+node_modules/
+models/
+
+# Copy of the skills made by the installer for a different agent (Claude uses .agents/skills)
+agent/
