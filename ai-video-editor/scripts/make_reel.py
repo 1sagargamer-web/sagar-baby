@@ -40,7 +40,8 @@ TTS_PY = HERE / ".venv-tts" / "bin" / "python"
 # Sagar: cloned from Sagar's own recording (voices/sagar-ref.wav, private, not in git).
 VOICES = {
     "krishna": {"ref": HERE / "voices" / "bhagwan-ref.wav", "exaggeration": 0.45, "cfg": 0.4, "seed": 7},
-    "sagar": {"ref": HERE / "voices" / "sagar-ref.wav", "exaggeration": 0.4, "cfg": 0.3, "temperature": 0.8, "seed": 11},
+    "sagar": {"ref": HERE / "voices" / "sagar-ref.wav", "exaggeration": 0.4, "cfg": 0.3, "temperature": 0.8, "seed": 11,
+              "tempo": 1.15},  # Sagar speaks a bit faster than the raw clone
 }
 # Trim silence at both ends and level to -16 LUFS
 CLEAN = (
@@ -50,9 +51,10 @@ CLEAN = (
 )
 
 
-def clean(src: Path, out: Path) -> None:
+def clean(src: Path, out: Path, tempo: float = 1.0) -> None:
+    af = CLEAN if tempo == 1.0 else f"rubberband=tempo={tempo}:formant=preserved:pitchq=quality," + CLEAN
     subprocess.run(
-        ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af", CLEAN, "-ac", "1", "-ar", "48000", str(out)],
+        ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af", af, "-ac", "1", "-ar", "48000", str(out)],
         check=True,
     )
 
@@ -99,7 +101,7 @@ def synth(who: str, jobs: list[dict]) -> None:
         check=True,
     )
     for j, r in zip(jobs, raw):
-        clean(Path(r["out"]), Path(j["out"]))
+        clean(Path(r["out"]), Path(j["out"]), v.get("tempo", 1.0))
         drop_stray_tail(Path(j["out"]))
         Path(r["out"]).unlink()
     batch.unlink()
@@ -221,6 +223,18 @@ def build(script_path: Path) -> None:
         caption_tags.append(
             f'        <div id="cap-{i + 1}" class="clip cap cap-{l["who"]}" data-start="{cs}" '
             f'data-duration="{round(cap_end - cs, 3)}" data-track-index="5"><span>{l["caption"]}</span></div>'
+        )
+
+    # background music: an original tune per reel (seed from the script, or from the title), low under the voices
+    music = spec.get("music", {})
+    if music is not False:
+        seed = music.get("seed", sum(map(ord, spec.get("title", proj.name))) % 1000)
+        mwav = audio_dir / "music.wav"
+        subprocess.run([sys.executable, str(HERE / "scripts" / "make_music.py"), str(mwav),
+                        "--seconds", str(total), "--seed", str(seed), "--bpm", str(music.get("bpm", 96))], check=True)
+        audio_tags.append(
+            f'      <audio id="music" class="clip" src="{mwav.relative_to(proj).as_posix()}" data-start="0" '
+            f'data-duration="{total}" data-track-index="6" data-volume="{music.get("volume", 0.25)}"></audio>'
         )
 
     html = TEMPLATE.format(

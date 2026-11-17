@@ -34,8 +34,11 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 - Camera: push-in on the punchline, shake on the shock. No fast cuts; it is one continuous shot.
 
 ## Sound
-- Voices are the main sound. Music only if Sagar gives a royalty-free track, or Sagar adds trending audio in
-  Instagram. Mix around -14 LUFS.
+- **Every reel gets background music**: an original tune made by `scripts/make_music.py` (bansuri + tanpura +
+  soft keherwa tabla, all synthesised, no licence issues). A new tune per reel (seed from the title), volume 0.25
+  under the voices. `"music": {"seed": 5, "bpm": 100, "volume": 0.3}` in script.json changes it,
+  `"music": false` turns it off (e.g. to add trending audio in Instagram).
+- Sagar's cloned voice is sped up 1.15x (rubberband, formant preserved). Mix around -14 LUFS.
 
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
