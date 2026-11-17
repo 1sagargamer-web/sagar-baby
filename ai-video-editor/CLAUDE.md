@@ -63,3 +63,9 @@ skills are already committed in `.agents/skills/` (reinstall with `npx skills ad
   HyperFrames `check`, `snapshot`, and `render --quality looks --fps 30 -o ../../Export/<name>-v1.mp4`.
 - Sagar's lines: cloned voice by default; a real recording (`"audio"` in script.json) replaces it.
   `"keep_audio": true` reuses an already generated line instead of re-generating it.
+
+## Other channels
+
+Each extra channel lives in `channels/<name>/` with its own `CLAUDE.md` and `Reference/my-style.md`; read those
+when working on that channel. They share `scripts/`, `.agents/skills/`, `models/` and `.venv-tts/`.
+- `channels/gaming/`: Sagar's second channel (Free Fire awareness, long 1920x1080 videos).
