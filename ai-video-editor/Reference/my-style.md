@@ -18,8 +18,10 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 5. **Sagar's reaction** (shocked eyes, "O" mouth, sweat drop, small camera shake), hold ~1 s, end.
 
 ## Voices
-- **Sagar's lines: cloned from Sagar's own recording** (`voices/sagar-ref.wav`, private, never in git) with
-  Chatterbox Multilingual. A real recording of a line (`"audio"` in script.json) always wins.
+- **Sagar's lines: Sagar records them by default.** After each reel's script is ready, send Sagar the
+  list of Sagar's lines to record and wait for the recordings (`"audio"` in script.json). Use the cloned voice
+  (`voices/sagar-ref.wav`, private, never in git; Chatterbox, sped up 1.15x) **only when Sagar says he cannot
+  record** for that reel.
 - **Bhagwan's lines: always the same natural voice**: Chatterbox speaking from the fixed synthetic reference
   `voices/bhagwan-ref.wav` (no real person's voice), seed 7. Settings in `VOICES` in `scripts/make_reel.py`.
   Never change them between videos.
