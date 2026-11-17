@@ -36,6 +36,6 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
-2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of his lines.
+2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of Sagar's lines.
 3. `python3 scripts/make_reel.py projects/<name>/script.json`
 4. Check, snapshot, render to `Export/<name>-v1.mp4` (see CLAUDE.md).
