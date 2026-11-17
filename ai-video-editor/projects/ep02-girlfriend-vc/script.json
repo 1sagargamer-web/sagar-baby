@@ -1,0 +1,71 @@
+{
+  "title": "Ep 02 - Naseeb mein girlfriend",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "भगवान जी, सच सच बताओ... मेरे नसीब में गर्लफ्रेंड लिखी है या नहीं?",
+      "caption": "Bhagwan ji, sach sach batao... mere naseeb mein girlfriend likhi hai ya nahi?",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray"
+      },
+      "audio": "Raw/ep02-sagar-1.wav"
+    },
+    {
+      "who": "krishna",
+      "hi": "लिखी थी वत्स... बहुत सुंदर, बहुत प्यारी।",
+      "caption": "Likhi thi Vatsa... bahut sundar, bahut pyaari.",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4,
+      "audio": "Raw/ep02-bhagwan-1.wav",
+      "vc": true
+    },
+    {
+      "who": "sagar",
+      "hi": "सच में प्रभु?! तो कहाँ है वो?",
+      "caption": "Sach mein Prabhu?! Toh kahan hai woh?",
+      "face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      },
+      "audio": "Raw/ep02-sagar-2.wav"
+    },
+    {
+      "who": "krishna",
+      "hi": "पिछले रक्षाबंधन पे... तुम्हें राखी बाँध के चली गई।",
+      "caption": "Pichhle Raksha Bandhan pe... tumhe rakhi baandh ke chali gayi.",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true,
+      "audio": "Raw/ep02-bhagwan-2.wav",
+      "vc": true
+    },
+    {
+      "who": "sagar",
+      "hi": "नहीं प्रभु!!",
+      "caption": "NAHIII PRABHU!!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "closed",
+        "tears": true,
+        "sweat": true
+      },
+      "shake": true,
+      "audio": "Raw/ep02-sagar-3.wav"
+    }
+  ]
+}

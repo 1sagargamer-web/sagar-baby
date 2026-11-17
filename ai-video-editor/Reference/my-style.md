@@ -25,6 +25,9 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 - **Bhagwan's lines: always the same natural voice**: Chatterbox speaking from the fixed synthetic reference
   `voices/bhagwan-ref.wav` (no real person's voice), seed 7. Settings in `VOICES` in `scripts/make_reel.py`.
   Never change them between videos.
+- **Testing (Ep 02):** Sagar records Bhagwan's lines too, converted into Bhagwan's voice with Chatterbox VC
+  (`"audio": "Raw/...", "vc": true` on the krishna line, `scripts/convert_voice.py`). If Sagar does not like it,
+  keep the AI Bhagwan voice. Ask Sagar which one before making the next reel.
 - Listener reactions: `"sagar_face"` / `"krishna_face"` on a line set how the other character reacts.
 
 ## Captions

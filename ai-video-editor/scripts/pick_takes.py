@@ -69,10 +69,27 @@ def main() -> None:
         bounds.append([a, b])
     for k in range(len(bounds) - 1):
         bounds[k][1] = bounds[k + 1][0]
-    # Whisper sometimes drops a repeated take entirely: if there is lots of audio after the last word, add it
-    if words and len(x) / SR - words[-1]["end"] > 1.0 and len(starts) == 1:
-        tail_start = words[-1]["end"] + 0.15
-        bounds = [[0.0, tail_start], [tail_start, len(x) / SR]]
+    # Whisper often skips repeated takes, so also cut on pauses: every sound island, and each island joined with the
+    # next one (a take can contain a deliberate "..." pause). All candidates are scored the same way.
+    hop = int(SR * 0.02)
+    db = np.array([20 * np.log10(np.sqrt(np.mean(x[i:i + hop] ** 2)) + 1e-9) for i in range(0, len(x) - hop, hop)])
+    loud = db > -40
+    islands, s0, quiet = [], None, 0
+    for i, v in enumerate(loud):
+        if v:
+            if s0 is None:
+                s0 = i
+            quiet = 0
+        elif s0 is not None:
+            quiet += 1
+            if quiet * 0.02 >= 0.4:
+                islands.append([s0 * 0.02, (i - quiet + 1) * 0.02]); s0 = None
+    if s0 is not None:
+        islands.append([s0 * 0.02, len(loud) * 0.02])
+    islands = [[max(0, a - 0.12), min(len(x) / SR, b + 0.15)] for a, b in islands if b - a > 0.25]
+    cands = [tuple(b) for b in bounds] + [tuple(i) for i in islands]
+    cands += [(islands[i][0], islands[i + 1][1]) for i in range(len(islands) - 1)]
+    bounds = sorted(set((round(a, 2), round(b, 2)) for a, b in cands))
 
     results = []
     for k, (a, b) in enumerate(bounds):
@@ -84,7 +101,15 @@ def main() -> None:
         conf = float(np.mean([w["prob"] for w in ws])) if ws else 0.0
         complete = difflib.SequenceMatcher(None, norm(text), norm(expected)).ratio()
         clipped = int(np.sum(np.abs(seg) > 0.985))
-        score = conf * 0.5 + complete * 0.5 - min(clipped, 50) * 0.002
+        # a candidate holding two takes reads as "complete" twice over; penalise extra words
+        extra = max(0, len(ws) - len(exp_words) - 1) * 0.08
+        # sound that Whisper did not transcribe (it drops repeated takes): more sound time than the words explain
+        seg_db = np.array([20 * np.log10(np.sqrt(np.mean(seg[i:i + hop] ** 2)) + 1e-9) for i in range(0, len(seg) - hop, hop)])
+        active = float(np.sum(seg_db > -40)) * 0.02
+        span = (ws[-1]["end"] - ws[0]["start"]) if ws else 0.0
+        if active > span * 1.3 + 0.6:
+            extra += 0.3
+        score = conf * 0.4 + complete * 0.6 - min(clipped, 50) * 0.002 - extra
         results.append({"take": k + 1, "from": round(a, 2), "to": round(b, 2), "text": text, "confidence": round(conf, 3),
                         "complete": round(complete, 3), "clipped": clipped, "score": round(score, 3)})
     best = max(results, key=lambda r: r["score"])

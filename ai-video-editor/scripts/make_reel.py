@@ -140,7 +140,16 @@ def build(script_path: Path) -> None:
     for line, wav in zip(spec["lines"], wavs):
         if line.get("audio"):  # a real recording for this line wins
             src = Path(line["audio"])
-            clean(src if src.is_absolute() else HERE / src, wav)
+            src = src if src.is_absolute() else HERE / src
+            if line.get("vc"):  # Sagar recorded this character's line: convert it into the character's voice
+                raw = wav.with_suffix(".vc.wav")
+                subprocess.run([str(TTS_PY), str(HERE / "scripts" / "convert_voice.py"), str(VOICES[line["who"]]["ref"]),
+                                str(src), str(raw)], check=True)
+                clean(raw, wav)
+                drop_stray_tail(wav)
+                raw.unlink()
+            else:
+                clean(src, wav)
         elif not (wav.exists() and line.get("keep_audio")):
             job = {"text": line["hi"], "out": str(wav)}
             if "exaggeration" in line:
