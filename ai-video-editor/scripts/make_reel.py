@@ -22,6 +22,7 @@ eyes: open | closed | half (krishna) | shock (sagar); mouth: closed | o (sagar);
 Writes projects/<reel>/index.html + assets/audio/*.wav. Then check and render with the HyperFrames CLI.
 """
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -237,8 +238,38 @@ def build(script_path: Path) -> None:
             f'data-duration="{total}" data-track-index="6" data-volume="{music.get("volume", 0.25)}"></audio>'
         )
 
+    # sound effects on the visible actions (files made by scripts/make_sfx.py into sfx/)
+    sfx_lib = HERE / "sfx"
+    if not (sfx_lib / "boom.wav").exists():
+        subprocess.run([sys.executable, str(HERE / "scripts" / "make_sfx.py"), str(sfx_lib)], check=True)
+    events = []
+    if any(l["who"] == "krishna" for l in lines):
+        events += [("whoosh", kr_enter - 0.2), ("shimmer", kr_enter + 0.03)]
+    for l in lines:
+        if l.get("face", {}).get("pose") == "thumb":
+            events.append(("pop", l["start"] + 0.03))
+        if l.get("punch"):
+            events.append(("whoosh-short", l["start"] - 0.05))
+        if l.get("shake"):
+            events.append(("boom", l["start"] + 0.03))
+        for s in l.get("sfx", []):
+            events.append((s["name"], l["start"] + s.get("at", 0)))
+    volumes = {"boom": 0.75, "shimmer": 0.5, "whoosh": 0.55, "whoosh-short": 0.45, "pop": 0.6, "ding": 0.5}
+    if spec.get("sfx", True) is not False:
+        for k, (name, at) in enumerate(sorted(events, key=lambda e: e[1])):
+            src = sfx_lib / f"{name}.wav"
+            dst = audio_dir / f"sfx-{name}.wav"
+            shutil.copyfile(src, dst)
+            dur = round(sf.info(str(dst)).duration, 3)
+            audio_tags.append(
+                f'      <audio id="sfx-{k + 1}" class="clip" src="{dst.relative_to(proj).as_posix()}" '
+                f'data-start="{max(0.0, round(at, 3))}" data-duration="{dur}" data-track-index="7" '
+                f'data-volume="{volumes.get(name, 0.5)}"></audio>'
+            )
+
     html = TEMPLATE.format(
         total=total,
+        watermark=spec.get("watermark", "Made By Sagar Mishra"),
         sagar=sagar_svg,
         krishna=krishna_svg,
         audio="\n".join(audio_tags),
@@ -274,6 +305,12 @@ TEMPLATE = """<!doctype html>
       }}
       .cap-krishna span {{ background: #fff4c7; border-color: #a3601a; }}
       #flash {{ position: absolute; inset: 0; background: #fff6cf; opacity: 0; }}
+      #watermark {{ position: absolute; left: 0; top: 196px; width: 1080px; text-align: center; }}
+      #watermark span {{
+        display: inline-block; font-weight: 700; font-size: 32px; letter-spacing: 0.04em; color: #ffffff;
+        background: rgba(20, 20, 30, 0.38); padding: 8px 24px; border-radius: 40px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.45);
+      }}
     </style>
   </head>
   <body>
@@ -306,6 +343,7 @@ TEMPLATE = """<!doctype html>
       <div id="captions" class="clip" data-start="0" data-duration="{total}" data-track-index="2" data-layout-allow-overlap>
 {captions}
       </div>
+      <div id="watermark" class="clip" data-start="0" data-duration="{total}" data-track-index="8"><span>{watermark}</span></div>
 {audio}
     </div>
     <script>

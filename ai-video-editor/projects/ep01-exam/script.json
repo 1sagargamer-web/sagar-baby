@@ -10,7 +10,8 @@
         "eyes": "closed",
         "pose": "pray"
       },
-      "keep_audio": true
+      "keep_audio": false,
+      "audio": "Raw/ep01-sagar-1.wav"
     },
     {
       "who": "krishna",
@@ -37,8 +38,8 @@
         "mouth": "smirk",
         "pose": "thumb"
       },
-      "keep_audio": true,
-      "exaggeration": 0.5
+      "keep_audio": false,
+      "audio": "Raw/ep01-sagar-2.wav"
     },
     {
       "who": "krishna",
@@ -61,8 +62,8 @@
         "sweat": true
       },
       "shake": true,
-      "keep_audio": true,
-      "exaggeration": 0.7
+      "keep_audio": false,
+      "audio": "Raw/ep01-sagar-3.wav"
     }
   ]
 }

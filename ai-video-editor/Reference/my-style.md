@@ -42,6 +42,19 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   `"music": false` turns it off (e.g. to add trending audio in Instagram).
 - Sagar's cloned voice is sped up 1.15x (rubberband, formant preserved). Mix around -14 LUFS.
 
+## Sound effects (every reel, automatic)
+- Made by `scripts/make_sfx.py` into `sfx/` (all synthesised). Bhagwan appears -> whoosh + shimmer;
+  thumbs-up -> pop; punchline push-in -> short whoosh; shock + shake -> boom.
+- Extra on any line: `"sfx": [{"name": "ding", "at": 0.2}]`. `"sfx": false` at the top turns them off.
+
+## Watermark (every reel)
+- "Made By Sagar Mishra", small pill at the top centre (y = 196 px, just under the phone status bar), whole video.
+  Change the text with `"watermark": "..."` in script.json.
+
+## Sagar's recordings
+- Sagar often says each line twice. Split the takes, score each (Whisper confidence, clipping, noise) and use the
+  best one; run `adeclip,highpass=f=70` on it and save as `Raw/<reel>-sagar-<n>.wav`.
+
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
 2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of Sagar's lines.
