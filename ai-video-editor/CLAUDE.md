@@ -21,7 +21,7 @@ Talk to the owner in simple Hinglish.
 | FFmpeg / FFprobe 6.1 | `ffmpeg`, `ffprobe` | ready |
 | Node.js 22 | `node`, `npx` | ready |
 | Python 3.13 | `python3` | ready |
-| Whisper | `faster-whisper` (pip), model `large-v3` | package installed; **model download needs huggingface.co network access** |
+| Whisper | `python3 scripts/transcribe.py <video> [out.json] [--language hi\|en]` (faster-whisper, model `large-v3` in `models/`, word timestamps) | ready, tested |
 | HyperFrames 0.9.61 | `node .agents/skills/hyperframes/scripts/plugin-cli.mjs <command>` (run inside the project folder) | ready, skills in `.agents/skills/` (linked into `.claude/skills/`) |
 | Chrome (for rendering) | `/usr/bin/google-chrome` | ready |
 
@@ -29,6 +29,10 @@ Always set `HYPERFRAMES_NO_TELEMETRY=1 DO_NOT_TRACK=1` when running the HyperFra
 
 Setup was verified by rendering `Export/test.mp4` (5 s, 1080x1920, 30 fps, title card) from
 `projects/test-title/`.
+
+The Whisper model (2.9 GB) is not in git. The cloud environment "sagar-baby" allows the Hugging Face
+hosts; download it with:
+`HF_HUB_DISABLE_XET=1 python3 -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-large-v3', local_dir='models/faster-whisper-large-v3')"`
 
 If a tool is missing in a fresh container: `pip3 install faster-whisper`, and the HyperFrames
 skills are already committed in `.agents/skills/` (reinstall with `npx skills add heygen-com/hyperframes --all`).
