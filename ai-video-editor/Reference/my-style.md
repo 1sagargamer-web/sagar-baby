@@ -18,9 +18,12 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 5. **Sagar's reaction** (shocked eyes, "O" mouth, sweat drop, small camera shake), hold ~1 s, end.
 
 ## Voices
-- **Sagar's lines: Sagar's own recorded voice** (one clip per line, or one recording split by Whisper).
-- **Bhagwan's lines: always the same AI voice**, set in `scripts/god_voice.py` (`VOICE`): Kokoro Hindi male,
-  slightly slow, 10% deeper, soft echo. Never change it between videos.
+- **Sagar's lines: cloned from Sagar's own recording** (`voices/sagar-ref.wav`, private, never in git) with
+  Chatterbox Multilingual. A real recording of a line (`"audio"` in script.json) always wins.
+- **Bhagwan's lines: always the same natural voice**: Chatterbox speaking from the fixed synthetic reference
+  `voices/bhagwan-ref.wav` (no real person's voice), seed 7. Settings in `VOICES` in `scripts/make_reel.py`.
+  Never change them between videos.
+- Listener reactions: `"sagar_face"` / `"krishna_face"` on a line set how the other character reacts.
 
 ## Captions
 - One caption per line in **Hinglish (Roman letters)**, white rounded box with black outline, bold Poppins,

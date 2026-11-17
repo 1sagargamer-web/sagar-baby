@@ -53,9 +53,11 @@ skills are already committed in `.agents/skills/` (reinstall with `npx skills ad
 **Read `Reference/my-style.md` before every edit.**
 
 - Characters: `characters/krishna.svg`, `characters/sagar.svg` (same art every video).
-- Bhagwan's fixed voice: `scripts/god_voice.py` (Kokoro model in `models/kokoro/`, not in git; download
-  `kokoro-v1.0.onnx` and `voices-v1.0.bin` from github.com/thewh1teagle/kokoro-onnx releases `model-files-v1.0`).
+- Voices (natural, Chatterbox Multilingual in `.venv-tts/`, not in git): `scripts/clone_voice.py`.
+  Bhagwan = `voices/bhagwan-ref.wav` (synthetic reference, committed). Sagar = `voices/sagar-ref.wav`, cut from
+  Sagar's own recording `voices/sagar-original.mp3` (private, gitignored; never upload or share it).
+  Recreate the venv: `python3 -m venv .venv-tts && .venv-tts/bin/pip install chatterbox-tts "setuptools<81"`.
 - Build a reel: `python3 scripts/make_reel.py projects/<name>/script.json`, then in that folder run the
   HyperFrames `check`, `snapshot`, and `render --quality looks --fps 30 -o ../../Export/<name>-v1.mp4`.
-- Sagar's lines use Sagar's own recordings (`"audio"` in script.json); without one, a placeholder AI voice is
-  used and that must be said clearly.
+- Sagar's lines: cloned voice by default; a real recording (`"audio"` in script.json) replaces it.
+  `"keep_audio": true` reuses an already generated line instead of re-generating it.

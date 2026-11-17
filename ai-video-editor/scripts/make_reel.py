@@ -30,31 +30,52 @@ import numpy as np
 import soundfile as sf
 
 HERE = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(HERE / "scripts"))
-import god_voice  # noqa: E402
+
+
 
 FPS = 30
 W, H = 1080, 1920
-# Placeholder for Sagar's lines until his own recording is given. Never used for Bhagwan.
-SAGAR_PLACEHOLDER = {"voice": "hm_psi", "speed": 1.05, "pitch": 1.04, "echo": "anull"}
+TTS_PY = HERE / ".venv-tts" / "bin" / "python"
+# Fixed voices. Bhagwan: a synthetic reference voice (no real person), spoken naturally by Chatterbox.
+# Sagar: cloned from Sagar's own recording (voices/sagar-ref.wav, private, not in git).
+VOICES = {
+    "krishna": {"ref": HERE / "voices" / "bhagwan-ref.wav", "exaggeration": 0.45, "cfg": 0.4, "seed": 7},
+    "sagar": {"ref": HERE / "voices" / "sagar-ref.wav", "exaggeration": 0.55, "cfg": 0.45, "seed": 11},
+}
+# Trim silence at both ends and level to -16 LUFS
+CLEAN = (
+    "silenceremove=start_periods=1:start_threshold=-40dB:start_silence=0.05,"
+    "areverse,silenceremove=start_periods=1:start_threshold=-40dB:start_silence=0.08,areverse,"
+    "loudnorm=I=-16:TP=-1.5"
+)
 
 
-def sagar_audio(line: dict, out: Path) -> None:
-    src = line.get("audio")
-    if src:
-        src_path = (HERE / src) if not Path(src).is_absolute() else Path(src)
-        # trim silence at both ends, level to -16 LUFS
-        af = (
-            "silenceremove=start_periods=1:start_threshold=-40dB:start_silence=0.05,"
-            "areverse,silenceremove=start_periods=1:start_threshold=-40dB:start_silence=0.08,areverse,"
-            "loudnorm=I=-16:TP=-1.5"
-        )
-        subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-i", str(src_path), "-af", af, "-ac", "1", "-ar", "48000", str(out)],
-            check=True,
-        )
-    else:
-        god_voice.make(line["hi"], out, SAGAR_PLACEHOLDER)
+def clean(src: Path, out: Path) -> None:
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af", CLEAN, "-ac", "1", "-ar", "48000", str(out)],
+        check=True,
+    )
+
+
+def synth(who: str, jobs: list[dict]) -> None:
+    """jobs: [{"text", "out", "exaggeration"?}] spoken in the character's fixed voice."""
+    if not jobs:
+        return
+    v = VOICES[who]
+    if not v["ref"].exists():
+        sys.exit(f"Missing voice reference {v['ref']} (see CLAUDE.md).")
+    raw = [{**j, "out": str(Path(j["out"]).with_suffix(".raw.wav"))} for j in jobs]
+    batch = Path(jobs[0]["out"]).parent / f"_{who}-jobs.json"
+    batch.write_text(json.dumps(raw, ensure_ascii=False))
+    subprocess.run(
+        [str(TTS_PY), str(HERE / "scripts" / "clone_voice.py"), str(v["ref"]), "--batch", str(batch),
+         "--exaggeration", str(v["exaggeration"]), "--cfg", str(v["cfg"]), "--seed", str(v["seed"])],
+        check=True,
+    )
+    for j, r in zip(jobs, raw):
+        clean(Path(r["out"]), Path(j["out"]))
+        Path(r["out"]).unlink()
+    batch.unlink()
 
 
 def mouth_envelope(wav: Path) -> list[bool]:
@@ -84,14 +105,23 @@ def build(script_path: Path) -> None:
     audio_dir = proj / "assets" / "audio"
     audio_dir.mkdir(parents=True, exist_ok=True)
 
+    wavs = [audio_dir / f"line-{i + 1:02d}-{l['who']}.wav" for i, l in enumerate(spec["lines"])]
+    jobs = {"krishna": [], "sagar": []}
+    for line, wav in zip(spec["lines"], wavs):
+        if line.get("audio"):  # a real recording for this line wins
+            src = Path(line["audio"])
+            clean(src if src.is_absolute() else HERE / src, wav)
+        elif not (wav.exists() and line.get("keep_audio")):
+            job = {"text": line["hi"], "out": str(wav)}
+            if "exaggeration" in line:
+                job["exaggeration"] = line["exaggeration"]
+            jobs[line["who"]].append(job)
+    for who, js in jobs.items():
+        synth(who, js)
+
     t = 0.3
     lines = []
-    for i, line in enumerate(spec["lines"]):
-        wav = audio_dir / f"line-{i + 1:02d}-{line['who']}.wav"
-        if line["who"] == "krishna":
-            god_voice.make(line["hi"], wav)
-        else:
-            sagar_audio(line, wav)
+    for line, wav in zip(spec["lines"], wavs):
         dur = sf.info(str(wav)).duration
         t += line.get("pause_before", 0)
         lines.append({**line, "wav": wav, "start": round(t, 3), "dur": round(dur, 3), "env": mouth_envelope(wav)})
@@ -115,8 +145,11 @@ def build(script_path: Path) -> None:
         for f in range(nframes):
             ft = f / FPS
             for l in lines:  # expression changes at the start of each line that sets them
-                if l["who"] == who and abs(l["start"] - ft) < 0.5 / FPS and "face" in l:
-                    face = {**defaults[who], **l["face"]}
+                if abs(l["start"] - ft) < 0.5 / FPS:
+                    if l["who"] == who and "face" in l:
+                        face = {**defaults[who], **l["face"]}
+                    elif f"{who}_face" in l:  # how the listener reacts to this line
+                        face = {**defaults[who], **l[f"{who}_face"]}
             eyes, mouth = face["eyes"], face["mouth"]
             talking = next((l for l in lines if l["who"] == who and l["start"] <= ft < l["start"] + l["dur"]), None)
             if talking and mouth != "o":

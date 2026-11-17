@@ -1,101 +1,168 @@
 <svg id="sg" viewBox="0 0 600 1000" xmlns="http://www.w3.org/2000/svg">
-  <!-- Sagar (the owner), drawn from his photos: messy fringe, thick brows, trimmed beard,
-       white tee + navy leather jacket, thumbs-up. Part ids used by the builder:
+  <!-- Sagar (the owner), v2 semi-realistic, from his photos: messy fringe, thick brows, brown eyes,
+       trimmed beard, white tee + navy leather jacket. Part ids used by the builder:
        sg-eyes-(open|closed|shock), sg-brows-(normal|sad|angry), sg-mouth-(closed|open|o|sad|smirk),
        sg-arms-(pray|thumb), sg-sweat, sg-tears, sg-head, sg-body -->
-  <g id="sg-body" stroke="#231812" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-    <!-- white tee -->
-    <path d="M140 1000 C140 740 190 610 300 600 C410 610 460 740 460 1000 Z" fill="#f6f5ef" />
+  <defs>
+    <filter id="sg-soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.2" /></filter>
+    <filter id="sg-softer" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" /></filter>
+    <linearGradient id="sg-skin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f1c6a3" />
+      <stop offset="0.55" stop-color="#ecbd98" />
+      <stop offset="1" stop-color="#dba582" />
+    </linearGradient>
+    <linearGradient id="sg-jacket" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2c3651" />
+      <stop offset="1" stop-color="#1b2133" />
+    </linearGradient>
+    <linearGradient id="sg-tee" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfaf6" />
+      <stop offset="1" stop-color="#e6e3da" />
+    </linearGradient>
+  </defs>
+
+  <g id="sg-body" stroke-linejoin="round" stroke-linecap="round">
+    <!-- tee -->
+    <path d="M120 1000 C122 760 180 640 300 628 C420 640 478 760 480 1000 Z" fill="url(#sg-tee)" stroke="#2a1d16" stroke-width="4" />
+    <path d="M276 700 C270 760 282 820 270 880 M330 720 C338 780 326 840 336 900" fill="none" stroke="#d6d2c6" stroke-width="5" />
     <!-- neck -->
-    <rect x="268" y="536" width="64" height="84" rx="24" fill="#efc3a0" />
-    <path d="M254 604 Q300 646 346 604" fill="#efc3a0" />
-    <path d="M250 606 Q300 656 350 606" fill="none" stroke="#d9d6cc" stroke-width="10" />
-    <!-- leather jacket, open -->
-    <path d="M140 1000 C140 742 186 618 252 604 L268 690 L246 760 L236 1000 Z" fill="#26304a" />
-    <path d="M460 1000 C460 742 414 618 348 604 L332 690 L354 760 L364 1000 Z" fill="#26304a" />
-    <path d="M252 604 L222 700 L268 690 Z" fill="#323d5c" />
-    <path d="M348 604 L378 700 L332 690 Z" fill="#323d5c" />
-    <path d="M242 772 L234 1000" fill="none" stroke="#9aa3b8" stroke-width="4" stroke-dasharray="7 7" />
-    <path d="M178 780 C170 860 166 930 170 1000" fill="none" stroke="#3b4768" stroke-width="5" />
-    <path d="M422 780 C430 860 434 930 430 1000" fill="none" stroke="#3b4768" stroke-width="5" />
+    <path d="M262 530 L262 622 Q300 652 338 622 L338 530 Z" fill="#e8b48f" stroke="#2a1d16" stroke-width="4" />
+    <path d="M262 548 Q300 606 338 548 L338 592 Q300 622 262 592 Z" fill="#c78a67" opacity="0.65" />
+    <path d="M258 628 Q300 664 342 628" fill="none" stroke="#dcd8cc" stroke-width="10" />
+    <!-- jacket -->
+    <path d="M120 1000 C122 760 168 650 250 624 L272 700 L254 780 L246 1000 Z" fill="url(#sg-jacket)" stroke="#11151f" stroke-width="4" />
+    <path d="M480 1000 C478 760 432 650 350 624 L328 700 L346 780 L354 1000 Z" fill="url(#sg-jacket)" stroke="#11151f" stroke-width="4" />
+    <path d="M250 624 L214 714 L272 700 Z" fill="#35415f" stroke="#11151f" stroke-width="4" />
+    <path d="M350 624 L386 714 L328 700 Z" fill="#35415f" stroke="#11151f" stroke-width="4" />
+    <path d="M152 800 C148 860 148 920 152 984" fill="none" stroke="#6b7aa0" stroke-width="7" opacity="0.55" />
+    <path d="M184 700 C174 732 168 764 166 796" fill="none" stroke="#7d8cb2" stroke-width="5" opacity="0.5" />
+    <path d="M448 800 C452 860 452 920 448 984" fill="none" stroke="#3f4b6b" stroke-width="6" opacity="0.6" />
+    <path d="M251 782 L244 1000" fill="none" stroke="#a9b2c6" stroke-width="3" stroke-dasharray="5 6" />
   </g>
-  <g id="sg-arms-pray" opacity="0" stroke="#231812" stroke-width="6" stroke-linejoin="round">
-    <path d="M168 760 C186 884 258 904 296 852 L296 770 C268 808 228 806 204 742 Z" fill="#26304a" />
-    <path d="M432 760 C414 884 342 904 304 852 L304 770 C332 808 372 806 396 742 Z" fill="#26304a" />
-    <path d="M280 866 C272 800 284 728 300 710 C316 728 328 800 320 866 Z" fill="#efc3a0" />
-    <path d="M300 718 L300 864" fill="none" />
+
+  <g id="sg-arms-pray" opacity="0" stroke="#11151f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M160 760 C180 884 256 906 296 852 L296 772 C268 808 226 806 200 740 Z" fill="url(#sg-jacket)" />
+    <path d="M440 760 C420 884 344 906 304 852 L304 772 C332 808 374 806 400 740 Z" fill="url(#sg-jacket)" />
+    <path d="M280 868 C272 802 284 730 300 712 C316 730 328 802 320 868 Z" fill="#e8b48f" stroke="#2a1d16" />
+    <path d="M300 720 L300 866" fill="none" stroke="#a96f52" stroke-width="3" />
   </g>
-  <g id="sg-arms-thumb" opacity="0" stroke="#231812" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M436 760 C428 850 392 878 344 852 L332 782 C364 800 392 784 404 736 Z" fill="#26304a" />
-    <path d="M268 790 h70 a20 20 0 0 1 20 20 v40 a20 20 0 0 1 -20 20 h-70 a20 20 0 0 1 -20 -20 v-40 a20 20 0 0 1 20 -20 Z" fill="#efc3a0" />
-    <path d="M262 818 L340 818 M262 842 L336 842" fill="none" stroke-width="4" />
-    <path d="M276 792 C270 756 274 720 292 712 C308 706 314 720 310 738 L306 792 Z" fill="#efc3a0" />
+  <g id="sg-arms-thumb" opacity="0" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M440 760 C432 852 394 882 344 856 L332 784 C366 802 394 786 406 736 Z" fill="url(#sg-jacket)" stroke="#11151f" stroke-width="4" />
+    <path d="M268 792 h70 a22 22 0 0 1 22 22 v38 a22 22 0 0 1 -22 22 h-70 a22 22 0 0 1 -22 -22 v-38 a22 22 0 0 1 22 -22 Z" fill="#e8b48f" stroke="#2a1d16" stroke-width="4" />
+    <path d="M262 820 Q300 826 342 818 M262 844 Q300 850 338 842" fill="none" stroke="#a96f52" stroke-width="3" />
+    <path d="M276 794 C268 756 272 720 292 712 C310 706 316 722 312 740 L308 794 Z" fill="#e8b48f" stroke="#2a1d16" stroke-width="4" />
+    <path d="M284 724 Q294 720 302 726" fill="none" stroke="#f6e0cf" stroke-width="3" />
   </g>
-  <g id="sg-head" stroke="#231812" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+
+  <g id="sg-head" stroke-linejoin="round" stroke-linecap="round">
     <!-- ears -->
-    <ellipse cx="176" cy="436" rx="18" ry="30" fill="#efc3a0" />
-    <ellipse cx="424" cy="436" rx="18" ry="30" fill="#efc3a0" />
-    <!-- face with a slightly narrow chin -->
-    <path d="M176 414 C176 304 230 280 300 280 C370 280 424 304 424 414 C424 502 382 560 300 566 C218 560 176 502 176 414 Z" fill="#efc3a0" />
-    <!-- trimmed beard + goatee -->
-    <path d="M180 448 C186 524 232 568 300 572 C368 568 414 524 420 448 C408 500 384 522 356 524 C334 540 266 540 244 524 C216 522 192 500 180 448 Z" fill="#3a2a22" opacity="0.5" stroke="none" />
-    <ellipse cx="300" cy="548" rx="30" ry="18" fill="#2a1d17" opacity="0.45" stroke="none" />
-    <!-- hair: top tufts, main mass, fringe falling on the forehead -->
-    <path d="M212 266 C214 230 236 212 256 236 C260 204 288 192 302 226 C316 196 344 198 348 232 C366 212 392 226 390 258 Z" fill="#1d1916" />
-    <path d="M166 410 C146 304 196 232 296 226 C394 220 458 280 440 396 C432 356 414 332 396 322 C382 352 352 364 322 362 C302 370 262 376 232 370 C206 370 184 386 166 410 Z" fill="#1d1916" />
-    <path d="M226 300 C250 328 262 350 252 374 C272 362 288 342 290 322 Z" fill="#1d1916" />
-    <path d="M286 296 C304 322 312 344 304 368 C324 354 334 332 330 306 Z" fill="#1d1916" />
-    <path d="M250 262 C280 250 330 252 360 270 M220 300 C236 286 254 280 270 280" fill="none" stroke="#4d433c" stroke-width="5" />
+    <path d="M190 392 C164 382 154 420 166 450 C174 470 188 474 196 460 Z" fill="#e3ad88" stroke="#2a1d16" stroke-width="4" />
+    <path d="M410 392 C436 382 446 420 434 450 C426 470 412 474 404 460 Z" fill="#d9a07c" stroke="#2a1d16" stroke-width="4" />
+    <path d="M178 412 C172 428 176 444 186 452" fill="none" stroke="#b77a5a" stroke-width="3" />
+    <path d="M422 412 C428 428 424 444 414 452" fill="none" stroke="#b77a5a" stroke-width="3" />
+    <!-- face -->
+    <path d="M184 398 C184 300 236 262 300 262 C364 262 416 300 416 398 C416 470 398 520 366 548 C344 568 324 576 300 576 C276 576 256 568 234 548 C202 520 184 470 184 398 Z" fill="url(#sg-skin)" stroke="#2a1d16" stroke-width="4" />
+    <!-- cheek / jaw shading -->
+    <path d="M416 398 C416 470 398 520 366 548 C344 568 324 576 300 576 C344 556 380 516 392 450 C398 414 398 368 392 336 C408 356 416 376 416 398 Z" fill="#cf9572" opacity="0.55" />
+    <ellipse cx="226" cy="468" rx="22" ry="12" fill="#ec9f86" opacity="0.22" />
+    <ellipse cx="374" cy="468" rx="22" ry="12" fill="#ec9f86" opacity="0.22" />
+    <!-- beard (soft edges), goatee, moustache -->
+    <path filter="url(#sg-soft)" d="M188 430 C192 500 228 560 270 574 C282 578 318 578 330 574 C372 560 408 500 412 430 C404 470 390 500 370 512 C350 524 334 520 322 528 C310 534 290 534 278 528 C266 520 250 524 230 512 C210 500 196 470 188 430 Z" fill="#2a1e18" opacity="0.62" />
+    <ellipse filter="url(#sg-soft)" cx="300" cy="552" rx="28" ry="17" fill="#21170f" opacity="0.5" />
+    <!-- hair shadow on the forehead -->
+    <g fill="#c38867" opacity="0.5" filter="url(#sg-soft)">
+      <path d="M306 322 C290 338 268 358 242 380 C268 374 288 364 304 348 Z" />
+      <path d="M346 320 C336 344 316 368 290 388 C318 382 342 364 356 338 Z" />
+      <path d="M268 332 C252 344 232 358 212 368 C232 370 254 360 272 348 Z" />
+    </g>
+    <!-- hair -->
+    <path d="M180 404 C170 330 196 252 270 234 C340 220 410 246 424 320 C430 350 424 386 418 408 C412 378 402 352 390 338 L210 338 C198 358 188 384 180 404 Z" fill="#17120f" />
+    <path d="M190 342 C176 272 214 216 276 208 C300 192 340 196 360 212 C400 216 432 254 428 302 C432 332 420 352 404 362 C396 332 380 318 360 314 C330 312 296 318 270 328 C240 338 214 342 190 342 Z" fill="#1d1714" />
+    <path d="M220 236 C230 214 250 206 266 216 C278 200 302 196 316 210 C332 198 356 202 364 218 C380 216 398 228 396 246 Z" fill="#1d1714" />
+    <g fill="#1d1714">
+      <path d="M300 314 C284 330 262 350 236 372 C262 366 282 356 298 340 Z" />
+      <path d="M340 312 C330 336 310 360 284 380 C312 374 336 356 350 330 Z" />
+      <path d="M262 324 C246 336 226 350 206 360 C226 362 248 352 266 340 Z" />
+      <path d="M380 318 C378 340 370 356 358 368 C376 362 390 346 394 326 Z" />
+    </g>
+    <g fill="none" stroke="#54453c" stroke-width="3.5">
+      <path d="M234 236 C268 222 320 222 356 240" />
+      <path d="M214 292 C246 270 290 264 330 272" />
+      <path d="M302 318 C292 334 276 350 258 362" />
+      <path d="M340 316 C332 334 318 350 302 364" />
+      <path d="M380 260 C396 276 404 296 404 318" />
+    </g>
     <!-- brows -->
-    <g id="sg-brows-normal" stroke="none" fill="#1d1916">
-      <path d="M214 392 Q246 368 284 380 L282 394 Q248 386 218 404 Z" />
-      <path d="M386 392 Q354 368 316 380 L318 394 Q352 386 382 404 Z" />
+    <g id="sg-brows-normal" fill="#1a1310">
+      <path d="M212 392 C228 378 254 374 282 382 C284 386 282 390 278 390 C254 386 234 388 216 398 C210 400 208 396 212 392 Z" />
+      <path d="M388 392 C372 378 346 374 318 382 C316 386 318 390 322 390 C346 386 366 388 384 398 C390 400 392 396 388 392 Z" />
     </g>
-    <g id="sg-brows-sad" opacity="0" stroke="none" fill="#1d1916">
-      <path d="M214 404 Q246 392 282 366 L286 380 Q252 402 218 416 Z" />
-      <path d="M386 404 Q354 392 318 366 L314 380 Q348 402 382 416 Z" />
+    <g id="sg-brows-sad" opacity="0" fill="#1a1310">
+      <path d="M214 398 C232 392 256 384 280 370 C284 372 284 378 280 380 C258 394 236 400 216 406 C210 406 210 400 214 398 Z" />
+      <path d="M386 398 C368 392 344 384 320 370 C316 372 316 378 320 380 C342 394 364 400 384 406 C390 406 390 400 386 398 Z" />
     </g>
-    <g id="sg-brows-angry" opacity="0" stroke="none" fill="#1d1916">
-      <path d="M212 380 Q248 382 286 404 L282 418 Q246 398 214 394 Z" />
-      <path d="M388 380 Q352 382 314 404 L318 418 Q354 398 386 394 Z" />
+    <g id="sg-brows-angry" opacity="0" fill="#1a1310">
+      <path d="M212 380 C236 382 260 390 282 402 C284 406 280 410 276 408 C256 398 234 394 214 392 C208 390 208 382 212 380 Z" />
+      <path d="M388 380 C364 382 340 390 318 402 C316 406 320 410 324 408 C344 398 366 394 386 392 C392 390 392 382 388 380 Z" />
     </g>
     <!-- eyes -->
     <g id="sg-eyes-open">
-      <path d="M226 434 Q250 410 274 434 Q250 450 226 434 Z" fill="#ffffff" />
-      <path d="M326 434 Q350 410 374 434 Q350 450 326 434 Z" fill="#ffffff" />
-      <circle cx="252" cy="433" r="11" fill="#2a1a10" stroke="none" />
-      <circle cx="352" cy="433" r="11" fill="#2a1a10" stroke="none" />
-      <circle cx="256" cy="429" r="3.5" fill="#ffffff" stroke="none" />
-      <circle cx="356" cy="429" r="3.5" fill="#ffffff" stroke="none" />
+      <path d="M226 422 Q250 402 278 418 Q252 434 226 422 Z" fill="#fbf7f2" />
+      <path d="M374 422 Q350 402 322 418 Q348 434 374 422 Z" fill="#fbf7f2" />
+      <circle cx="255" cy="419" r="10.5" fill="#4b2e1a" />
+      <circle cx="351" cy="419" r="10.5" fill="#4b2e1a" />
+      <circle cx="255" cy="419" r="5" fill="#120b07" />
+      <circle cx="351" cy="419" r="5" fill="#120b07" />
+      <circle cx="258" cy="415" r="3" fill="#ffffff" />
+      <circle cx="354" cy="415" r="3" fill="#ffffff" />
+      <path d="M224 422 Q250 398 280 418" fill="none" stroke="#1a120e" stroke-width="5" />
+      <path d="M376 422 Q350 398 320 418" fill="none" stroke="#1a120e" stroke-width="5" />
+      <path d="M230 427 Q252 435 276 423" fill="none" stroke="#b98466" stroke-width="2" />
+      <path d="M370 427 Q348 435 324 423" fill="none" stroke="#b98466" stroke-width="2" />
     </g>
-    <g id="sg-eyes-closed" opacity="0" fill="none">
-      <path d="M226 436 Q250 450 274 436" />
-      <path d="M326 436 Q350 450 374 436" />
+    <g id="sg-eyes-closed" opacity="0" fill="none" stroke="#1a120e" stroke-width="5">
+      <path d="M226 420 Q250 434 278 420" />
+      <path d="M374 420 Q350 434 322 420" />
+      <path d="M234 426 L230 434 M246 430 L244 438 M366 426 L370 434 M354 430 L356 438" stroke-width="2.5" />
     </g>
     <g id="sg-eyes-shock" opacity="0">
-      <ellipse cx="248" cy="432" rx="30" ry="33" fill="#ffffff" />
-      <ellipse cx="352" cy="432" rx="30" ry="33" fill="#ffffff" />
-      <circle cx="248" cy="434" r="6" fill="#2a1a10" stroke="none" />
-      <circle cx="352" cy="434" r="6" fill="#2a1a10" stroke="none" />
+      <ellipse cx="252" cy="418" rx="27" ry="25" fill="#fbf7f2" stroke="#1a120e" stroke-width="4" />
+      <ellipse cx="348" cy="418" rx="27" ry="25" fill="#fbf7f2" stroke="#1a120e" stroke-width="4" />
+      <circle cx="252" cy="420" r="7" fill="#4b2e1a" />
+      <circle cx="348" cy="420" r="7" fill="#4b2e1a" />
+      <circle cx="252" cy="420" r="3.5" fill="#120b07" />
+      <circle cx="348" cy="420" r="3.5" fill="#120b07" />
     </g>
     <!-- nose -->
-    <path d="M296 442 Q284 478 300 486 Q312 484 316 476" fill="none" stroke-width="5" />
-    <!-- moustache -->
-    <path d="M258 500 Q300 480 342 500 Q322 494 300 497 Q278 494 258 500 Z" fill="#241a15" stroke="none" opacity="0.85" />
+    <path d="M290 424 C288 446 282 460 284 468" fill="none" stroke="#c98d6b" stroke-width="3" opacity="0.8" />
+    <ellipse cx="304" cy="454" rx="5" ry="10" fill="#ffffff" opacity="0.22" />
+    <path d="M280 466 Q300 482 320 466" fill="none" stroke="#8c5a44" stroke-width="4" />
+    <ellipse cx="290" cy="470" rx="5" ry="3" fill="#7a4a36" opacity="0.6" />
+    <ellipse cx="310" cy="470" rx="5" ry="3" fill="#7a4a36" opacity="0.6" />
+    <path d="M258 490 C272 476 290 476 300 482 C310 476 328 476 342 490 C326 488 312 490 300 494 C288 490 274 488 258 490 Z" fill="#241913" opacity="0.88" filter="url(#sg-soft)" />
     <!-- mouths -->
-    <path id="sg-mouth-closed" d="M274 512 Q300 524 326 512" fill="none" />
-    <g id="sg-mouth-open" opacity="0">
-      <path d="M270 506 Q300 556 330 506 Q300 516 270 506 Z" fill="#6b1e24" />
-      <path d="M286 532 Q300 546 314 532 Q300 526 286 532 Z" fill="#e8677b" stroke="none" />
+    <g id="sg-mouth-closed">
+      <path d="M278 506 Q300 522 322 506 Q300 512 278 506 Z" fill="#c47466" opacity="0.85" />
+      <path d="M272 502 Q300 510 328 502" fill="none" stroke="#6b3a30" stroke-width="4" />
     </g>
-    <ellipse id="sg-mouth-o" opacity="0" cx="300" cy="522" rx="16" ry="22" fill="#6b1e24" />
-    <path id="sg-mouth-sad" opacity="0" d="M276 524 Q300 506 324 524" fill="none" />
-    <path id="sg-mouth-smirk" opacity="0" d="M274 514 Q304 522 330 502" fill="none" />
+    <g id="sg-mouth-open" opacity="0">
+      <path d="M272 498 Q300 494 328 498 Q324 536 300 540 Q276 536 272 498 Z" fill="#4a1418" stroke="#6b3a30" stroke-width="3" />
+      <path d="M277 500 Q300 497 323 500 L321 509 Q300 507 279 509 Z" fill="#ffffff" />
+      <ellipse cx="300" cy="530" rx="14" ry="6" fill="#d86a78" />
+    </g>
+    <g id="sg-mouth-o" opacity="0">
+      <ellipse cx="300" cy="516" rx="15" ry="20" fill="#4a1418" stroke="#c47466" stroke-width="5" />
+    </g>
+    <path id="sg-mouth-sad" opacity="0" d="M276 514 Q300 498 324 514" fill="none" stroke="#6b3a30" stroke-width="4" />
+    <g id="sg-mouth-smirk" opacity="0">
+      <path d="M282 508 Q304 520 324 504 Q304 512 282 508 Z" fill="#c47466" opacity="0.85" />
+      <path d="M272 504 Q302 512 330 494" fill="none" stroke="#6b3a30" stroke-width="4" />
+    </g>
     <!-- sweat + tears -->
-    <path id="sg-sweat" opacity="0" d="M448 318 C464 346 470 362 458 374 C448 382 434 374 436 360 C438 346 444 334 448 318 Z" fill="#8fd3ff" stroke="#3a7fb0" stroke-width="4" />
-    <g id="sg-tears" opacity="0" fill="#8fd3ff" stroke="#3a7fb0" stroke-width="4">
-      <path d="M236 452 C244 470 248 482 240 490 C232 496 222 488 226 478 C228 470 232 462 236 452 Z" />
-      <path d="M364 452 C372 470 376 482 368 490 C360 496 350 488 354 478 C356 470 360 462 364 452 Z" />
+    <path id="sg-sweat" opacity="0" d="M440 318 C456 346 462 362 450 374 C440 382 426 374 428 360 C430 346 436 334 440 318 Z" fill="#9edaff" stroke="#3a7fb0" stroke-width="3" />
+    <g id="sg-tears" opacity="0" fill="#9edaff" stroke="#3a7fb0" stroke-width="3">
+      <path d="M238 436 C246 454 250 466 242 474 C234 480 224 472 228 462 C230 454 234 446 238 436 Z" />
+      <path d="M362 436 C370 454 374 466 366 474 C358 480 348 472 352 462 C354 454 358 446 362 436 Z" />
     </g>
   </g>
 </svg>
