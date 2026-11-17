@@ -22,12 +22,13 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   list of Sagar's lines to record and wait for the recordings (`"audio"` in script.json). Use the cloned voice
   (`voices/sagar-ref.wav`, private, never in git; Chatterbox, sped up 1.15x) **only when Sagar says he cannot
   record** for that reel.
-- **Bhagwan's lines: always the same natural voice**: Chatterbox speaking from the fixed synthetic reference
-  `voices/bhagwan-ref.wav` (no real person's voice), seed 7. Settings in `VOICES` in `scripts/make_reel.py`.
-  Never change them between videos.
-- **Testing (Ep 02):** Sagar records Bhagwan's lines too, converted into Bhagwan's voice with Chatterbox VC
-  (`"audio": "Raw/...", "vc": true` on the krishna line, `scripts/convert_voice.py`). If Sagar does not like it,
-  keep the AI Bhagwan voice. Ask Sagar which one before making the next reel.
+- **Bhagwan's lines: always the same voice, `voices/bhagwan-ref.wav` ("Shaant Gehri", option 1, chosen by
+  Sagar; synthetic, no real person's voice). Never change it.**
+  - Default: Sagar records Bhagwan's lines too (calm, slow, a smile in the voice, pause at "..."), and they are
+    converted into that voice with Chatterbox VC (`"audio": "Raw/...", "vc": true` on the krishna line).
+    Ask for these recordings together with Sagar's own lines.
+  - If Sagar cannot record Bhagwan's lines, Chatterbox TTS speaks them from the same reference (seed 7).
+  - Other options tried and not chosen are kept in `voices/bhagwan-options/` (only if Sagar asks again).
 - Listener reactions: `"sagar_face"` / `"krishna_face"` on a line set how the other character reacts.
 
 ## Captions
