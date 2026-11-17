@@ -146,6 +146,14 @@ def build(script_path: Path) -> None:
             if "exaggeration" in line:
                 job["exaggeration"] = line["exaggeration"]
             jobs[line["who"]].append(job)
+    # Rule: Sagar records his own lines. The clone is used only when the script says "allow_clone": true
+    # (Sagar said he cannot record this time). Until the recordings arrive, prepare Bhagwan's lines and stop.
+    if jobs["sagar"] and not spec.get("allow_clone"):
+        synth("krishna", jobs["krishna"])
+        print("WAITING FOR SAGAR'S RECORDINGS. Lines to record:")
+        for n, line in enumerate((l for l in spec["lines"] if l["who"] == "sagar" and not l.get("audio")), 1):
+            print(f"  {n}. {line['caption']}")
+        return
     for who, js in jobs.items():
         synth(who, js)
 
