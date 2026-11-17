@@ -25,3 +25,16 @@ __pycache__/
 
 # Private voice recordings, never commit
 voices/sagar*
+
+# Second channel (channels/<name>/): same rules as the first channel
+channels/*/Raw/*
+!channels/*/Raw/.gitkeep
+channels/*/Export/*
+!channels/*/Export/.gitkeep
+channels/*/Reference/*.mp4
+channels/*/Reference/*.mov
+channels/*/Reference/*.json
+channels/*/projects/*/assets/audio/
+channels/*/projects/*/assets/video/
+# Sagar's voice, its clone and every clip made from it: private, never commit
+channels/*/voices/
