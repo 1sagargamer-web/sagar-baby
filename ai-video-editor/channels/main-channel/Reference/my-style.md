@@ -11,6 +11,17 @@ the last 30 s at 1 fps, plus cut detection.
 **Rule:** copy the *editing* (structure, timing, layouts, kinds of effects). Never copy their logos, channel
 cards, music, sound files, fonts, exact text or graphics. Make our own versions that feel the same.
 
+## Sagar's fix list (every fix he asked for; always follow, never undo)
+1. Text bigger, bolder and glowing like the references (Poppins Black, 3D extrusion, coloured glow, no black outline).
+2. Emoji = big 3D glossy emoji like the references, many at once, behind Sagar.
+3. Keep Sagar's ORIGINAL background; no replaced room (looked fake) and no face glow (made a white halo and haze).
+4. Text/emoji animations smooth like the references (letter-by-letter springs, motion-blur fly-ins, 3D drift).
+5. Sound effects like the references: real recorded-style CC0 sounds, one per text event; no synthesised blips.
+6. Cut-out edges clean: no dark blurry ring around hair/hands (`scripts/clean_matte.py`).
+7. Hair in front of bright smoke must not look chopped or blink: soft, temporally smoothed edge
+   (clean_matte defaults 0.38/0.85, 1.1 px, 3-frame smoothing) and smoke puffs fade in over 0.1 s.
+8. Never invent viewer comments; ask Sagar for real comment screenshots when he mentions comments.
+
 ## Format
 - YouTube long video, landscape **1920x1080**, 60 fps source looks best (export 30 or 60 fps), 10-18 min.
 - Type: talking/reacting host on camera (facecam) + the content being reacted to (memes, short clips,

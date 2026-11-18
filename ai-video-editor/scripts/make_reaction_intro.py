@@ -321,9 +321,11 @@ TEMPLATE = r"""<!doctype html>
         document.querySelectorAll(root + " .blob").forEach((el, k) => {
           const a = (k / 14) * Math.PI * 2 + r(), d = (60 + r() * 240) * sc;
           tl.set(el, { x: b.x, y: b.y, xPercent: -50, yPercent: -50 }, 0);
-          tl.fromTo(el, { opacity: 0.95, scale: 0.15, x: b.x, y: b.y },
+          // fade in over ~0.1 s (an instant full-bright puff reads as a light blink)
+          tl.fromTo(el, { opacity: 0, scale: 0.15, x: b.x, y: b.y },
             { scale: (1.2 + r() * 0.8) * sc, x: b.x + Math.cos(a) * d * 1.4, y: b.y + Math.sin(a) * d * 0.8,
               duration: 0.5, ease: "power3.out", ...IR }, b.t + k * 0.012);
+          tl.to(el, { opacity: 0.88, duration: 0.1, ease: "power1.out" }, b.t + k * 0.012);
           tl.to(el, { opacity: 0, scale: "+=0.35", duration: 0.45, ease: "power1.in" }, b.t + 0.3 + r() * 0.2);
         });
         document.querySelectorAll(root + " .shard").forEach((el, k) => {
