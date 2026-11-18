@@ -41,6 +41,10 @@ to the voice (Whisper word timings).
 4. **Topic tease** (3-8 s): punch-in zooms on the host, a full-screen picture of today's topic, previous
    video cards or viewers' comments popping in around the host ("you asked for this"), emoji / heart
    bursts on funny lines.
+   **What is said in the intro (ref-1 transcript, ~18 s), the order to follow:**
+   greeting + name + a fun rhyming tagline (0-3 s) → "hello, kaise ho" (3-4 s) → "last video par aapne
+   comments kiye the ki ye karo" (social proof, 4-9 s) → the question hook "kya aaj ye ho payega?" (10-13 s)
+   → "aap bhi saath mein khelna" (13-15 s) → credit line → "let's get started" (17-18 s).
 5. A short subtitle line like "Let's get started" (white italic, bottom centre), then a **white flash** or
    whip transition into the main content. The whole intro is about 15-20 s.
 
