@@ -99,10 +99,26 @@ to the voice (Whisper word timings).
 - **Emoji = 3D glossy stickers** (Microsoft Fluent 3D emoji, MIT licence, `@lobehub/fluent-emoji-3d` from npm),
   thin white border, 180-420 px, 10-12 at once popping in all over the screen and drifting up (not tiny flat
   emoji, not falling from the top).
-- **Background:** Sagar's own room is replaced with one of his room photos in `characters/backgrounds/`.
-  Default `room-1-silver.jpg` (it shows a silver play button, which matches 2 lakh subscribers; the other two
-  show a gold button, which would look fake). Made with `scripts/room_composite.py` (empty-room matte fix,
-  warm grade, light wrap, room blur + grain). Always check frames for holes or smudges in the cut-out.
+- **Background: keep Sagar's ORIGINAL room** (Sagar, v2 feedback: the replaced room looked fake/AI). Make him pop
+  instead: `scripts/person_glow.py` = brighter, warmer person with a soft glow through a feathered matte, room a
+  little dimmer with a soft vignette (no visible edge). Room photos in `characters/backgrounds/` are only used if
+  Sagar asks again.
+- **Animation (frame-by-frame study of the references at 30 fps, v3):** built by `scripts/make_reaction_intro.py`
+  from `projects/<video>/intro.json`.
+  - Some words come in **letter by letter** (each letter springs up from tiny, 0.03 s apart, overshoot), e.g. the
+    first word and the big bottom words ("ALRIGHT", "REACTION" in the references).
+  - Others **fly in with motion blur** from the left/right/top (blur 18 px, stretched, 3D turn), or pop with blur.
+  - While on screen every word **drifts in 3D** (slow rotateY/rotateX + 5% scale), never dead still.
+  - Exit: sink down with a tilt, or fly off left/right/up with blur.
+  - Two words share the screen (e.g. BIG left + BOSS right, LEKE + AA GAYA!).
+  - Big moment = **smoke burst** (yellow cloudy puffs with turbulent edges + flying brown shards) behind the words,
+    plus a fast punch-in zoom with a small shake.
+  - Emoji field: ~22 3D emoji **behind Sagar**, fade+scale in within 0.25 s all over the screen, drift up ~1 s.
+  - Channel card slides up from the bottom with blur, Subscribe click, slides back down.
+- **Sound effects (v3, crispy):** `scripts/make_sfx_reaction.py` → snap (every word), blip (every letter, added
+  automatically), zip (flying words), burst (smoke explosion), zoom-in (punch-ins), swipe (card), click + ding
+  (subscribe), sparkle (emoji field), flash (white flash). Matched to the references' spectrograms (sharp click +
+  falling-pitch blips); measured, not heard.
 - Comments ("aapne comments mein bola tha"): ask Sagar for real comment screenshots when he says it; never
   invent viewer comments.
 

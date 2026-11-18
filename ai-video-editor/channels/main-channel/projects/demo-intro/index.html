@@ -10,54 +10,48 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
       #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Poppins Black", sans-serif; }
-
-      /* camera: the room and Sagar move together */
       .cam { position: absolute; inset: 0; transform-origin: 50% 32%; }
       .cam video { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
-      #cam-back { z-index: 1; }
-      #behind { z-index: 2; }
-      #cam-front { z-index: 3; }
-      #front { z-index: 4; }
-      #flash { z-index: 6; }
-      .layer { position: absolute; inset: 0; pointer-events: none; }
+      #cam-back { z-index: 1; } #behind { z-index: 2; } #cam-front { z-index: 3; } #front { z-index: 4; } #flash { z-index: 6; }
+      .layer { position: absolute; inset: 0; pointer-events: none; perspective: 1100px; }
 
-      /* big 3D word (reference look): bright fill, same-hue extrusion, white rim light, coloured glow, no black outline */
-      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; }
+      /* 3D word: bright fill + top highlight, same-hue extrusion, light rim, big coloured glow (no black outline) */
+      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; transform-style: preserve-3d; }
       .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: -0.01em; }
-      .w .b {
-        color: var(--deep);
-        -webkit-text-stroke: calc(var(--size) * 0.018) var(--rim);
-        paint-order: stroke fill;
-        text-shadow:
-          var(--dx1) 3px 0 var(--deep), var(--dx2) 6px 0 var(--deep), var(--dx3) 9px 0 var(--deep),
+      .w .b { color: var(--deep); -webkit-text-stroke: calc(var(--size) * 0.016) var(--rim); paint-order: stroke fill;
+        text-shadow: var(--dx1) 3px 0 var(--deep), var(--dx2) 6px 0 var(--deep), var(--dx3) 9px 0 var(--deep),
           var(--dx4) 12px 0 var(--deep), var(--dx5) 15px 0 var(--deep), var(--dx6) 18px 0 var(--deep),
-          var(--dx6) 22px 10px rgba(0, 0, 0, 0.45),
-          0 0 26px var(--glow), 0 0 60px var(--glow);
-      }
-      .w .f {
-        position: absolute; left: 0; top: 0;
+          var(--dx6) 24px 14px rgba(0, 0, 0, 0.45), 0 0 34px var(--glow), 0 0 90px var(--glow); }
+      .w .f { position: absolute; left: 0; top: 0;
         background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
-        -webkit-background-clip: text; background-clip: text; color: transparent;
-      }
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .w .l { display: inline-block; }
+      .w.lw .f { background: none; }
+      .w.lw .f .l { background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
       .w.left  { --dx1: -2px; --dx2: -4px; --dx3: -6px; --dx4: -8px; --dx5: -10px; --dx6: -12px; }
       .w.right { --dx1: 2px; --dx2: 4px; --dx3: 6px; --dx4: 8px; --dx5: 10px; --dx6: 12px; }
       .w.down  { --dx1: 0px; --dx2: 0px; --dx3: 0px; --dx4: 0px; --dx5: 0px; --dx6: 0px; }
-      .lime  { --hi: #fdffd0; --c1: #f2ff3c; --c2: #8fe830; --deep: #3f9e1c; --rim: #fbffd8; --glow: rgba(205, 255, 70, 0.55); }
-      .cyan  { --hi: #e6feff; --c1: #79f1ff; --c2: #27b8ff; --deep: #1c52d6; --rim: #e8fdff; --glow: rgba(70, 215, 255, 0.6); }
-      .pink  { --hi: #ffe2fb; --c1: #ff86ee; --c2: #ff38c4; --deep: #b0158f; --rim: #ffe6fb; --glow: rgba(255, 70, 210, 0.6); }
-      .gold  { --hi: #fffbd0; --c1: #fff04a; --c2: #ffbb00; --deep: #ff5e00; --rim: #fff9c8; --glow: rgba(255, 110, 0, 0.75); }
-      .red   { --hi: #ffd9cf; --c1: #ff6c47; --c2: #ff2626; --deep: #9c0010; --rim: #ffe0d8; --glow: rgba(255, 50, 30, 0.6); }
-      .neon  { --hi: #ffffff; --c1: #ffffff; --c2: #ffd3f1; --deep: #ff3d9a; --rim: #ff6fb6; --glow: rgba(255, 30, 120, 0.9); }
+      .lime   { --hi: #fdffd0; --c1: #f2ff3c; --c2: #8fe830; --deep: #3f9e1c; --rim: #fbffd8; --glow: rgba(205, 255, 70, 0.6); }
+      .cyan   { --hi: #e6feff; --c1: #79f1ff; --c2: #27b8ff; --deep: #1c52d6; --rim: #e8fdff; --glow: rgba(70, 215, 255, 0.65); }
+      .pink   { --hi: #ffe2fb; --c1: #ff86ee; --c2: #ff38c4; --deep: #b0158f; --rim: #ffe6fb; --glow: rgba(255, 60, 210, 0.75); }
+      .gold   { --hi: #fffbd0; --c1: #fff04a; --c2: #ffbb00; --deep: #ff5e00; --rim: #fff9c8; --glow: rgba(255, 110, 0, 0.8); }
+      .red    { --hi: #ffd9cf; --c1: #ff6c47; --c2: #ff2626; --deep: #9c0010; --rim: #ffe0d8; --glow: rgba(255, 50, 30, 0.65); }
+      .neon   { --hi: #ffffff; --c1: #ffffff; --c2: #ffd3f1; --deep: #ff3d9a; --rim: #ff6fb6; --glow: rgba(255, 30, 120, 0.95); }
+      .purple { --hi: #f6e6ff; --c1: #e08cff; --c2: #a94bff; --deep: #5a1aa8; --rim: #f3e2ff; --glow: rgba(190, 90, 255, 0.7); }
 
-      /* small word captions, lower left (yellow, heavy italic) */
       .cap { position: absolute; left: 110px; top: 890px; opacity: 0; white-space: nowrap; font-family: "Poppins Black Italic";
         font-style: italic; font-size: 92px; color: #ffe02e; letter-spacing: -0.01em;
-        -webkit-text-stroke: 7px #2a1600; paint-order: stroke fill; text-shadow: 0 6px 0 #2a1600, 0 12px 22px rgba(0,0,0,.55), 0 0 30px rgba(255,190,0,.45); }
+        -webkit-text-stroke: 7px #2a1600; paint-order: stroke fill; text-shadow: 0 6px 0 #2a1600, 0 12px 22px rgba(0,0,0,.55), 0 0 30px rgba(255,190,0,.5); }
 
-      /* explosion burst */
-      .burst { position: absolute; width: 900px; height: 600px; left: 0; top: 0; opacity: 0; }
+      /* smoke burst: yellow puffs + flying shards */
+      .burst { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; filter: url(#smoke); }
+      .burst .blob { position: absolute; left: 0; top: 0; border-radius: 50%; opacity: 0;
+        background: radial-gradient(circle at 42% 38%, rgba(255, 253, 230, 0.95) 0%, rgba(255, 238, 120, 0.9) 22%,
+          rgba(255, 210, 40, 0.75) 45%, rgba(250, 175, 20, 0.35) 68%, rgba(240, 160, 0, 0) 100%); }
+      .burst .shard { position: absolute; left: 0; top: 0; width: 26px; height: 16px; opacity: 0; background: #6b3a12;
+        clip-path: polygon(0 0, 100% 30%, 70% 100%, 10% 80%); }
 
-      /* channel card (our own design) */
       #card { position: absolute; left: 70px; top: 760px; width: 800px; height: 190px; opacity: 0;
         background: #ffffff; border-radius: 32px; box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 0 6px rgba(255,255,255,.35);
         display: flex; align-items: center; gap: 26px; padding: 0 30px; font-family: "Poppins", sans-serif; }
@@ -73,207 +67,250 @@
       #subbed { background: #e6e6e6; color: #333; opacity: 0; }
       #cursor { position: absolute; left: 0; top: 0; width: 64px; height: 64px; opacity: 0; }
 
-      /* 3D emoji stickers (Microsoft Fluent 3D emoji, MIT licence) */
       .emo { position: absolute; left: 0; top: 0; width: 300px; height: 300px; opacity: 0;
-        filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 3px #ffffff) drop-shadow(0 14px 18px rgba(0,0,0,.35)); }
+        filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 3px #ffffff) drop-shadow(0 12px 16px rgba(0,0,0,.3)); }
       #flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="7" data-width="1920" data-height="1080">
-      <!-- the new room (slightly blurred, webcam grain) -->
+    <svg width="0" height="0" style="position:absolute">
+      <filter id="smoke" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="7" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="90" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7.0" data-width="1920" data-height="1080">
       <div id="cam-back" class="cam">
-        <video id="room" class="clip" src="assets/room.mp4" data-start="0" data-duration="6.633" data-track-index="0" muted></video>
+        <video id="plate" class="clip" src="assets/plate.mp4" data-start="0" data-duration="6.633" data-track-index="0" muted></video>
       </div>
-
-      <!-- big words that sit BEHIND Sagar -->
-      <div id="behind" class="clip layer" data-start="0" data-duration="7" data-track-index="1" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
-        <svg id="burst1" class="burst" viewBox="0 0 900 600">
-          <g fill="#ffd21f" stroke="#ff8a00" stroke-width="10">
-            <path d="M450 40 L520 190 L700 90 L640 250 L860 260 L680 360 L800 520 L600 450 L540 590 L450 460 L360 590 L300 450 L100 520 L220 360 L40 260 L260 250 L200 90 L380 190 Z"/>
-          </g>
-          <g fill="#fff6c4" opacity="0.9"><circle cx="450" cy="300" r="150"/><circle cx="330" cy="320" r="90"/><circle cx="570" cy="290" r="100"/></g>
-        </svg>
-        <svg id="burst2" class="burst" viewBox="0 0 900 600">
-          <g fill="#ff9ae6" stroke="#ffffff" stroke-width="10">
-            <path d="M450 40 L520 190 L700 90 L640 250 L860 260 L680 360 L800 520 L600 450 L540 590 L450 460 L360 590 L300 450 L100 520 L220 360 L40 260 L260 250 L200 90 L380 190 Z"/>
-          </g>
-          <g fill="#ffffff" opacity="0.9"><circle cx="450" cy="300" r="140"/><circle cx="320" cy="330" r="80"/><circle cx="590" cy="280" r="95"/></g>
-        </svg>
-        <div id="w-tahalka1" class="w pink right" style="--size: 160px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
-        <div id="w-bigboss" class="w red down" style="--size: 290px"><span class="b" data-layout-allow-occlusion>BIG BOSS</span><span class="f">BIG BOSS</span></div>
-        <div id="w-lo" class="w cyan left" style="--size: 330px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
+      <div id="behind" class="clip layer" data-start="0" data-duration="7.0" data-track-index="1" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
+        <div id="burst0" class="burst"><i class="blob" style="width:177px;height:177px"></i><i class="blob" style="width:257px;height:257px"></i><i class="blob" style="width:256px;height:256px"></i><i class="blob" style="width:184px;height:184px"></i><i class="blob" style="width:240px;height:240px"></i><i class="blob" style="width:229px;height:229px"></i><i class="blob" style="width:250px;height:250px"></i><i class="blob" style="width:269px;height:269px"></i><i class="blob" style="width:168px;height:168px"></i><i class="blob" style="width:276px;height:276px"></i><i class="blob" style="width:171px;height:171px"></i><i class="blob" style="width:160px;height:160px"></i><i class="blob" style="width:256px;height:256px"></i><i class="blob" style="width:207px;height:207px"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i></div>
+        <div id="burst1" class="burst"><i class="blob" style="width:288px;height:288px"></i><i class="blob" style="width:189px;height:189px"></i><i class="blob" style="width:278px;height:278px"></i><i class="blob" style="width:231px;height:231px"></i><i class="blob" style="width:259px;height:259px"></i><i class="blob" style="width:152px;height:152px"></i><i class="blob" style="width:268px;height:268px"></i><i class="blob" style="width:194px;height:194px"></i><i class="blob" style="width:294px;height:294px"></i><i class="blob" style="width:196px;height:196px"></i><i class="blob" style="width:213px;height:213px"></i><i class="blob" style="width:264px;height:264px"></i><i class="blob" style="width:194px;height:194px"></i><i class="blob" style="width:224px;height:224px"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i><i class="shard"></i></div>
+        <img id="ef0-0" class="emo" src="assets/emoji/1f602.webp" alt="" />
+        <img id="ef0-1" class="emo" src="assets/emoji/1f60d.webp" alt="" />
+        <img id="ef0-2" class="emo" src="assets/emoji/1f923.webp" alt="" />
+        <img id="ef0-3" class="emo" src="assets/emoji/1f61c.webp" alt="" />
+        <img id="ef0-4" class="emo" src="assets/emoji/1f618.webp" alt="" />
+        <img id="ef0-5" class="emo" src="assets/emoji/1f970.webp" alt="" />
+        <img id="ef0-6" class="emo" src="assets/emoji/1f606.webp" alt="" />
+        <img id="ef0-7" class="emo" src="assets/emoji/1f61d.webp" alt="" />
+        <img id="ef0-8" class="emo" src="assets/emoji/1f929.webp" alt="" />
+        <img id="ef0-9" class="emo" src="assets/emoji/1f973.webp" alt="" />
+        <img id="ef0-10" class="emo" src="assets/emoji/1f601.webp" alt="" />
+        <img id="ef0-11" class="emo" src="assets/emoji/1f602.webp" alt="" />
+        <img id="ef0-12" class="emo" src="assets/emoji/1f60d.webp" alt="" />
+        <img id="ef0-13" class="emo" src="assets/emoji/1f923.webp" alt="" />
+        <img id="ef0-14" class="emo" src="assets/emoji/1f61c.webp" alt="" />
+        <img id="ef0-15" class="emo" src="assets/emoji/1f618.webp" alt="" />
+        <img id="ef0-16" class="emo" src="assets/emoji/1f970.webp" alt="" />
+        <img id="ef0-17" class="emo" src="assets/emoji/1f606.webp" alt="" />
+        <img id="ef0-18" class="emo" src="assets/emoji/1f61d.webp" alt="" />
+        <img id="ef0-19" class="emo" src="assets/emoji/1f929.webp" alt="" />
+        <img id="ef0-20" class="emo" src="assets/emoji/1f973.webp" alt="" />
+        <img id="ef0-21" class="emo" src="assets/emoji/1f601.webp" alt="" />
+        <div id="w-tahalka1" class="w pink right" style="--size: 250px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-big" class="w red left" style="--size: 330px"><span class="b" data-layout-allow-occlusion>BIG</span><span class="f">BIG</span></div>
+        <div id="w-boss" class="w cyan right" style="--size: 265px"><span class="b" data-layout-allow-occlusion>BOSS</span><span class="f">BOSS</span></div>
+        <div id="w-lo" class="w lime left" style="--size: 360px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
         <div id="w-leke" class="w neon left" style="--size: 250px"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
       </div>
-
-      <!-- Sagar (cut out, warmed to the room, light wrap) -->
       <div id="cam-front" class="cam">
-        <video id="sagar" class="clip" src="assets/sagar-room.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
+        <video id="person" class="clip" src="assets/sagar-glow.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
       </div>
-
-      <!-- things in front of Sagar -->
-      <div id="front" class="clip layer" data-start="0" data-duration="7" data-track-index="3" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
-        <div id="w-ekdam" class="w lime left" style="--size: 270px"><span class="b" data-layout-allow-occlusion>EKDAM</span><span class="f">EKDAM</span></div>
-        <div id="w-aagaya" class="w neon right" style="--size: 190px"><span class="b" data-layout-allow-occlusion>AA GAYA!</span><span class="f">AA GAYA!</span></div>
-        <div id="w-tahalka2" class="w gold down" style="--size: 290px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
-        <div id="w-video" class="w cyan right" style="--size: 210px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
-        <div id="c-wali" class="cap">WALI</div>
-        <div id="c-kivideo" class="cap">KI VIDEO</div>
-        <div id="c-chahiye" class="cap">CHAHIYE THI</div>
-        <div id="c-itni" class="cap">ITNI</div>
+      <div id="front" class="clip layer" data-start="0" data-duration="7.0" data-track-index="3" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
+        <div id="w-ekdam" class="w gold down lw" style="--size: 240px"><span class="b" data-layout-allow-occlusion><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span><span class="f"><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span></div>
+        <div id="w-aagaya" class="w gold down lw" style="--size: 190px"><span class="b" data-layout-allow-occlusion><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span><span class="f"><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span></div>
+        <div id="w-tahalka2" class="w gold down lw" style="--size: 270px"><span class="b" data-layout-allow-occlusion><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span><span class="f"><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span></div>
+        <div id="w-video" class="w cyan right" style="--size: 220px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
+        <div id="cap0" class="cap">WALI</div>
+        <div id="cap1" class="cap">KI VIDEO</div>
+        <div id="cap2" class="cap">CHAHIYE THI</div>
+        <div id="cap3" class="cap">ITNI</div>
         <div id="card">
           <img src="assets/profile-photo.png" alt="" />
           <div>
             <div class="name">The Real Sagar <span class="tick">&#10003;</span></div>
-            <div class="meta">@TheRealSagarr &middot; 200K subscribers</div>
+            <div class="meta">@TheRealSagarr · 200K subscribers</div>
             <div class="btn"><span id="sub">SUBSCRIBE</span><span id="subbed">SUBSCRIBED &#10003;</span></div>
           </div>
         </div>
         <svg id="cursor" viewBox="0 0 64 64"><path d="M10 4 L10 52 L22 41 L31 60 L39 56 L30 37 L46 37 Z" fill="#ffffff" stroke="#111" stroke-width="4" stroke-linejoin="round"/></svg>
-        <!-- fire burst on TAHALKA -->
-        <img id="f1" class="emo" src="assets/emoji/1f525.webp" alt="" />
-        <img id="f2" class="emo" src="assets/emoji/1f525.webp" alt="" />
-        <img id="f3" class="emo" src="assets/emoji/1f4af.webp" alt="" />
-        <img id="f4" class="emo" src="assets/emoji/1f525.webp" alt="" />
-        <img id="f5" class="emo" src="assets/emoji/1f929.webp" alt="" />
-        <!-- emoji rain at the end -->
-        <img id="r1" class="emo" src="assets/emoji/1f602.webp" alt="" />
-        <img id="r2" class="emo" src="assets/emoji/1f60d.webp" alt="" />
-        <img id="r3" class="emo" src="assets/emoji/1f923.webp" alt="" />
-        <img id="r4" class="emo" src="assets/emoji/1f61c.webp" alt="" />
-        <img id="r5" class="emo" src="assets/emoji/1f618.webp" alt="" />
-        <img id="r6" class="emo" src="assets/emoji/1f602.webp" alt="" />
-        <img id="r7" class="emo" src="assets/emoji/1f60d.webp" alt="" />
-        <img id="r8" class="emo" src="assets/emoji/1f923.webp" alt="" />
-        <img id="r9" class="emo" src="assets/emoji/1f929.webp" alt="" />
-        <img id="r10" class="emo" src="assets/emoji/1f61c.webp" alt="" />
-        <img id="r11" class="emo" src="assets/emoji/1f602.webp" alt="" />
-        <img id="r12" class="emo" src="assets/emoji/1f618.webp" alt="" />
+        <img id="ep0-0" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="ep0-1" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="ep0-2" class="emo" src="assets/emoji/1f4af.webp" alt="" />
+        <img id="ep0-3" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="ep0-4" class="emo" src="assets/emoji/1f929.webp" alt="" />
       </div>
-
-      <div id="flash" class="clip" data-start="0" data-duration="7" data-track-index="4"></div>
-
-      <!-- sound -->
-      <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="6.62" data-track-index="10" data-volume="1"></audio>
-      <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="7" data-track-index="11" data-volume="0.16" data-timeline-role="music"></audio>
-      <audio id="s01" class="clip" src="assets/sfx/pop-word.wav" data-start="0.13" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
-      <audio id="s02" class="clip" src="assets/sfx/swoosh.wav" data-start="0.44" data-duration="0.38" data-track-index="13" data-volume="0.5"></audio>
-      <audio id="s03" class="clip" src="assets/sfx/pop-low.wav" data-start="1.09" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
-      <audio id="s04" class="clip" src="assets/sfx/impact.wav" data-start="1.21" data-duration="0.9" data-track-index="14" data-volume="0.6"></audio>
-      <audio id="s05" class="clip" src="assets/sfx/pop-low.wav" data-start="1.73" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
-      <audio id="s06" class="clip" src="assets/sfx/pop-low.wav" data-start="2.17" data-duration="0.2" data-track-index="13" data-volume="0.4"></audio>
-      <audio id="s07" class="clip" src="assets/sfx/pop-word.wav" data-start="2.52" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
-      <audio id="s08" class="clip" src="assets/sfx/impact.wav" data-start="2.64" data-duration="0.9" data-track-index="15" data-volume="0.5"></audio>
-      <audio id="s09" class="clip" src="assets/sfx/swoosh.wav" data-start="2.84" data-duration="0.38" data-track-index="13" data-volume="0.45"></audio>
-      <audio id="s17" class="clip" src="assets/sfx/pop-word.wav" data-start="2.97" data-duration="0.16" data-track-index="16" data-volume="0.5"></audio>
-      <audio id="s10" class="clip" src="assets/sfx/click.wav" data-start="3.28" data-duration="0.14" data-track-index="12" data-volume="0.7"></audio>
-      <audio id="s11" class="clip" src="assets/sfx/ding.wav" data-start="3.32" data-duration="0.8" data-track-index="17" data-volume="0.35"></audio>
-      <audio id="s12" class="clip" src="assets/sfx/pop-low.wav" data-start="3.69" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
-      <audio id="s13" class="clip" src="assets/sfx/impact.wav" data-start="3.94" data-duration="0.9" data-track-index="14" data-volume="0.6"></audio>
-      <audio id="s14" class="clip" src="assets/sfx/pop-word.wav" data-start="4.49" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
-      <audio id="s15" class="clip" src="assets/sfx/bubbles.wav" data-start="5.13" data-duration="1.4" data-track-index="13" data-volume="0.4"></audio>
-      <audio id="s16" class="clip" src="assets/sfx/flash.wav" data-start="6.12" data-duration="0.55" data-track-index="15" data-volume="0.5"></audio>
+      <div id="flash" class="clip" data-start="0" data-duration="7.0" data-track-index="4"></div>
+      <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="6.633" data-track-index="10" data-volume="1"></audio>
+      <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="7.0" data-track-index="11" data-volume="0.14" data-timeline-role="music"></audio>
+      <audio id="sfx0" class="clip" src="assets/sfx/snap.wav" data-start="0.11" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="sfx1" class="clip" src="assets/sfx/blip.wav" data-start="0.13" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="sfx2" class="clip" src="assets/sfx/blip.wav" data-start="0.16" data-duration="0.07" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx3" class="clip" src="assets/sfx/blip.wav" data-start="0.19" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="sfx4" class="clip" src="assets/sfx/blip.wav" data-start="0.22" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="sfx5" class="clip" src="assets/sfx/blip.wav" data-start="0.25" data-duration="0.07" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx6" class="clip" src="assets/sfx/zip.wav" data-start="0.43" data-duration="0.22" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx7" class="clip" src="assets/sfx/snap.wav" data-start="0.47" data-duration="0.16" data-track-index="13" data-volume="0.55"></audio>
+      <audio id="sfx8" class="clip" src="assets/sfx/zoom-in.wav" data-start="1.08" data-duration="0.3" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sfx9" class="clip" src="assets/sfx/pop-low.wav" data-start="1.09" data-duration="0.2" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="sfx10" class="clip" src="assets/sfx/burst.wav" data-start="1.2" data-duration="1.3" data-track-index="14" data-volume="0.7"></audio>
+      <audio id="sfx11" class="clip" src="assets/sfx/snap.wav" data-start="1.22" data-duration="0.16" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="sfx12" class="clip" src="assets/sfx/zip.wav" data-start="1.27" data-duration="0.22" data-track-index="16" data-volume="0.45"></audio>
+      <audio id="sfx13" class="clip" src="assets/sfx/pop-low.wav" data-start="1.72" data-duration="0.2" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx14" class="clip" src="assets/sfx/zip.wav" data-start="2.1" data-duration="0.22" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sfx15" class="clip" src="assets/sfx/pop-low.wav" data-start="2.16" data-duration="0.2" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="sfx16" class="clip" src="assets/sfx/snap.wav" data-start="2.5" data-duration="0.16" data-track-index="12" data-volume="0.6"></audio>
+      <audio id="sfx17" class="clip" src="assets/sfx/zip.wav" data-start="2.6" data-duration="0.22" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx18" class="clip" src="assets/sfx/swipe.wav" data-start="2.82" data-duration="0.25" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx19" class="clip" src="assets/sfx/snap.wav" data-start="2.95" data-duration="0.16" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx20" class="clip" src="assets/sfx/blip.wav" data-start="2.97" data-duration="0.07" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx21" class="clip" src="assets/sfx/blip.wav" data-start="3.0" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="sfx22" class="clip" src="assets/sfx/blip.wav" data-start="3.06" data-duration="0.07" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx23" class="clip" src="assets/sfx/blip.wav" data-start="3.09" data-duration="0.07" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx24" class="clip" src="assets/sfx/blip.wav" data-start="3.12" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="sfx25" class="clip" src="assets/sfx/blip.wav" data-start="3.15" data-duration="0.07" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx26" class="clip" src="assets/sfx/blip.wav" data-start="3.18" data-duration="0.07" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx27" class="clip" src="assets/sfx/click.wav" data-start="3.27" data-duration="0.14" data-track-index="12" data-volume="0.7"></audio>
+      <audio id="sfx28" class="clip" src="assets/sfx/ding.wav" data-start="3.31" data-duration="0.8" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx29" class="clip" src="assets/sfx/swipe.wav" data-start="3.53" data-duration="0.25" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sfx30" class="clip" src="assets/sfx/pop-low.wav" data-start="3.68" data-duration="0.2" data-track-index="14" data-volume="0.35"></audio>
+      <audio id="sfx31" class="clip" src="assets/sfx/zoom-in.wav" data-start="3.8" data-duration="0.3" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sfx32" class="clip" src="assets/sfx/burst.wav" data-start="3.92" data-duration="1.3" data-track-index="14" data-volume="0.6"></audio>
+      <audio id="sfx33" class="clip" src="assets/sfx/snap.wav" data-start="3.94" data-duration="0.16" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="sfx34" class="clip" src="assets/sfx/blip.wav" data-start="3.94" data-duration="0.07" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="sfx35" class="clip" src="assets/sfx/blip.wav" data-start="3.97" data-duration="0.07" data-track-index="17" data-volume="0.35"></audio>
+      <audio id="sfx36" class="clip" src="assets/sfx/blip.wav" data-start="4.0" data-duration="0.07" data-track-index="18" data-volume="0.35"></audio>
+      <audio id="sfx37" class="clip" src="assets/sfx/blip.wav" data-start="4.03" data-duration="0.07" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="sfx38" class="clip" src="assets/sfx/blip.wav" data-start="4.06" data-duration="0.07" data-track-index="17" data-volume="0.35"></audio>
+      <audio id="sfx39" class="clip" src="assets/sfx/blip.wav" data-start="4.09" data-duration="0.07" data-track-index="18" data-volume="0.35"></audio>
+      <audio id="sfx40" class="clip" src="assets/sfx/blip.wav" data-start="4.12" data-duration="0.07" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sfx41" class="clip" src="assets/sfx/zip.wav" data-start="4.45" data-duration="0.22" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx42" class="clip" src="assets/sfx/sparkle.wav" data-start="5.11" data-duration="1.2" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="sfx43" class="clip" src="assets/sfx/snap.wav" data-start="5.13" data-duration="0.16" data-track-index="13" data-volume="0.4"></audio>
+      <audio id="sfx44" class="clip" src="assets/sfx/flash.wav" data-start="6.12" data-duration="0.55" data-track-index="13" data-volume="0.5"></audio>
     </div>
-
     <script>
+      const D = {"T": 7.0, "cams": [{"t": 1.22, "scale": 1.16, "dur": 0.12, "shake": true}, {"t": 2.5, "scale": 1.0, "dur": 0.16, "ease": "power2.inOut"}, {"t": 2.66, "scale": 1.06, "dur": 0.8, "ease": "power1.out"}, {"t": 3.62, "scale": 1.14, "cut": true}, {"t": 3.94, "scale": 1.3, "dur": 0.12, "shake": true}, {"t": 4.68, "scale": 1.0, "cut": true}, {"t": 5.15, "scale": 1.18, "cut": true, "push": 1.25, "pushDur": 1.4}], "words": [{"id": "ekdam", "text": "EKDAM", "style": "gold", "layer": "front", "x": 560, "y": 870, "size": 240, "in": 0.13, "out": 0.5, "enter": "letters", "exit": "sink", "rot": -4, "slant": "down"}, {"id": "tahalka1", "text": "TAHALKA", "style": "pink", "layer": "behind", "x": 960, "y": 170, "size": 250, "in": 0.47, "out": 1.12, "enter": "fly-top", "exit": "up", "rot": -2, "slant": "right"}, {"id": "big", "text": "BIG", "style": "red", "layer": "behind", "x": 390, "y": 330, "size": 330, "in": 1.22, "out": 2.14, "enter": "fly-left", "exit": "up", "rot": -6, "slant": "left"}, {"id": "boss", "text": "BOSS", "style": "cyan", "layer": "behind", "x": 1490, "y": 350, "size": 265, "in": 1.3, "out": 2.16, "enter": "fly-right", "exit": "up", "rot": 5, "slant": "right"}, {"id": "lo", "text": "LO!", "style": "lime", "layer": "behind", "x": 380, "y": 400, "size": 360, "in": 2.52, "out": 2.7, "enter": "pop", "exit": "left", "rot": -8, "slant": "left"}, {"id": "leke", "text": "LEKE", "style": "neon", "layer": "behind", "x": 400, "y": 300, "size": 250, "in": 2.64, "out": 3.58, "enter": "fly-left", "exit": "left", "rot": -5, "slant": "left"}, {"id": "aagaya", "text": "AA GAYA!", "style": "gold", "layer": "front", "x": 1380, "y": 880, "size": 190, "in": 2.97, "out": 3.58, "enter": "letters", "exit": "sink", "rot": 3, "slant": "down"}, {"id": "tahalka2", "text": "TAHALKA", "style": "gold", "layer": "front", "x": 960, "y": 860, "size": 270, "in": 3.94, "out": 4.48, "enter": "letters", "exit": "sink", "rot": -3, "slant": "down"}, {"id": "video", "text": "VIDEO!", "style": "cyan", "layer": "front", "x": 1480, "y": 330, "size": 220, "in": 4.48, "out": 4.95, "enter": "fly-right", "exit": "right", "rot": 6, "slant": "right"}], "captions": [{"text": "WALI", "in": 1.1, "out": 1.24}, {"text": "KI VIDEO", "in": 1.73, "out": 2.17}, {"text": "CHAHIYE THI", "in": 2.17, "out": 2.52}, {"text": "ITNI", "in": 3.69, "out": 3.94}], "bursts": [{"t": 1.22, "x": 960, "y": 330, "layer": "behind", "scale": 1.15}, {"t": 3.93, "x": 960, "y": 820, "layer": "behind", "scale": 0.9}], "card": {"in": 2.84, "out": 3.55, "click": 3.28, "name": "The Real Sagar", "meta": "@TheRealSagarr \u00b7 200K subscribers", "photo": "assets/profile-photo.png"}, "fields": [{"in": 5.13, "out": 6.12, "items": [{"id": "ef0-0", "size": 230, "x": 581, "y": 171, "rot": 21, "drift": 191, "delay": 0.105}, {"id": "ef0-1", "size": 156, "x": 96, "y": 0, "rot": 0, "drift": 164, "delay": 0.176}, {"id": "ef0-2", "size": 140, "x": 414, "y": 1025, "rot": 9, "drift": 182, "delay": 0.061}, {"id": "ef0-3", "size": 198, "x": 1653, "y": 177, "rot": -9, "drift": 144, "delay": 0.207}, {"id": "ef0-4", "size": 123, "x": 1657, "y": 493, "rot": -8, "drift": 139, "delay": 0.036}, {"id": "ef0-5", "size": 258, "x": 1244, "y": 722, "rot": -20, "drift": 176, "delay": 0.148}, {"id": "ef0-6", "size": 369, "x": 469, "y": 324, "rot": -10, "drift": 211, "delay": 0.062}, {"id": "ef0-7", "size": 263, "x": -26, "y": 557, "rot": 11, "drift": 169, "delay": 0.187}, {"id": "ef0-8", "size": 370, "x": 359, "y": 807, "rot": 2, "drift": 163, "delay": 0.095}, {"id": "ef0-9", "size": 192, "x": 437, "y": 584, "rot": -9, "drift": 101, "delay": 0.018}, {"id": "ef0-10", "size": 346, "x": 1242, "y": 534, "rot": 8, "drift": 210, "delay": 0.154}, {"id": "ef0-11", "size": 184, "x": 1339, "y": 360, "rot": -21, "drift": 195, "delay": 0.201}, {"id": "ef0-12", "size": 335, "x": 525, "y": 336, "rot": -3, "drift": 201, "delay": 0.164}, {"id": "ef0-13", "size": 274, "x": 1259, "y": 366, "rot": -5, "drift": 115, "delay": 0.185}, {"id": "ef0-14", "size": 227, "x": 528, "y": 446, "rot": -18, "drift": 174, "delay": 0.206}, {"id": "ef0-15", "size": 258, "x": 900, "y": 12, "rot": -23, "drift": 181, "delay": 0.153}, {"id": "ef0-16", "size": 256, "x": 1465, "y": 629, "rot": -24, "drift": 172, "delay": 0.064}, {"id": "ef0-17", "size": 188, "x": 1547, "y": 800, "rot": 14, "drift": 109, "delay": 0.065}, {"id": "ef0-18", "size": 208, "x": 1791, "y": 869, "rot": -7, "drift": 124, "delay": 0.055}, {"id": "ef0-19", "size": 191, "x": 638, "y": -21, "rot": -2, "drift": 101, "delay": 0.1}, {"id": "ef0-20", "size": 296, "x": 1565, "y": 702, "rot": -7, "drift": 114, "delay": 0.097}, {"id": "ef0-21", "size": 216, "x": 828, "y": 385, "rot": -18, "drift": 105, "delay": 0.014}]}], "pops": [{"id": "ep0-0", "x": 250, "y": 560, "size": 300, "t": 3.98, "out": 4.42}, {"id": "ep0-1", "x": 1680, "y": 520, "size": 320, "t": 4.02, "out": 4.4399999999999995}, {"id": "ep0-2", "x": 1520, "y": 170, "size": 230, "t": 4.06, "out": 4.46}, {"id": "ep0-3", "x": 420, "y": 170, "size": 250, "t": 4.1, "out": 4.4799999999999995}, {"id": "ep0-4", "x": 1260, "y": 600, "size": 220, "t": 4.14, "out": 4.5}], "flash": 6.25, "letterGap": 0.03};
       const tl = gsap.timeline({ paused: true });
+      const IR = { immediateRender: false };
 
-      // ---------- camera: jump-cut zooms (footage cuts at 3.62, 4.68, 5.15) and punch-ins ----------
+      // ---------- camera: punch-ins (fast, slight shake) and jump-cut zoom changes ----------
       const cams = ["#cam-back", "#cam-front"];
-      const camSet = (t, v) => tl.set(cams, v, t);
-      const camTo = (t, v) => tl.to(cams, v, t);
-      camSet(0, { scale: 1, x: 0, y: 0 });
-      camTo(1.24, { scale: 1.2, duration: 0.14, ease: "power3.out" });
-      [16, -14, 10, -7, 4, 0].forEach((x, i) => camTo(1.24 + i * 0.04, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }));
-      camTo(2.5, { scale: 1, y: 0, duration: 0.18, ease: "power2.inOut" });
-      camTo(2.66, { scale: 1.07, duration: 0.9, ease: "power1.out" });
-      camSet(3.62, { scale: 1.16, x: 0, y: 0 });
-      camTo(3.96, { scale: 1.32, duration: 0.12, ease: "power3.out" });
-      [18, -16, 12, -8, 5, 0].forEach((x, i) => camTo(3.96 + i * 0.04, { x, y: i % 2 ? 6 : -6, duration: 0.04, ease: "none" }));
-      camSet(4.68, { scale: 1, x: 0, y: 0 });
-      camSet(5.15, { scale: 1.2, x: 0, y: 0 });
-      camTo(5.15, { scale: 1.26, duration: 1.4, ease: "none" });
+      tl.set(cams, { scale: 1, x: 0, y: 0 }, 0);
+      for (const c of D.cams) {
+        if (c.cut) { tl.set(cams, { scale: c.scale, x: 0, y: 0 }, c.t); }
+        else { tl.to(cams, { scale: c.scale, duration: c.dur || 0.14, ease: c.ease || "power3.out" }, c.t); }
+        if (c.push) tl.to(cams, { scale: c.push, duration: c.pushDur || 1.2, ease: "none" }, c.t + (c.cut ? 0 : (c.dur || 0.14)));
+        if (c.shake) [16, -14, 10, -7, 4, 0].forEach((x, i) =>
+          tl.to(cams, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }, c.t + i * 0.04));
+      }
 
-      // ---------- big 3D words ----------
-      const pos = {};
-      const place = (id, x, y, rot = 0) => { pos[id] = { x, y, rotation: rot }; tl.set(id, { x, y, xPercent: -50, yPercent: -50, rotation: rot }, 0); };
-      const popIn = (id, t, from = {}) => {
-        tl.fromTo(id, { opacity: 0, scale: 0.35, filter: "blur(14px)", ...pos[id], ...from },
-          { opacity: 1, scale: 1.1, filter: "blur(0px)", ...pos[id], duration: 0.13, ease: "power3.out", immediateRender: false }, t);
-        tl.to(id, { scale: 1, duration: 0.1, ease: "power2.inOut" }, t + 0.13);
+      // ---------- words ----------
+      const ENTER = {
+        "fly-left":  { x: -700, scaleX: 1.6, rotationY: 55, filter: "blur(18px)" },
+        "fly-right": { x: 700, scaleX: 1.6, rotationY: -55, filter: "blur(18px)" },
+        "fly-top":   { y: -500, scaleY: 1.5, rotationX: -60, filter: "blur(18px)" },
+        "pop":       { scale: 0.3, filter: "blur(14px)" },
+        "spin":      { scale: 0.2, rotationY: 180, filter: "blur(12px)" },
       };
-      const out = (id, t, extra = {}) => tl.to(id, { opacity: 0, scale: 1.25, filter: "blur(16px)", duration: 0.12, ease: "power2.in", ...extra }, t);
-      const wobble = (id, t, dur, amt = 3) => {
-        for (let k = 0, s = t + 0.23; s < t + dur - 0.1; k++, s += 0.11) tl.to(id, { rotation: (k % 2 ? 1 : -1) * amt, duration: 0.11, ease: "sine.inOut" }, s);
+      const EXIT = {
+        sink:  { y: 320, rotation: -10, filter: "blur(14px)", opacity: 0 },
+        left:  { x: -800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
+        right: { x: 800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
+        up:    { y: -600, scaleY: 1.4, filter: "blur(20px)", opacity: 0 },
+        blur:  { scale: 1.3, filter: "blur(18px)", opacity: 0 },
       };
-
-      place("#w-ekdam", 560, 850, -5);    popIn("#w-ekdam", 0.13, { rotation: -16 });  out("#w-ekdam", 0.5);
-      place("#w-tahalka1", 1515, 330, 5); popIn("#w-tahalka1", 0.47, { x: 1750 });    wobble("#w-tahalka1", 0.47, 0.6, 4); out("#w-tahalka1", 1.09, { x: 1600 });
-      place("#w-bigboss", 960, 240, -3);  popIn("#w-bigboss", 1.22, { scale: 2.2 });   wobble("#w-bigboss", 1.22, 0.95, 2); out("#w-bigboss", 2.17);
-      place("#w-lo", 370, 400, -10);      popIn("#w-lo", 2.52, { rotation: -30 });     out("#w-lo", 2.68, { x: 200 });
-      place("#w-leke", 400, 300, -6);     popIn("#w-leke", 2.64, { scale: 1.9 });      wobble("#w-leke", 2.64, 0.9, 2); out("#w-leke", 3.56);
-      place("#w-aagaya", 1400, 870, 3);   popIn("#w-aagaya", 2.98, { x: 1600 });       wobble("#w-aagaya", 2.98, 0.58, 2); out("#w-aagaya", 3.56);
-      place("#w-tahalka2", 960, 850, -3); popIn("#w-tahalka2", 3.94, { scale: 2.4 });  out("#w-tahalka2", 4.48);
-      for (let k = 0, s = 4.1; s < 4.46; k++, s += 0.045) tl.to("#w-tahalka2", { x: 960 + (k % 2 ? 10 : -10), duration: 0.045, ease: "none" }, s);
-      place("#w-video", 1480, 330, 6);    popIn("#w-video", 4.48, { x: 1700 });        out("#w-video", 4.9);
-
-      // bursts behind BIG BOSS and LEKE
-      tl.set("#burst1", { x: 960, y: 250, xPercent: -50, yPercent: -50 }, 0);
-      tl.fromTo("#burst1", { opacity: 1, scale: 0.2, rotation: -20 }, { scale: 1.5, rotation: 10, duration: 0.45, ease: "power3.out", immediateRender: false }, 1.22);
-      tl.to("#burst1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 1.55);
-      tl.set("#burst2", { x: 420, y: 300, xPercent: -50, yPercent: -50 }, 0);
-      tl.fromTo("#burst2", { opacity: 1, scale: 0.2, rotation: 15 }, { scale: 1.2, rotation: -8, duration: 0.45, ease: "power3.out", immediateRender: false }, 2.64);
-      tl.to("#burst2", { opacity: 0, duration: 0.3, ease: "power1.in" }, 2.98);
+      for (const w of D.words) {
+        const el = "#w-" + w.id, rot = w.rot || 0, dur = w.out - w.in;
+        tl.set(el, { x: w.x, y: w.y, xPercent: -50, yPercent: -50, rotation: rot, transformPerspective: 1000 }, 0);
+        if (w.enter === "letters") {
+          tl.set(el, { opacity: 1 }, w.in);
+          const ls = document.querySelectorAll(el + " .l");
+          const n = ls.length / 2;
+          ls.forEach((l, i) => {
+            const k = i % n;
+            tl.fromTo(l, { opacity: 0, scale: 0.1, y: 70, rotationX: -70 },
+              { opacity: 1, scale: 1.18, y: -8, rotationX: 0, duration: 0.12, ease: "power3.out", ...IR }, w.in + k * D.letterGap);
+            tl.to(l, { scale: 1, y: 0, duration: 0.12, ease: "back.out(3)" }, w.in + k * D.letterGap + 0.12);
+          });
+        } else {
+          const from = ENTER[w.enter || "pop"];
+          tl.fromTo(el, { opacity: 0, x: w.x, y: w.y, rotation: rot, scale: 1, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, ...from,
+              x: w.x + (from.x || 0), y: w.y + (from.y || 0) },
+            { opacity: 1, x: w.x, y: w.y, scale: 1.08, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, filter: "blur(0px)",
+              duration: 0.16, ease: "power3.out", ...IR }, w.in);
+          tl.to(el, { scale: 1, duration: 0.12, ease: "back.out(2.5)" }, w.in + 0.16);
+        }
+        // hold: slow 3D drift (never dead still, like the reference)
+        const hold = Math.max(0.1, dur - 0.32);
+        tl.to(el, { rotationY: w.slant === "left" ? 7 : -7, rotationX: 4, scale: 1.05, duration: hold, ease: "sine.inOut" }, w.in + 0.28);
+        const ex = EXIT[w.exit || "blur"];
+        tl.to(el, { ...ex, x: w.x + (ex.x || 0), y: w.y + (ex.y || 0), duration: 0.16, ease: "power2.in" }, w.out - 0.04);
+      }
 
       // ---------- small yellow captions ----------
-      const cap = (id, t, end) => {
-        tl.set(id, { transformOrigin: "0% 100%" }, 0);
-        tl.fromTo(id, { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.1, ease: "back.out(3)", immediateRender: false }, t);
-        tl.to(id, { opacity: 0, duration: 0.06 }, end);
-      };
-      cap("#c-wali", 1.09, 1.24);
-      cap("#c-kivideo", 1.73, 2.17);
-      cap("#c-chahiye", 2.17, 2.52);
-      cap("#c-itni", 3.69, 3.94);
-
-      // ---------- channel card + subscribe click ----------
-      tl.fromTo("#card", { opacity: 0, scale: 0.5, rotation: -9, x: -120 },
-        { opacity: 1, scale: 1, rotation: -3, x: 0, duration: 0.22, ease: "back.out(2)", immediateRender: false }, 2.84);
-      tl.fromTo("#cursor", { opacity: 0, x: 900, y: 1050 }, { opacity: 1, x: 520, y: 905, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.95);
-      tl.to("#cursor", { scale: 0.8, duration: 0.05 }, 3.27);
-      tl.to("#cursor", { scale: 1, duration: 0.06 }, 3.32);
-      tl.to("#sub", { opacity: 0, duration: 0.05 }, 3.29);
-      tl.to("#subbed", { opacity: 1, duration: 0.05 }, 3.29);
-      tl.to("#card .btn", { scale: 0.92, duration: 0.05 }, 3.27);
-      tl.to("#card .btn", { scale: 1, duration: 0.1, ease: "back.out(3)" }, 3.32);
-      tl.to(["#card", "#cursor"], { opacity: 0, x: "-=60", filter: "blur(12px)", duration: 0.16, ease: "power2.in" }, 3.85);
-
-      // ---------- 3D emoji ----------
-      // fire burst around TAHALKA: [id, x, y, size]
-      [["#f1", 260, 560, 300], ["#f2", 1660, 520, 320], ["#f3", 1500, 180, 240], ["#f4", 420, 160, 260], ["#f5", 1250, 600, 220]]
-        .forEach(([id, x, y, s], i) => {
-          tl.set(id, { width: s, height: s, xPercent: -50, yPercent: -50 }, 0);
-          tl.fromTo(id, { opacity: 0, x, y, scale: 0.2, rotation: -25 },
-            { opacity: 1, scale: 1, rotation: i % 2 ? 8 : -8, duration: 0.18, ease: "back.out(2.5)", immediateRender: false }, 3.96 + i * 0.04);
-          tl.to(id, { y: y - 80, scale: 1.15, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power1.in" }, 4.42 + i * 0.02);
-        });
-      // emoji burst all over the screen, drifting up (positions, sizes and timing from a fixed seed)
-      let seed = 11;
-      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-      const spots = [[180, 260], [520, 120], [1420, 140], [1760, 300], [300, 640], [1650, 700], [880, 90],
-                     [1180, 820], [120, 950], [1840, 960], [640, 880], [1300, 420]];
-      spots.forEach(([x, y], i) => {
-        const id = "#r" + (i + 1), s = 190 + rnd() * 230, t = 5.13 + i * 0.07 + rnd() * 0.05;
-        tl.set(id, { width: s, height: s, xPercent: -50, yPercent: -50 }, 0);
-        tl.fromTo(id, { opacity: 0, x, y, scale: 0.1, rotation: -30 + rnd() * 60 },
-          { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2.6)", immediateRender: false }, t);
-        tl.to(id, { y: y - 140 - rnd() * 120, x: x + (rnd() - 0.5) * 120, rotation: "+=" + (-20 + rnd() * 40),
-          duration: 1.0, ease: "sine.inOut" }, t + 0.2);
-        tl.to(id, { opacity: 0, scale: 1.25, filter: "blur(10px)", duration: 0.18, ease: "power1.in" }, 6.12 + rnd() * 0.12);
+      D.captions.forEach((c, i) => {
+        const el = "#cap" + i;
+        tl.set(el, { transformOrigin: "0% 100%" }, 0);
+        tl.fromTo(el, { opacity: 0, scale: 0.5, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.12, ease: "back.out(3)", ...IR }, c.in);
+        tl.to(el, { opacity: 0, scale: 0.9, duration: 0.06 }, c.out);
       });
 
-      // ---------- white flash into the main video ----------
-      tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in", immediateRender: false }, 6.25);
+      // ---------- smoke bursts ----------
+      D.bursts.forEach((b, i) => {
+        const root = "#burst" + i, sc = b.scale || 1;
+        let s = 31 + i * 7; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+        document.querySelectorAll(root + " .blob").forEach((el, k) => {
+          const a = (k / 14) * Math.PI * 2 + r(), d = (60 + r() * 240) * sc;
+          tl.set(el, { x: b.x, y: b.y, xPercent: -50, yPercent: -50 }, 0);
+          tl.fromTo(el, { opacity: 0.95, scale: 0.15, x: b.x, y: b.y },
+            { scale: (1.2 + r() * 0.8) * sc, x: b.x + Math.cos(a) * d * 1.4, y: b.y + Math.sin(a) * d * 0.8,
+              duration: 0.5, ease: "power3.out", ...IR }, b.t + k * 0.012);
+          tl.to(el, { opacity: 0, scale: "+=0.35", duration: 0.45, ease: "power1.in" }, b.t + 0.3 + r() * 0.2);
+        });
+        document.querySelectorAll(root + " .shard").forEach((el, k) => {
+          const a = (k / 12) * Math.PI * 2 + r() * 0.5, d = (300 + r() * 450) * sc;
+          tl.fromTo(el, { opacity: 1, x: b.x, y: b.y, rotation: r() * 360, scale: 0.6 + r() },
+            { x: b.x + Math.cos(a) * d * 1.3, y: b.y + Math.sin(a) * d * 0.7 + 200, rotation: "+=" + (360 + r() * 360),
+              duration: 0.7, ease: "power1.out", ...IR }, b.t);
+          tl.to(el, { opacity: 0, duration: 0.2 }, b.t + 0.55);
+        });
+      });
+
+      // ---------- channel card: slides up with blur, subscribe click, slides away ----------
+      if (D.card) {
+        const c = D.card;
+        tl.fromTo("#card", { opacity: 0, y: 260, rotation: -8, filter: "blur(12px)" },
+          { opacity: 1, y: 0, rotation: -3, filter: "blur(0px)", duration: 0.2, ease: "power3.out", ...IR }, c.in);
+        tl.fromTo("#cursor", { opacity: 0, x: 900, y: 1050 }, { opacity: 1, x: 520, y: 905, duration: 0.28, ease: "power2.out", ...IR }, c.in + 0.1);
+        tl.to("#cursor", { scale: 0.8, duration: 0.05 }, c.click - 0.01);
+        tl.to("#cursor", { scale: 1, duration: 0.06 }, c.click + 0.04);
+        tl.to("#sub", { opacity: 0, duration: 0.05 }, c.click);
+        tl.to("#subbed", { opacity: 1, duration: 0.05 }, c.click);
+        tl.to("#card .btn", { scale: 0.9, duration: 0.05 }, c.click - 0.01);
+        tl.to("#card .btn", { scale: 1, duration: 0.1, ease: "back.out(3)" }, c.click + 0.04);
+        tl.to(["#card", "#cursor"], { opacity: 0, y: "+=240", filter: "blur(12px)", duration: 0.16, ease: "power2.in" }, c.out);
+      }
+
+      // ---------- emoji fields (behind Sagar, fade + scale in, drift up) and emoji pops ----------
+      for (const f of D.fields) for (const e of f.items) {
+        const el = "#" + e.id;
+        tl.set(el, { width: e.size, height: e.size, xPercent: -50, yPercent: -50 }, 0);
+        tl.fromTo(el, { opacity: 0, x: e.x, y: e.y + 40, scale: 0.4, rotation: e.rot - 15 },
+          { opacity: 1, y: e.y, scale: 1, rotation: e.rot, duration: 0.22, ease: "back.out(2)", ...IR }, f.in + e.delay);
+        tl.to(el, { y: e.y - e.drift, rotation: e.rot + 8, duration: f.out - f.in, ease: "none" }, f.in + e.delay + 0.22);
+        tl.to(el, { opacity: 0, scale: 1.15, duration: 0.18, ease: "power1.in" }, f.out + e.delay * 0.5);
+      }
+      for (const e of D.pops) {
+        const el = "#" + e.id;
+        tl.set(el, { width: e.size, height: e.size, xPercent: -50, yPercent: -50 }, 0);
+        tl.fromTo(el, { opacity: 0, x: e.x, y: e.y, scale: 0.2, rotation: -25 },
+          { opacity: 1, scale: 1, rotation: 6, duration: 0.18, ease: "back.out(2.5)", ...IR }, e.t);
+        tl.to(el, { y: e.y - 90, scale: 1.15, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power1.in" }, e.out);
+      }
+
+      if (D.flash != null) tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in", ...IR }, D.flash);
 
       window.__timelines["main"] = tl;
       tl.seek(0);

@@ -122,6 +122,91 @@ def ding():
     return np.stack([x, x], 1)
 
 
+def snap():
+    """Crispy word pop: a sharp click, a bright blip that falls 2.4k -> 900 Hz, and a tiny low thump."""
+    n = int(0.16 * SR)
+    t = np.arange(n) / SR
+    click = rng.normal(0, 1, n) * np.exp(-t * 900)
+    click = click - onepole(click, np.full(n, 0.3))  # high-passed = crisp
+    blip, _ = tone_sweep(2400, 900, 0.16, 38)
+    blip = blip * np.exp(-t * 32)
+    thump, _ = tone_sweep(220, 90, 0.16, 30)
+    thump = thump * np.exp(-t * 35)
+    x = click * 0.9 + blip * 0.7 + thump * 0.5
+    return np.stack([x, x], 1)
+
+
+def blip():
+    n = int(0.07 * SR)
+    t = np.arange(n) / SR
+    b, _ = tone_sweep(2000, 1150, 0.07, 55)
+    b = b * np.exp(-t * 55) + (rng.normal(0, 1, n) * np.exp(-t * 1200)) * 0.4
+    return np.stack([b, b], 1)
+
+
+def zip_():
+    """Fast whoosh with a falling pitch (doppler) - for words flying in."""
+    n = int(0.22 * SR)
+    tt = np.linspace(0, 1, n)
+    noise = rng.normal(0, 1, n)
+    cut = 0.55 - 0.45 * tt
+    air = onepole(noise, cut) - onepole(noise, cut * 0.25)
+    tone, _ = tone_sweep(1700, 600, 0.22, 14)
+    amp = np.sin(np.pi * np.clip(tt * 1.3, 0, 1)) ** 1.5
+    x = (air * 0.8 + tone * 0.35) * amp
+    return np.stack([x * (1 - 0.6 * tt), x * (0.4 + 0.6 * tt)], 1)
+
+
+def burst():
+    """Smoke explosion: deep boom, crackling debris, a wide air blast."""
+    n = int(1.3 * SR)
+    t = np.arange(n) / SR
+    f = 40 + 90 * np.exp(-t * 18)
+    boom = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 4)
+    air = onepole(rng.normal(0, 1, n), np.full(n, 0.12)) * np.exp(-t * 6) * 1.2
+    crackle = np.zeros(n)
+    for _ in range(70):
+        s0 = int(abs(rng.normal(0.12, 0.18)) * SR)
+        m = int(0.01 * SR)
+        if s0 + m < n:
+            crackle[s0:s0 + m] += rng.normal(0, 1, m) * np.exp(-np.arange(m) / (m / 4)) * rng.uniform(0.2, 0.8)
+    crackle = crackle - onepole(crackle, np.full(n, 0.25))
+    x = np.tanh((boom * 1.5 + air + crackle * 0.9) * 1.6)
+    return np.stack([x, np.roll(x, 300)], 1)
+
+
+def zoom_in():
+    n = int(0.3 * SR)
+    tt = np.linspace(0, 1, n)
+    noise = rng.normal(0, 1, n)
+    x = (onepole(noise, 0.03 + 0.6 * tt ** 2) - onepole(noise, 0.02 + 0.1 * tt)) * tt ** 1.6 * np.minimum(1, (1 - tt) * 12)
+    return np.stack([x, x], 1)
+
+
+def swipe():
+    n = int(0.25 * SR)
+    tt = np.linspace(0, 1, n)
+    noise = rng.normal(0, 1, n)
+    x = (onepole(noise, 0.15 + 0.5 * np.sin(np.pi * tt)) - onepole(noise, 0.05)) * np.sin(np.pi * tt) ** 2
+    return np.stack([x, x], 1)
+
+
+def sparkle():
+    n = int(1.2 * SR)
+    out = np.zeros((n, 2))
+    notes = [1568, 1760, 2093, 2349, 2637, 3136, 3520]
+    for k in range(14):
+        s0 = int(k * 0.035 * SR + rng.uniform(0, 0.02) * SR)
+        f = notes[rng.integers(len(notes))]
+        m = n - s0
+        t = np.arange(m) / SR
+        b = (np.sin(2 * np.pi * f * t) + 0.3 * np.sin(2 * np.pi * f * 2.7 * t)) * np.exp(-t * 9) * rng.uniform(0.4, 1)
+        pan = rng.uniform(0.2, 0.8)
+        out[s0:, 0] += b * (1 - pan)
+        out[s0:, 1] += b * pan
+    return out
+
+
 def save(x, path, lufs=-16):
     x = x / max(1e-9, np.max(np.abs(x))) * 0.85
     with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
@@ -142,6 +227,13 @@ def main() -> None:
     save(flash(), out / "flash.wav")
     save(riser(), out / "riser.wav", lufs=-18)
     save(ding(), out / "ding.wav", lufs=-18)
+    save(snap(), out / "snap.wav", lufs=-15)
+    save(blip(), out / "blip.wav", lufs=-17)
+    save(zip_(), out / "zip.wav", lufs=-16)
+    save(burst(), out / "burst.wav", lufs=-13)
+    save(zoom_in(), out / "zoom-in.wav", lufs=-17)
+    save(swipe(), out / "swipe.wav", lufs=-18)
+    save(sparkle(), out / "sparkle.wav", lufs=-18)
     print("saved sfx to", out)
 
 

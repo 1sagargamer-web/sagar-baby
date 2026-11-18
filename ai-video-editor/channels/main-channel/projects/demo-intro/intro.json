@@ -1,0 +1,74 @@
+{
+  "duration": 7.0,
+  "plate": "assets/plate.mp4",
+  "person": "assets/sagar-glow.webm",
+  "media_duration": 6.633,
+  "voice": "assets/voice.wav",
+  "music": {"src": "assets/music.wav", "volume": 0.14},
+  "cams": [
+    {"t": 1.22, "scale": 1.16, "dur": 0.12, "shake": true},
+    {"t": 2.5, "scale": 1.0, "dur": 0.16, "ease": "power2.inOut"},
+    {"t": 2.66, "scale": 1.06, "dur": 0.8, "ease": "power1.out"},
+    {"t": 3.62, "scale": 1.14, "cut": true},
+    {"t": 3.94, "scale": 1.3, "dur": 0.12, "shake": true},
+    {"t": 4.68, "scale": 1.0, "cut": true},
+    {"t": 5.15, "scale": 1.18, "cut": true, "push": 1.25, "pushDur": 1.4}
+  ],
+  "words": [
+    {"id": "ekdam", "text": "EKDAM", "style": "gold", "layer": "front", "x": 560, "y": 870, "size": 240,
+     "in": 0.13, "out": 0.5, "enter": "letters", "exit": "sink", "rot": -4, "slant": "down"},
+    {"id": "tahalka1", "text": "TAHALKA", "style": "pink", "layer": "behind", "x": 960, "y": 170, "size": 250,
+     "in": 0.47, "out": 1.12, "enter": "fly-top", "exit": "up", "rot": -2, "slant": "right"},
+    {"id": "big", "text": "BIG", "style": "red", "layer": "behind", "x": 390, "y": 330, "size": 330,
+     "in": 1.22, "out": 2.14, "enter": "fly-left", "exit": "up", "rot": -6, "slant": "left"},
+    {"id": "boss", "text": "BOSS", "style": "cyan", "layer": "behind", "x": 1490, "y": 350, "size": 265,
+     "in": 1.3, "out": 2.16, "enter": "fly-right", "exit": "up", "rot": 5, "slant": "right"},
+    {"id": "lo", "text": "LO!", "style": "lime", "layer": "behind", "x": 380, "y": 400, "size": 360,
+     "in": 2.52, "out": 2.7, "enter": "pop", "exit": "left", "rot": -8, "slant": "left"},
+    {"id": "leke", "text": "LEKE", "style": "neon", "layer": "behind", "x": 400, "y": 300, "size": 250,
+     "in": 2.64, "out": 3.58, "enter": "fly-left", "exit": "left", "rot": -5, "slant": "left"},
+    {"id": "aagaya", "text": "AA GAYA!", "style": "gold", "layer": "front", "x": 1380, "y": 880, "size": 190,
+     "in": 2.97, "out": 3.58, "enter": "letters", "exit": "sink", "rot": 3, "slant": "down"},
+    {"id": "tahalka2", "text": "TAHALKA", "style": "gold", "layer": "front", "x": 960, "y": 860, "size": 270,
+     "in": 3.94, "out": 4.48, "enter": "letters", "exit": "sink", "rot": -3, "slant": "down"},
+    {"id": "video", "text": "VIDEO!", "style": "cyan", "layer": "front", "x": 1480, "y": 330, "size": 220,
+     "in": 4.48, "out": 4.95, "enter": "fly-right", "exit": "right", "rot": 6, "slant": "right"}
+  ],
+  "captions": [
+    {"text": "WALI", "in": 1.1, "out": 1.24},
+    {"text": "KI VIDEO", "in": 1.73, "out": 2.17},
+    {"text": "CHAHIYE THI", "in": 2.17, "out": 2.52},
+    {"text": "ITNI", "in": 3.69, "out": 3.94}
+  ],
+  "bursts": [
+    {"t": 1.22, "x": 960, "y": 330, "layer": "behind", "scale": 1.15},
+    {"t": 3.93, "x": 960, "y": 820, "layer": "behind", "scale": 0.9}
+  ],
+  "card": {"in": 2.84, "out": 3.55, "click": 3.28, "name": "The Real Sagar",
+           "meta": "@TheRealSagarr · 200K subscribers", "photo": "assets/profile-photo.png"},
+  "emoji_pops": [
+    {"t": 3.98, "out": 4.42, "items": [["1f525", 250, 560, 300], ["1f525", 1680, 520, 320], ["1f4af", 1520, 170, 230],
+                                       ["1f525", 420, 170, 250], ["1f929", 1260, 600, 220]]}
+  ],
+  "emoji_fields": [
+    {"in": 5.13, "out": 6.12, "count": 22, "layer": "behind", "seed": 4,
+     "set": ["1f602", "1f60d", "1f923", "1f61c", "1f618", "1f970", "1f606", "1f61d", "1f929", "1f973", "1f601"]}
+  ],
+  "flash": 6.25,
+  "sfx": [
+    ["snap", 0.11, 0.55],
+    ["zip", 0.43, 0.5], ["snap", 0.47, 0.55],
+    ["pop-low", 1.09, 0.35],
+    ["zoom-in", 1.08, 0.4], ["burst", 1.2, 0.7], ["snap", 1.22, 0.5], ["zip", 1.27, 0.45],
+    ["pop-low", 1.72, 0.35], ["pop-low", 2.16, 0.35],
+    ["zip", 2.1, 0.4],
+    ["snap", 2.5, 0.6], ["zip", 2.6, 0.45],
+    ["swipe", 2.82, 0.5], ["snap", 2.95, 0.45],
+    ["click", 3.27, 0.7], ["ding", 3.31, 0.3], ["swipe", 3.53, 0.4],
+    ["pop-low", 3.68, 0.35],
+    ["zoom-in", 3.8, 0.4], ["burst", 3.92, 0.6], ["snap", 3.94, 0.5],
+    ["zip", 4.45, 0.5],
+    ["sparkle", 5.11, 0.45], ["snap", 5.13, 0.4],
+    ["flash", 6.12, 0.5]
+  ]
+}

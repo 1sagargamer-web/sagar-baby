@@ -33,14 +33,15 @@ logos, channel cards, music, sound files, fonts, exact text or graphics.
 - HyperFrames: skills in `.agents/skills/`; always `check` + `snapshot` and look at frames before `render`.
 - Music / SFX: synthesised by us (`scripts/make_music.py`, `scripts/make_sfx.py`, or new channel versions).
 
-## Background replacement (every video)
+## Footage look (every video): original room + glowing Sagar
 1. `npx hyperframes remove-background <footage> -o assets/sagar-cutout.webm --quality best` (first time on a new
    container: `npm install onnxruntime-node@1.21.1 --onnxruntime-node-install-cuda=skip --prefix
    ~/.cache/hyperframes/optional/onnxruntime-node@1.21.1`). About 0.7 s per 1080p frame on CPU.
-2. `python3 scripts/room_composite.py --footage assets/sagar.mp4 --matte assets/sagar-cutout.webm
-   --bg characters/backgrounds/room-1-silver.jpg --person-out assets/sagar-room.webm --room-out assets/room.mp4`
-3. In the composition: room video (back) → words behind → `sagar-room.webm` → words/cards/emoji in front, the
-   room and Sagar inside two `.cam` wrappers that zoom together.
+2. `python3 scripts/person_glow.py --footage assets/sagar.mp4 --matte assets/sagar-cutout.webm
+   --plate-out assets/plate.mp4 --person-out assets/sagar-glow.webm` (matte cleaned with the empty-room method).
+3. Intro: write `intro.json`, then `python3 scripts/make_reaction_intro.py projects/<video>/intro.json`
+   (needs `assets/sfx/*.wav` + `assets/sfx/durations.json`, fonts in `assets/fonts/`, emoji in `assets/emoji/`).
+   Layers: plate → words/emoji behind → `sagar-glow.webm` → words/cards/emoji in front.
 
 ## Every video
 1. Download the raw video, transcribe it, and show Sagar the plan (intro words, cuts, clip layout, effects,
