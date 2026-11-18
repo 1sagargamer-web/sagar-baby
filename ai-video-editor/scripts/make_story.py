@@ -76,7 +76,10 @@ def word_times(wavs: list[Path], texts: list[str]) -> list[list[float]]:
                          cpu_threads=os.cpu_count() or 4)
     out = []
     for wav, text in zip(wavs, texts):
-        segs, _ = model.transcribe(str(wav), language="hi", word_timestamps=True, vad_filter=False, beam_size=5)
+        pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+                             check=True, capture_output=True).stdout  # decode with FFmpeg (faster-whisper's own av decode breaks)
+        segs, _ = model.transcribe(np.frombuffer(pcm, dtype=np.float32), language="hi", word_timestamps=True,
+                                   vad_filter=False, beam_size=5)
         ws = [w for s in segs for w in (s.words or []) if norm(w.word)]
         words = [w for w in text.split() if norm(w)]
         dur = sf.info(str(wav)).duration
