@@ -12,7 +12,8 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
 - Sagar sends the gameplay. Claude does everything else: cuts, zooms, motion graphics, captions, voice, music, SFX.
 
 ## Awareness rules (every video, no exceptions)
-1. **Disclaimer first**, 3 s, from Sagar's own disclaimer image (`channels/gaming/Reference/disclaimer.png`).
+1. **Disclaimer first**, 4 s, Sagar's own text (`Reference/disclaimer.png`, crisp 1920x1080 remake of his image
+   `Reference/disclaimer-original.jpg`; same words, do not change them).
 2. **Never show a panel's name, logo, login screen, website, Telegram/YouTube/Discord link, price or seller.**
    Blur them whenever they are on screen. Never say or show where to get a panel.
 3. Cheat features (aimbot, ESP lines) may be shown, framed as "this is how cheaters ruin matches", never as
@@ -65,8 +66,10 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
   end. Never "panel kahan milega wo bhi bataunga" (ref2 does this; we never do).
 
 ## Voice
-- Sagar's own voice, **cloned** from his recording (Chatterbox, `channels/gaming/voices/sagar-ref.wav`,
-  private, never in git). Option chosen by Sagar: **(pending, A / B / C sent on 2026-11-17)**.
+- Sagar's own voice, **cloned** from his recording (private, never in git). **Claude writes the whole commentary**;
+  Sagar only sends gameplay.
+- Sagar's feedback (2026-11-18): options A (calm) and C (hype) both good, but still sounds AI -> make it more natural.
+  Chosen setup: see `CLAUDE.md` (Voice).
 - Commentary style in the references: casual live Hinglish, talking to viewers ("guys", "dekho", "bhai"),
   reacting to kills, chatting with teammates, ending on the ban reveal.
 - If Sagar's gameplay already has his live mic commentary, keep it (clean it up, cut fumbles) and use the
@@ -75,9 +78,9 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
 ## Sound
 - Loudness: final mix **-14 LUFS**, true peak -1 dB. Voice always on top; music ducks under voice.
 - Game sound kept but low under the voice (references measured: non-speech parts around -30 dB).
-- Music: original synthesised tracks (`scripts/make_gaming_music.py`, to be built): hype trap/phonk style beat for
+- Music (approved by Sagar): original synthesised tracks (`scripts/make_gaming_music.py`): hype trap/phonk style beat for
   gameplay, dark suspense pad for the turning point, silence for 0.5 s before a big reveal.
-- SFX (`scripts/make_gaming_sfx.py`, to be built, all synthesised): whoosh on title cards, impact/boom on
+- SFX (`scripts/make_gaming_sfx.py` -> `sfx/gaming/`, all synthesised): whoosh on title cards, impact/boom on
   big words and reveals, riser before the reveal, glitch on the ban notice, pop on callouts, ding on kills.
 
 ## Never
