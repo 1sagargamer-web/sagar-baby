@@ -31,7 +31,7 @@ logos, channel cards, music, sound files, fonts, exact text or graphics.
 - Whisper: `python3 scripts/transcribe.py <file> [out.json] --language hi` (word timings for the intro words,
   captions and silence cuts).
 - HyperFrames: skills in `.agents/skills/`; always `check` + `snapshot` and look at frames before `render`.
-- Music / SFX: synthesised by us (`scripts/make_music.py`, `scripts/make_sfx.py`, or new channel versions).
+- Music: `scripts/make_music_hype.py`. SFX: CC0 library in `sfx-library/` (see Reference/my-style.md, Sound).
 
 ## Footage + cut-out (every video)
 1. `npx hyperframes remove-background <footage> -o assets/sagar-cutout.webm --quality best` (first time on a new
