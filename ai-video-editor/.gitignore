@@ -38,3 +38,6 @@ channels/*/projects/*/assets/audio/
 channels/*/projects/*/assets/video/
 # Sagar's voice, its clone and every clip made from it: private, never commit
 channels/*/voices/
+
+# Internal test projects (may use reference footage), never commit
+channels/*/projects/_*/

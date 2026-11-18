@@ -55,14 +55,22 @@ History:
   (`ai4bharat/IndicF5`, MIT, gated: Sagar must click "Agree" on its Hugging Face page first).
 - Check every generated line with Whisper (words right, confidence) before using it; Claude cannot listen.
 
-## Building a video (pipeline, builder to be written: `scripts/make_gaming_video.py`)
-Long 1920x1080 gameplay videos are too long to render frame-by-frame in Chrome, so:
-1. FFmpeg does the gameplay edit (cuts, punch-in zooms, blur boxes over panel names, B&W/slow-mo) at 1920x1080.
-2. HyperFrames renders the motion graphics (hook word cards, title cards, callouts, end card) as short clips.
-3. Captions are styled subtitles burned in by FFmpeg (Anton, white + black outline, yellow/red key words).
-4. Audio: voice + game sound + music (ducked) + SFX, mixed to -14 LUFS, true peak -1 dB.
-Before the final render: check + snapshot the HyperFrames parts and look at frames of the edit; after: ffprobe
-duration, loudness, frames. Report what was measured vs. what Claude could not hear/see.
+## Building a video: `scripts/make_gaming_video.py` (ready, tested 2026-11-18)
+1. Write `projects/<name>/plan.json` (format in the script's docstring): disclaimer, hook (word cards + B&W clip
+   panels + voice), title card, clip segments (label card, badge, zooms, blur boxes, callouts, voice lines,
+   big captions, SFX, subscribe pop-up, glitch transition, reveal), end card (SABAK list + subscribe).
+2. `python3 scripts/make_gaming_video.py channels/gaming/projects/<name>/plan.json` (from the editor root):
+   FFmpeg prepares each clip (trim, speed, cover-crop to 16:9, blur boxes, B&W) into `assets/video/`; voice lines
+   (Sagar's recordings, else clone D) into `assets/audio/vo/` (cached by text); a new SFX pack (seed from title) in
+   `assets/sfx/`; new music per mood span (hype -> suspense at a reveal -> ending at the end card); everything
+   mixed into `assets/audio/mix.wav` (music x0.22 and game sound ducked 55 % under the voice, limiter + two-pass
+   loudnorm to -14 LUFS / -1 dBTP); `index.html` with all motion graphics and 1-3 word captions (Anton).
+3. In the project folder: HyperFrames `check --json` (0 errors), `snapshot --at ...` and look at the frames,
+   then `render . --quality looks --fps 30 -o ../../Export/<name>-v1.mp4` (about 3-4x real time: a 12 min video
+   takes ~45 min; run it in the background).
+4. `python3 scripts/make_gaming_video.py <plan> --report ../../Export/<name>-v1.mp4` -> duration, LUFS, true peak.
+- Known check warnings that are fine: "timeline_track_too_dense" (one long file), "line_unread" on fast captions.
+- Internal test projects go in `projects/_<name>/` (gitignored; may use reference footage, never exported).
 
 ## Every video
 1. Plan with timestamps (hook, matches, turning point, ending) + commentary script -> Sagar approves.
