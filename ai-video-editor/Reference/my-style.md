@@ -56,6 +56,8 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   Change the text with `"watermark": "..."` in script.json.
 
 ## Sagar's recordings
+- **Sagar may change words while recording (Sagar's own wording). Always transcribe the chosen take and update that
+  line's `hi` and `caption` in script.json to what Sagar actually said.** Tell Sagar which lines changed.
 - Sagar often says each line 2+ times. Run `python3 scripts/pick_takes.py Raw/<file> "<hi text>" Raw/<reel>-sagar-<n>.wav`:
   it splits the takes, scores them (Whisper confidence, completeness, clipping), saves the best de-clipped, and
   prints the scores to report to Sagar.
