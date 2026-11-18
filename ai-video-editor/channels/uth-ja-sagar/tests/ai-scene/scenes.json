@@ -1,0 +1,6 @@
+[
+ {"prompt": "a teenage Indian boy in an orange t-shirt standing on a rooftop terrace seen from behind, hands on hips, watching the sunrise over the city skyline, water tank, potted plant, school bag on the floor", "out": "channels/uth-ja-sagar/tests/ai-scene/ai-1.png", "seed": 1},
+ {"prompt": "a teenage Indian boy in an orange t-shirt standing on a rooftop terrace seen from behind, hands on hips, watching the sunrise over the city skyline, water tank, potted plant, school bag on the floor", "out": "channels/uth-ja-sagar/tests/ai-scene/ai-2.png", "seed": 2},
+ {"prompt": "a teenage Indian boy with glasses studying late at night at a wooden desk under a warm lamp, stacks of books, window with city lights", "out": "channels/uth-ja-sagar/tests/ai-scene/ai-3.png", "seed": 3},
+ {"prompt": "a teenage Indian boy in an orange t-shirt sitting sad on the stairs of an old house, head down, evening light, small lane", "out": "channels/uth-ja-sagar/tests/ai-scene/ai-4.png", "seed": 4}
+]

@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6b5b95"/>
+      <stop offset="0.35" stop-color="#d9779a"/>
+      <stop offset="0.62" stop-color="#f6a46b"/>
+      <stop offset="0.8" stop-color="#ffd59a"/>
+    </linearGradient>
+    <radialGradient id="sunglow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6d6" stop-opacity="1"/>
+      <stop offset="0.25" stop-color="#ffe2a0" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#ffb070" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c47a8e"/><stop offset="1" stop-color="#e09a8c"/>
+    </linearGradient>
+    <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a5a78"/><stop offset="1" stop-color="#a86e7c"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8b58e"/><stop offset="1" stop-color="#c98c6c"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f1c9a2"/><stop offset="1" stop-color="#d9a481"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffd7a0" stop-opacity="0"/><stop offset="1" stop-color="#ffd7a0" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="1080" height="1080" fill="url(#sky)"/>
+  <!-- clouds -->
+  <g fill="#ffd2b8" opacity="0.75">
+    <path d="M90 230 q40 -40 90 -12 q30 -36 80 -6 q50 -8 60 30 z"/>
+    <path d="M700 170 q30 -34 76 -10 q34 -30 82 -4 q44 0 50 28 z"/>
+    <path d="M600 330 q24 -22 60 -6 q30 -20 64 0 q30 4 34 20 z" opacity="0.7"/>
+  </g>
+  <!-- birds -->
+  <g fill="none" stroke="#5a3d5c" stroke-width="4" stroke-linecap="round">
+    <path d="M300 300 q12 -12 24 0 q12 -12 24 0"/>
+    <path d="M360 270 q9 -9 18 0 q9 -9 18 0"/>
+    <path d="M250 340 q8 -8 16 0 q8 -8 16 0"/>
+  </g>
+  <!-- sun -->
+  <circle cx="760" cy="560" r="260" fill="url(#sunglow)"/>
+  <circle cx="760" cy="560" r="78" fill="#fff3cf"/>
+  <!-- sun rays -->
+  <g stroke="#fff1c4" stroke-width="10" stroke-linecap="round" opacity="0.35">
+    <line x1="760" y1="440" x2="760" y2="380"/><line x1="860" y1="470" x2="900" y2="430"/>
+    <line x1="660" y1="470" x2="620" y2="430"/><line x1="890" y1="560" x2="950" y2="560"/>
+    <line x1="630" y1="560" x2="570" y2="560"/>
+  </g>
+
+  <!-- far skyline -->
+  <path fill="url(#far)" d="M0 610 h60 v-40 h50 v-30 h40 v50 h70 v-80 h30 v-20 h40 v100 h60 v-60 h50 v40 h40 v-90 h20 v-30 h20 v120 h70 v-40 h60 v60 h50 v-70 h40 v30 h60 v-50 h30 v80 h60 v-30 h70 v40 h40 v-60 h40 V700 H0 Z"/>
+  <!-- mid skyline with windows -->
+  <path fill="url(#mid)" d="M0 660 h90 v-70 h80 v40 h60 v-110 h90 v80 h70 v-50 h80 v90 h60 v-30 h90 v-60 h70 v70 h80 v-90 h90 v100 h70 v-40 h50 V780 H0 Z"/>
+  <g fill="#ffd89a" opacity="0.8">
+    <rect x="250" y="540" width="14" height="18"/><rect x="280" y="540" width="14" height="18"/>
+    <rect x="250" y="580" width="14" height="18"/><rect x="310" y="580" width="14" height="18"/>
+    <rect x="120" y="610" width="12" height="16"/><rect x="745" y="590" width="14" height="18"/>
+    <rect x="775" y="620" width="14" height="18"/><rect x="930" y="600" width="12" height="16"/>
+    <rect x="955" y="630" width="12" height="16"/><rect x="430" y="610" width="12" height="16"/>
+  </g>
+  <!-- water tanks on far roofs -->
+  <g fill="#7a4e6c">
+    <rect x="345" y="505" width="34" height="40" rx="6"/><rect x="860" y="560" width="30" height="34" rx="6"/>
+  </g>
+
+  <!-- rooftop floor -->
+  <path d="M0 800 L1080 770 L1080 1080 L0 1080 Z" fill="url(#roof)"/>
+  <g stroke="#b77a5d" stroke-width="3" opacity="0.5">
+    <line x1="0" y1="880" x2="1080" y2="850"/><line x1="0" y1="980" x2="1080" y2="950"/>
+    <line x1="200" y1="795" x2="120" y2="1080"/><line x1="480" y1="787" x2="460" y2="1080"/>
+    <line x1="760" y1="779" x2="800" y2="1080"/>
+  </g>
+  <!-- long morning shadow of the boy -->
+  <path d="M370 905 L130 1000 L110 985 L355 892 Z" fill="#9c5f4f" opacity="0.35"/>
+
+  <!-- parapet wall -->
+  <path d="M0 720 L1080 690 L1080 790 L0 820 Z" fill="url(#wall)"/>
+  <path d="M0 712 L1080 682 L1080 700 L0 730 Z" fill="#f7dcbf"/>
+  <path d="M0 720 L1080 690 L1080 790 L0 820 Z" fill="url(#rim)" opacity="0.5"/>
+  <path d="M0 720 L1080 690 L1080 790 L0 820 Z" fill="none" stroke="#8c5a48" stroke-width="5"/>
+
+  <!-- water tank (left) -->
+  <g>
+    <rect x="40" y="560" width="150" height="170" rx="22" fill="#3d3d4a" stroke="#22222c" stroke-width="5"/>
+    <rect x="40" y="590" width="150" height="10" fill="#2a2a34"/><rect x="40" y="650" width="150" height="10" fill="#2a2a34"/>
+    <ellipse cx="115" cy="562" rx="75" ry="14" fill="#4c4c5a" stroke="#22222c" stroke-width="5"/>
+    <rect x="160" y="565" width="22" height="160" rx="10" fill="#ffcf96" opacity="0.25"/>
+    <rect x="60" y="730" width="16" height="70" fill="#5a4a52"/><rect x="155" y="730" width="16" height="70" fill="#5a4a52"/>
+  </g>
+
+  <!-- potted plant (right) -->
+  <g>
+    <path d="M900 860 L1000 860 L985 960 L915 960 Z" fill="#c8673f" stroke="#7a3a22" stroke-width="5"/>
+    <rect x="893" y="850" width="114" height="20" rx="6" fill="#d97a4f" stroke="#7a3a22" stroke-width="5"/>
+    <g fill="#5f9a4a" stroke="#355f2a" stroke-width="4">
+      <path d="M950 850 q-70 -50 -60 -140 q40 60 60 140z"/>
+      <path d="M950 850 q60 -70 40 -160 q-40 70 -40 160z"/>
+      <path d="M950 850 q-20 -90 10 -180 q20 90 -10 180z"/>
+      <path d="M950 850 q-100 -10 -120 -70 q70 10 120 70z"/>
+      <path d="M950 850 q90 -20 110 -80 q-70 20 -110 80z"/>
+    </g>
+  </g>
+
+  <!-- school bag on the floor -->
+  <g transform="translate(260,30)">
+    <rect x="300" y="890" width="110" height="120" rx="26" fill="#2f6f8f" stroke="#1c3f52" stroke-width="5"/>
+    <rect x="320" y="945" width="70" height="45" rx="12" fill="#3b86a8" stroke="#1c3f52" stroke-width="4"/>
+    <path d="M330 892 q25 -40 50 0" fill="none" stroke="#1c3f52" stroke-width="7"/>
+  </g>
+
+  <!-- boy, seen from behind-ish 3/4, standing tall, fists on hips, facing the sun -->
+  <g id="boy" transform="translate(-150,0)" stroke="#3a2420" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M522 760 L508 900 L543 902 L556 780 Z" fill="#33415c"/>
+    <path d="M572 760 L588 900 L623 898 L604 770 Z" fill="#2b3850"/>
+    <path d="M498 896 q-8 18 12 22 h40 q4 -14 -10 -22 z" fill="#f2f2f2"/>
+    <path d="M582 894 q-6 18 14 22 h40 q4 -14 -14 -22 z" fill="#e6e6e6"/>
+    <path d="M498 612 q63 -34 126 0 l6 160 q-69 18 -138 0 z" fill="#e8743b"/>
+    <path d="M600 606 q18 6 24 6 l6 160 q-12 4 -22 6 z" fill="#ffb27a" stroke="none" opacity="0.7"/>
+    <path d="M545 596 q16 12 32 0" fill="none" stroke="#a8502a" stroke-width="5"/>
+    <path d="M500 618 q-46 40 -42 96 q8 28 40 30" fill="none" stroke="#3a2420" stroke-width="30"/>
+    <path d="M500 618 q-46 40 -42 96 q8 28 40 30" fill="none" stroke="#e8743b" stroke-width="20"/>
+    <path d="M622 618 q46 40 42 96 q-8 28 -40 30" fill="none" stroke="#3a2420" stroke-width="30"/>
+    <path d="M622 618 q46 40 42 96 q-8 28 -40 30" fill="none" stroke="#f08a4f" stroke-width="20"/>
+    <circle cx="502" cy="744" r="15" fill="#c98a62"/>
+    <circle cx="620" cy="744" r="15" fill="#e0a374"/>
+    <rect x="547" y="562" width="28" height="38" rx="8" fill="#b9784f"/>
+    <ellipse cx="507" cy="520" rx="11" ry="17" fill="#c07f58"/>
+    <ellipse cx="615" cy="520" rx="11" ry="17" fill="#d99a70"/>
+    <ellipse cx="561" cy="515" rx="54" ry="60" fill="#c98a62"/>
+    <path d="M507 525 q-10 -82 54 -90 q66 4 58 90 q-8 20 -18 26 q-14 -6 -22 4 q-12 -8 -20 2 q-12 -8 -22 0 q-12 -10 -22 -2 q-6 -12 -8 -30z" fill="#2b1d1a"/>
+    <path d="M596 470 q14 20 12 50" fill="none" stroke="#6a4636" stroke-width="5"/>
+    <path d="M616 505 q6 14 0 30" fill="none" stroke="#ffd29a" stroke-width="5"/>
+  </g>
+  <!-- warm light wash -->
+  <rect width="1080" height="1080" fill="#ffb070" opacity="0.08"/>
+</svg>

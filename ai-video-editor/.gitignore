@@ -22,6 +22,7 @@ projects/*/assets/audio/
 Reference/*.transcript.json
 __pycache__/
 .venv-tts/
+.venv-img/
 
 # Private voice recordings, never commit
 voices/sagar*

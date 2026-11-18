@@ -1,0 +1,12 @@
+# Raw footage, finished videos, reference copies are large; keep them out of git
+Raw/*
+!Raw/.gitkeep
+Export/*
+!Export/.gitkeep
+Reference/*.mp4
+Reference/*.mov
+Reference/*.transcript.json
+Reference/frames/
+projects/*/assets/audio/
+# Private voice recordings, never commit
+voices/sagar*
