@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
       @font-face { font-family: "Poppins Black"; src: url("assets/fonts/poppins-black.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lilita One"; src: url("assets/fonts/lilita-one.woff2") format("woff2"); }
       @font-face { font-family: "Poppins Black Italic"; src: url("assets/fonts/poppins-black-italic.woff2") format("woff2"); font-weight: 900; font-style: italic; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
@@ -15,19 +16,28 @@
       #cam-back { z-index: 1; } #behind { z-index: 2; } #cam-front { z-index: 3; } #front { z-index: 4; } #flash { z-index: 6; }
       .layer { position: absolute; inset: 0; pointer-events: none; perspective: 1100px; }
 
-      /* 3D word: bright fill + top highlight, same-hue extrusion, light rim, big coloured glow (no black outline) */
-      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; transform-style: preserve-3d; }
-      .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: -0.01em; }
-      .w .b { color: var(--deep); -webkit-text-stroke: calc(var(--size) * 0.016) var(--rim); paint-order: stroke fill;
-        text-shadow: var(--dx1) 3px 0 var(--deep), var(--dx2) 6px 0 var(--deep), var(--dx3) 9px 0 var(--deep),
-          var(--dx4) 12px 0 var(--deep), var(--dx5) 15px 0 var(--deep), var(--dx6) 18px 0 var(--deep),
-          var(--dx6) 24px 14px rgba(0, 0, 0, 0.45), 0 0 34px var(--glow), 0 0 90px var(--glow); }
+      /* 3D word (reference look): condensed rounded heavy font, glossy top, deep extrusion straight down in a darker
+         shade, strong glow in the word's colour */
+      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; }
+      .w .b, .w .f { display: block; font-family: "Lilita One", sans-serif; font-size: var(--size); letter-spacing: 0.01em; }
+      .w .b { color: var(--deep); -webkit-text-stroke: calc(var(--size) * 0.03) var(--deep); paint-order: stroke fill;
+        text-shadow: 0 2px 0 var(--deep), 0 4px 0 var(--deep), 0 6px 0 var(--deep), 0 8px 0 var(--deep),
+          0 10px 0 var(--deep), 0 12px 0 var(--deep), 0 14px 0 var(--deep), 0 16px 0 var(--deep),
+          0 18px 0 var(--dark), 0 20px 0 var(--dark), 0 22px 0 var(--dark),
+          0 30px 22px rgba(0, 0, 0, 0.4), 0 0 18px var(--glow), 0 0 45px var(--glow), 0 0 110px var(--glow); }
       .w .f { position: absolute; left: 0; top: 0;
-        background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
+        background: linear-gradient(180deg, var(--hi) 0%, var(--hi) 12%, var(--c1) 30%, var(--c1) 58%, var(--c2) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .lime   { --hi: #fbffe0; --c1: #e9ff3a; --c2: #7fe12a; --deep: #2f9a1e; --dark: #1d6612; --glow: rgba(190, 255, 60, 0.75); }
+      .cyan   { --hi: #effeff; --c1: #74f2ff; --c2: #2bb8ff; --deep: #1f63d8; --dark: #143f92; --glow: rgba(60, 210, 255, 0.75); }
+      .pink   { --hi: #fff0fc; --c1: #ff8bf0; --c2: #f23fd0; --deep: #a51a9e; --dark: #6e0f6a; --glow: rgba(255, 70, 220, 0.8); }
+      .gold   { --hi: #fffde6; --c1: #ffec3d; --c2: #ffb300; --deep: #f05a00; --dark: #a82e00; --glow: rgba(255, 150, 0, 0.85); }
+      .red    { --hi: #ffe5df; --c1: #ff5d4a; --c2: #ff1e3c; --deep: #a3001f; --dark: #640012; --glow: rgba(255, 40, 60, 0.75); }
+      .neon   { --hi: #ffffff; --c1: #ffffff; --c2: #ffd6f2; --deep: #f0479e; --dark: #a51c66; --glow: rgba(255, 60, 150, 0.9); }
+      .purple { --hi: #fbf0ff; --c1: #e9a0ff; --c2: #b55bff; --deep: #6a26c4; --dark: #431680; --glow: rgba(200, 110, 255, 0.8); }
       .w .l { display: inline-block; }
       .w.lw .f { background: none; }
-      .w.lw .f .l { background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
+      .w.lw .f .l { background: linear-gradient(180deg, var(--hi) 0%, var(--hi) 12%, var(--c1) 30%, var(--c1) 58%, var(--c2) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent; }
       .w.left  { --dx1: -2px; --dx2: -4px; --dx3: -6px; --dx4: -8px; --dx5: -10px; --dx6: -12px; }
       .w.right { --dx1: 2px; --dx2: 4px; --dx3: 6px; --dx4: 8px; --dx5: 10px; --dx6: 12px; }
@@ -78,6 +88,15 @@
         <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="7" result="n" />
         <feDisplacementMap in="SourceGraphic" in2="n" scale="90" xChannelSelector="R" yChannelSelector="G" />
       </filter>
+      <filter id="mb-ekdam" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-tahalka1" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-big" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-boss" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-lo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-leke" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-aagaya" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-tahalka2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
+      <filter id="mb-video" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="0 0" /></filter>
     </svg>
     <div id="root" data-composition-id="main" data-start="0" data-duration="7.0" data-width="1920" data-height="1080">
       <div id="cam-back" class="cam">
@@ -108,20 +127,20 @@
         <img id="ef0-19" class="emo" src="assets/emoji/1f929.webp" alt="" />
         <img id="ef0-20" class="emo" src="assets/emoji/1f973.webp" alt="" />
         <img id="ef0-21" class="emo" src="assets/emoji/1f601.webp" alt="" />
-        <div id="w-tahalka1" class="w pink right" style="--size: 250px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
-        <div id="w-big" class="w red left" style="--size: 330px"><span class="b" data-layout-allow-occlusion>BIG</span><span class="f">BIG</span></div>
-        <div id="w-boss" class="w cyan right" style="--size: 265px"><span class="b" data-layout-allow-occlusion>BOSS</span><span class="f">BOSS</span></div>
-        <div id="w-lo" class="w lime left" style="--size: 360px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
-        <div id="w-leke" class="w neon left" style="--size: 250px"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
+        <div id="w-tahalka1" class="w pink right" style="--size: 300px; filter: url(#mb-tahalka1)"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-big" class="w red left" style="--size: 400px; filter: url(#mb-big)"><span class="b" data-layout-allow-occlusion>BIG</span><span class="f">BIG</span></div>
+        <div id="w-boss" class="w cyan right" style="--size: 330px; filter: url(#mb-boss)"><span class="b" data-layout-allow-occlusion>BOSS</span><span class="f">BOSS</span></div>
+        <div id="w-lo" class="w lime left" style="--size: 420px; filter: url(#mb-lo)"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
+        <div id="w-leke" class="w neon left" style="--size: 340px; filter: url(#mb-leke)"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
       </div>
       <div id="cam-front" class="cam">
         <video id="person" class="clip" src="assets/sagar-clean.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
       </div>
       <div id="front" class="clip layer" data-start="0" data-duration="7.0" data-track-index="3" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
-        <div id="w-ekdam" class="w gold down lw" style="--size: 240px"><span class="b" data-layout-allow-occlusion><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span><span class="f"><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span></div>
-        <div id="w-aagaya" class="w gold down lw" style="--size: 190px"><span class="b" data-layout-allow-occlusion><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span><span class="f"><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span></div>
-        <div id="w-tahalka2" class="w gold down lw" style="--size: 270px"><span class="b" data-layout-allow-occlusion><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span><span class="f"><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span></div>
-        <div id="w-video" class="w cyan right" style="--size: 220px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
+        <div id="w-ekdam" class="w gold down lw" style="--size: 300px; filter: url(#mb-ekdam)"><span class="b" data-layout-allow-occlusion><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span><span class="f"><span class="l">E</span><span class="l">K</span><span class="l">D</span><span class="l">A</span><span class="l">M</span></span></div>
+        <div id="w-aagaya" class="w gold down lw" style="--size: 225px; filter: url(#mb-aagaya)"><span class="b" data-layout-allow-occlusion><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span><span class="f"><span class="l">A</span><span class="l">A</span><span class="l">&nbsp;</span><span class="l">G</span><span class="l">A</span><span class="l">Y</span><span class="l">A</span><span class="l">!</span></span></div>
+        <div id="w-tahalka2" class="w gold down lw" style="--size: 330px; filter: url(#mb-tahalka2)"><span class="b" data-layout-allow-occlusion><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span><span class="f"><span class="l">T</span><span class="l">A</span><span class="l">H</span><span class="l">A</span><span class="l">L</span><span class="l">K</span><span class="l">A</span></span></div>
+        <div id="w-video" class="w cyan right" style="--size: 265px; filter: url(#mb-video)"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
         <div id="cap0" class="cap">WALI</div>
         <div id="cap1" class="cap">KI VIDEO</div>
         <div id="cap2" class="cap">CHAHIYE THI</div>
@@ -144,32 +163,38 @@
       <div id="flash" class="clip" data-start="0" data-duration="7.0" data-track-index="4"></div>
       <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="6.633" data-track-index="10" data-volume="1"></audio>
       <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="7.0" data-track-index="11" data-volume="0.14" data-timeline-role="music"></audio>
-      <audio id="sfx0" class="clip" src="assets/sfx/r-pop.wav" data-start="0.12" data-duration="0.1" data-track-index="12" data-volume="0.5"></audio>
-      <audio id="sfx1" class="clip" src="assets/sfx/r-whoosh.wav" data-start="0.43" data-duration="0.55" data-track-index="12" data-volume="0.45"></audio>
-      <audio id="sfx2" class="clip" src="assets/sfx/r-pop.wav" data-start="1.09" data-duration="0.1" data-track-index="12" data-volume="0.3"></audio>
-      <audio id="sfx3" class="clip" src="assets/sfx/r-impact.wav" data-start="1.18" data-duration="0.65" data-track-index="13" data-volume="0.55"></audio>
-      <audio id="sfx4" class="clip" src="assets/sfx/r-boom.wav" data-start="1.2" data-duration="1.568729" data-track-index="12" data-volume="0.45"></audio>
-      <audio id="sfx5" class="clip" src="assets/sfx/r-whoosh.wav" data-start="1.27" data-duration="0.55" data-track-index="14" data-volume="0.35"></audio>
-      <audio id="sfx6" class="clip" src="assets/sfx/r-pop.wav" data-start="1.72" data-duration="0.1" data-track-index="15" data-volume="0.3"></audio>
-      <audio id="sfx7" class="clip" src="assets/sfx/r-exit.wav" data-start="2.08" data-duration="0.6" data-track-index="13" data-volume="0.35"></audio>
-      <audio id="sfx8" class="clip" src="assets/sfx/r-pop.wav" data-start="2.16" data-duration="0.1" data-track-index="14" data-volume="0.3"></audio>
-      <audio id="sfx9" class="clip" src="assets/sfx/r-pop-big.wav" data-start="2.5" data-duration="0.45" data-track-index="14" data-volume="0.5"></audio>
-      <audio id="sfx10" class="clip" src="assets/sfx/r-whoosh.wav" data-start="2.6" data-duration="0.55" data-track-index="15" data-volume="0.4"></audio>
-      <audio id="sfx11" class="clip" src="assets/sfx/r-card.wav" data-start="2.82" data-duration="0.6" data-track-index="12" data-volume="0.5"></audio>
-      <audio id="sfx12" class="clip" src="assets/sfx/r-pop.wav" data-start="2.96" data-duration="0.1" data-track-index="13" data-volume="0.45"></audio>
-      <audio id="sfx13" class="clip" src="assets/sfx/r-sub.wav" data-start="3.27" data-duration="0.7" data-track-index="13" data-volume="0.5"></audio>
-      <audio id="sfx14" class="clip" src="assets/sfx/r-exit.wav" data-start="3.53" data-duration="0.6" data-track-index="12" data-volume="0.3"></audio>
-      <audio id="sfx15" class="clip" src="assets/sfx/r-pop.wav" data-start="3.68" data-duration="0.1" data-track-index="14" data-volume="0.3"></audio>
-      <audio id="sfx16" class="clip" src="assets/sfx/r-boom.wav" data-start="3.9" data-duration="1.568729" data-track-index="14" data-volume="0.5"></audio>
-      <audio id="sfx17" class="clip" src="assets/sfx/r-reveal.wav" data-start="3.93" data-duration="1.0" data-track-index="15" data-volume="0.45"></audio>
-      <audio id="sfx18" class="clip" src="assets/sfx/r-sparkle.wav" data-start="4.0" data-duration="1.2" data-track-index="13" data-volume="0.35"></audio>
-      <audio id="sfx19" class="clip" src="assets/sfx/r-whoosh.wav" data-start="4.45" data-duration="0.55" data-track-index="12" data-volume="0.45"></audio>
-      <audio id="sfx20" class="clip" src="assets/sfx/r-sparkle.wav" data-start="5.11" data-duration="1.2" data-track-index="12" data-volume="0.45"></audio>
-      <audio id="sfx21" class="clip" src="assets/sfx/r-magic.wav" data-start="5.13" data-duration="1.2" data-track-index="15" data-volume="0.3"></audio>
-      <audio id="sfx22" class="clip" src="assets/sfx/r-riser.wav" data-start="5.65" data-duration="1.0" data-track-index="13" data-volume="0.4"></audio>
+      <audio id="sfx0" class="clip" src="assets/sfx/r-swish.wav" data-start="0" data-duration="0.5" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="sfx1" class="clip" src="assets/sfx/r-drop.wav" data-start="0.13" data-duration="0.75" data-track-index="13" data-volume="0.75"></audio>
+      <audio id="sfx2" class="clip" src="assets/sfx/r-swish.wav" data-start="0.21" data-duration="0.5" data-track-index="14" data-volume="0.45"></audio>
+      <audio id="sfx3" class="clip" src="assets/sfx/r-drop.wav" data-start="0.47" data-duration="0.75" data-track-index="12" data-volume="0.6"></audio>
+      <audio id="sfx4" class="clip" src="assets/sfx/r-suck.wav" data-start="0.51" data-duration="0.78" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="sfx5" class="clip" src="assets/sfx/r-pop.wav" data-start="1.09" data-duration="0.1" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx6" class="clip" src="assets/sfx/r-boom.wav" data-start="1.2" data-duration="1.568729" data-track-index="13" data-volume="0.55"></audio>
+      <audio id="sfx7" class="clip" src="assets/sfx/r-impact.wav" data-start="1.21" data-duration="0.65" data-track-index="14" data-volume="0.55"></audio>
+      <audio id="sfx8" class="clip" src="assets/sfx/r-flyby.wav" data-start="1.28" data-duration="0.62" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx9" class="clip" src="assets/sfx/r-pop.wav" data-start="1.72" data-duration="0.1" data-track-index="15" data-volume="0.3"></audio>
+      <audio id="sfx10" class="clip" src="assets/sfx/r-pop.wav" data-start="2.16" data-duration="0.1" data-track-index="12" data-volume="0.3"></audio>
+      <audio id="sfx11" class="clip" src="assets/sfx/r-swish.wav" data-start="2.26" data-duration="0.5" data-track-index="14" data-volume="0.45"></audio>
+      <audio id="sfx12" class="clip" src="assets/sfx/r-drop.wav" data-start="2.52" data-duration="0.75" data-track-index="12" data-volume="0.7"></audio>
+      <audio id="sfx13" class="clip" src="assets/sfx/r-flyby.wav" data-start="2.6" data-duration="0.62" data-track-index="15" data-volume="0.45"></audio>
+      <audio id="sfx14" class="clip" src="assets/sfx/r-swish.wav" data-start="2.71" data-duration="0.5" data-track-index="16" data-volume="0.4"></audio>
+      <audio id="sfx15" class="clip" src="assets/sfx/r-card.wav" data-start="2.82" data-duration="0.6" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx16" class="clip" src="assets/sfx/r-drop.wav" data-start="2.97" data-duration="0.75" data-track-index="14" data-volume="0.55"></audio>
+      <audio id="sfx17" class="clip" src="assets/sfx/r-suck.wav" data-start="3.23" data-duration="0.78" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="sfx18" class="clip" src="assets/sfx/r-sub.wav" data-start="3.27" data-duration="0.7" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx19" class="clip" src="assets/sfx/r-exit.wav" data-start="3.53" data-duration="0.6" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sfx20" class="clip" src="assets/sfx/r-pop.wav" data-start="3.68" data-duration="0.1" data-track-index="16" data-volume="0.3"></audio>
+      <audio id="sfx21" class="clip" src="assets/sfx/r-boom.wav" data-start="3.92" data-duration="1.568729" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="sfx22" class="clip" src="assets/sfx/r-drop.wav" data-start="3.94" data-duration="0.75" data-track-index="16" data-volume="0.7"></audio>
+      <audio id="sfx23" class="clip" src="assets/sfx/r-sparkle.wav" data-start="4.0" data-duration="1.2" data-track-index="12" data-volume="0.3"></audio>
+      <audio id="sfx24" class="clip" src="assets/sfx/r-flyby.wav" data-start="4.42" data-duration="0.62" data-track-index="13" data-volume="0.5"></audio>
+      <audio id="sfx25" class="clip" src="assets/sfx/r-drop.wav" data-start="4.48" data-duration="0.75" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="sfx26" class="clip" src="assets/sfx/r-sparkle.wav" data-start="5.11" data-duration="1.2" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx27" class="clip" src="assets/sfx/r-magic.wav" data-start="5.13" data-duration="1.2" data-track-index="16" data-volume="0.3"></audio>
+      <audio id="sfx28" class="clip" src="assets/sfx/r-riser.wav" data-start="5.65" data-duration="1.0" data-track-index="12" data-volume="0.4"></audio>
     </div>
     <script>
-      const D = {"T": 7.0, "cams": [{"t": 1.22, "scale": 1.16, "dur": 0.12, "shake": true}, {"t": 2.5, "scale": 1.0, "dur": 0.16, "ease": "power2.inOut"}, {"t": 2.66, "scale": 1.06, "dur": 0.8, "ease": "power1.out"}, {"t": 3.62, "scale": 1.14, "cut": true}, {"t": 3.94, "scale": 1.3, "dur": 0.12, "shake": true}, {"t": 4.68, "scale": 1.0, "cut": true}, {"t": 5.15, "scale": 1.18, "cut": true, "push": 1.25, "pushDur": 1.4}], "words": [{"id": "ekdam", "text": "EKDAM", "style": "gold", "layer": "front", "x": 560, "y": 870, "size": 240, "in": 0.13, "out": 0.5, "enter": "letters", "exit": "sink", "rot": -4, "slant": "down"}, {"id": "tahalka1", "text": "TAHALKA", "style": "pink", "layer": "behind", "x": 960, "y": 170, "size": 250, "in": 0.47, "out": 1.12, "enter": "fly-top", "exit": "up", "rot": -2, "slant": "right"}, {"id": "big", "text": "BIG", "style": "red", "layer": "behind", "x": 390, "y": 330, "size": 330, "in": 1.22, "out": 2.14, "enter": "fly-left", "exit": "up", "rot": -6, "slant": "left"}, {"id": "boss", "text": "BOSS", "style": "cyan", "layer": "behind", "x": 1490, "y": 350, "size": 265, "in": 1.3, "out": 2.16, "enter": "fly-right", "exit": "up", "rot": 5, "slant": "right"}, {"id": "lo", "text": "LO!", "style": "lime", "layer": "behind", "x": 380, "y": 400, "size": 360, "in": 2.52, "out": 2.7, "enter": "pop", "exit": "left", "rot": -8, "slant": "left"}, {"id": "leke", "text": "LEKE", "style": "neon", "layer": "behind", "x": 400, "y": 300, "size": 250, "in": 2.64, "out": 3.58, "enter": "fly-left", "exit": "left", "rot": -5, "slant": "left"}, {"id": "aagaya", "text": "AA GAYA!", "style": "gold", "layer": "front", "x": 1380, "y": 880, "size": 190, "in": 2.97, "out": 3.58, "enter": "letters", "exit": "sink", "rot": 3, "slant": "down"}, {"id": "tahalka2", "text": "TAHALKA", "style": "gold", "layer": "front", "x": 960, "y": 860, "size": 270, "in": 3.94, "out": 4.48, "enter": "letters", "exit": "sink", "rot": -3, "slant": "down"}, {"id": "video", "text": "VIDEO!", "style": "cyan", "layer": "front", "x": 1480, "y": 330, "size": 220, "in": 4.48, "out": 4.95, "enter": "fly-right", "exit": "right", "rot": 6, "slant": "right"}], "captions": [{"text": "WALI", "in": 1.1, "out": 1.24}, {"text": "KI VIDEO", "in": 1.73, "out": 2.17}, {"text": "CHAHIYE THI", "in": 2.17, "out": 2.52}, {"text": "ITNI", "in": 3.69, "out": 3.94}], "bursts": [{"t": 1.22, "x": 960, "y": 330, "layer": "behind", "scale": 1.15}, {"t": 3.93, "x": 960, "y": 820, "layer": "behind", "scale": 0.9}], "card": {"in": 2.84, "out": 3.55, "click": 3.28, "name": "The Real Sagar", "meta": "@TheRealSagarr \u00b7 200K subscribers", "photo": "assets/profile-photo.png"}, "fields": [{"in": 5.13, "out": 6.12, "items": [{"id": "ef0-0", "size": 230, "x": 581, "y": 171, "rot": 21, "drift": 191, "delay": 0.105}, {"id": "ef0-1", "size": 156, "x": 96, "y": 0, "rot": 0, "drift": 164, "delay": 0.176}, {"id": "ef0-2", "size": 140, "x": 414, "y": 1025, "rot": 9, "drift": 182, "delay": 0.061}, {"id": "ef0-3", "size": 198, "x": 1653, "y": 177, "rot": -9, "drift": 144, "delay": 0.207}, {"id": "ef0-4", "size": 123, "x": 1657, "y": 493, "rot": -8, "drift": 139, "delay": 0.036}, {"id": "ef0-5", "size": 258, "x": 1244, "y": 722, "rot": -20, "drift": 176, "delay": 0.148}, {"id": "ef0-6", "size": 369, "x": 469, "y": 324, "rot": -10, "drift": 211, "delay": 0.062}, {"id": "ef0-7", "size": 263, "x": -26, "y": 557, "rot": 11, "drift": 169, "delay": 0.187}, {"id": "ef0-8", "size": 370, "x": 359, "y": 807, "rot": 2, "drift": 163, "delay": 0.095}, {"id": "ef0-9", "size": 192, "x": 437, "y": 584, "rot": -9, "drift": 101, "delay": 0.018}, {"id": "ef0-10", "size": 346, "x": 1242, "y": 534, "rot": 8, "drift": 210, "delay": 0.154}, {"id": "ef0-11", "size": 184, "x": 1339, "y": 360, "rot": -21, "drift": 195, "delay": 0.201}, {"id": "ef0-12", "size": 335, "x": 525, "y": 336, "rot": -3, "drift": 201, "delay": 0.164}, {"id": "ef0-13", "size": 274, "x": 1259, "y": 366, "rot": -5, "drift": 115, "delay": 0.185}, {"id": "ef0-14", "size": 227, "x": 528, "y": 446, "rot": -18, "drift": 174, "delay": 0.206}, {"id": "ef0-15", "size": 258, "x": 900, "y": 12, "rot": -23, "drift": 181, "delay": 0.153}, {"id": "ef0-16", "size": 256, "x": 1465, "y": 629, "rot": -24, "drift": 172, "delay": 0.064}, {"id": "ef0-17", "size": 188, "x": 1547, "y": 800, "rot": 14, "drift": 109, "delay": 0.065}, {"id": "ef0-18", "size": 208, "x": 1791, "y": 869, "rot": -7, "drift": 124, "delay": 0.055}, {"id": "ef0-19", "size": 191, "x": 638, "y": -21, "rot": -2, "drift": 101, "delay": 0.1}, {"id": "ef0-20", "size": 296, "x": 1565, "y": 702, "rot": -7, "drift": 114, "delay": 0.097}, {"id": "ef0-21", "size": 216, "x": 828, "y": 385, "rot": -18, "drift": 105, "delay": 0.014}]}], "pops": [{"id": "ep0-0", "x": 250, "y": 560, "size": 300, "t": 3.98, "out": 4.42}, {"id": "ep0-1", "x": 1680, "y": 520, "size": 320, "t": 4.02, "out": 4.4399999999999995}, {"id": "ep0-2", "x": 1520, "y": 170, "size": 230, "t": 4.06, "out": 4.46}, {"id": "ep0-3", "x": 420, "y": 170, "size": 250, "t": 4.1, "out": 4.4799999999999995}, {"id": "ep0-4", "x": 1260, "y": 600, "size": 220, "t": 4.14, "out": 4.5}], "flash": 6.25, "letterGap": 0.03};
+      const D = {"T": 7.0, "cams": [{"t": 1.22, "scale": 1.16, "dur": 0.12, "shake": true}, {"t": 2.5, "scale": 1.0, "dur": 0.16, "ease": "power2.inOut"}, {"t": 2.66, "scale": 1.06, "dur": 0.8, "ease": "power1.out"}, {"t": 3.62, "scale": 1.14, "cut": true}, {"t": 3.94, "scale": 1.3, "dur": 0.12, "shake": true}, {"t": 4.68, "scale": 1.0, "cut": true}, {"t": 5.15, "scale": 1.18, "cut": true, "push": 1.25, "pushDur": 1.4}], "words": [{"id": "ekdam", "text": "EKDAM", "style": "gold", "layer": "front", "x": 520, "y": 860, "size": 300, "in": 0.13, "out": 0.5, "enter": "letters", "exit": "sink", "rot": -4, "slant": "down"}, {"id": "tahalka1", "text": "TAHALKA", "style": "pink", "layer": "behind", "x": 960, "y": 175, "size": 300, "in": 0.47, "out": 1.12, "enter": "fly-top", "exit": "up", "rot": -2, "slant": "right"}, {"id": "big", "text": "BIG", "style": "red", "layer": "behind", "x": 390, "y": 340, "size": 400, "in": 1.22, "out": 2.14, "enter": "fly-left", "exit": "left", "rot": -5, "slant": "left"}, {"id": "boss", "text": "BOSS", "style": "cyan", "layer": "behind", "x": 1480, "y": 360, "size": 330, "in": 1.3, "out": 2.16, "enter": "fly-right", "exit": "right", "rot": 4, "slant": "right"}, {"id": "lo", "text": "LO!", "style": "lime", "layer": "behind", "x": 430, "y": 420, "size": 420, "in": 2.52, "out": 2.7, "enter": "zoom", "exit": "left", "rot": -6, "slant": "left"}, {"id": "leke", "text": "LEKE", "style": "neon", "layer": "behind", "x": 380, "y": 320, "size": 340, "in": 2.64, "out": 3.58, "enter": "fly-left", "exit": "left", "rot": -4, "slant": "left"}, {"id": "aagaya", "text": "AA GAYA!", "style": "gold", "layer": "front", "x": 1330, "y": 880, "size": 225, "in": 2.97, "out": 3.58, "enter": "letters", "exit": "sink", "rot": 2, "slant": "down"}, {"id": "tahalka2", "text": "TAHALKA", "style": "gold", "layer": "front", "x": 960, "y": 860, "size": 330, "in": 3.94, "out": 4.48, "enter": "letters", "exit": "sink", "rot": -2, "slant": "down"}, {"id": "video", "text": "VIDEO!", "style": "cyan", "layer": "front", "x": 1440, "y": 340, "size": 265, "in": 4.48, "out": 4.95, "enter": "fly-right", "exit": "right", "rot": 4, "slant": "right"}], "captions": [{"text": "WALI", "in": 1.1, "out": 1.24}, {"text": "KI VIDEO", "in": 1.73, "out": 2.17}, {"text": "CHAHIYE THI", "in": 2.17, "out": 2.52}, {"text": "ITNI", "in": 3.69, "out": 3.94}], "bursts": [{"t": 1.22, "x": 960, "y": 330, "layer": "behind", "scale": 1.15}, {"t": 3.93, "x": 960, "y": 820, "layer": "behind", "scale": 0.9}], "card": {"in": 2.84, "out": 3.55, "click": 3.28, "name": "The Real Sagar", "meta": "@TheRealSagarr \u00b7 200K subscribers", "photo": "assets/profile-photo.png"}, "fields": [{"in": 5.13, "out": 6.12, "items": [{"id": "ef0-0", "size": 230, "x": 581, "y": 171, "rot": 21, "drift": 191, "delay": 0.105}, {"id": "ef0-1", "size": 156, "x": 96, "y": 0, "rot": 0, "drift": 164, "delay": 0.176}, {"id": "ef0-2", "size": 140, "x": 414, "y": 1025, "rot": 9, "drift": 182, "delay": 0.061}, {"id": "ef0-3", "size": 198, "x": 1653, "y": 177, "rot": -9, "drift": 144, "delay": 0.207}, {"id": "ef0-4", "size": 123, "x": 1657, "y": 493, "rot": -8, "drift": 139, "delay": 0.036}, {"id": "ef0-5", "size": 258, "x": 1244, "y": 722, "rot": -20, "drift": 176, "delay": 0.148}, {"id": "ef0-6", "size": 369, "x": 469, "y": 324, "rot": -10, "drift": 211, "delay": 0.062}, {"id": "ef0-7", "size": 263, "x": -26, "y": 557, "rot": 11, "drift": 169, "delay": 0.187}, {"id": "ef0-8", "size": 370, "x": 359, "y": 807, "rot": 2, "drift": 163, "delay": 0.095}, {"id": "ef0-9", "size": 192, "x": 437, "y": 584, "rot": -9, "drift": 101, "delay": 0.018}, {"id": "ef0-10", "size": 346, "x": 1242, "y": 534, "rot": 8, "drift": 210, "delay": 0.154}, {"id": "ef0-11", "size": 184, "x": 1339, "y": 360, "rot": -21, "drift": 195, "delay": 0.201}, {"id": "ef0-12", "size": 335, "x": 525, "y": 336, "rot": -3, "drift": 201, "delay": 0.164}, {"id": "ef0-13", "size": 274, "x": 1259, "y": 366, "rot": -5, "drift": 115, "delay": 0.185}, {"id": "ef0-14", "size": 227, "x": 528, "y": 446, "rot": -18, "drift": 174, "delay": 0.206}, {"id": "ef0-15", "size": 258, "x": 900, "y": 12, "rot": -23, "drift": 181, "delay": 0.153}, {"id": "ef0-16", "size": 256, "x": 1465, "y": 629, "rot": -24, "drift": 172, "delay": 0.064}, {"id": "ef0-17", "size": 188, "x": 1547, "y": 800, "rot": 14, "drift": 109, "delay": 0.065}, {"id": "ef0-18", "size": 208, "x": 1791, "y": 869, "rot": -7, "drift": 124, "delay": 0.055}, {"id": "ef0-19", "size": 191, "x": 638, "y": -21, "rot": -2, "drift": 101, "delay": 0.1}, {"id": "ef0-20", "size": 296, "x": 1565, "y": 702, "rot": -7, "drift": 114, "delay": 0.097}, {"id": "ef0-21", "size": 216, "x": 828, "y": 385, "rot": -18, "drift": 105, "delay": 0.014}]}], "pops": [{"id": "ep0-0", "x": 250, "y": 560, "size": 300, "t": 3.98, "out": 4.42}, {"id": "ep0-1", "x": 1680, "y": 520, "size": 320, "t": 4.02, "out": 4.4399999999999995}, {"id": "ep0-2", "x": 1520, "y": 170, "size": 230, "t": 4.06, "out": 4.46}, {"id": "ep0-3", "x": 420, "y": 170, "size": 250, "t": 4.1, "out": 4.4799999999999995}, {"id": "ep0-4", "x": 1260, "y": 600, "size": 220, "t": 4.14, "out": 4.5}], "flash": 6.25, "letterGap": 0.03};
       const tl = gsap.timeline({ paused: true });
       const IR = { immediateRender: false };
 
@@ -184,47 +209,49 @@
           tl.to(cams, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }, c.t + i * 0.04));
       }
 
-      // ---------- words ----------
+      // ---------- words (reference: fast entries with directional motion blur, near-still hold, blurred exits) ----------
       const ENTER = {
-        "fly-left":  { x: -700, scaleX: 1.6, rotationY: 55, filter: "blur(18px)" },
-        "fly-right": { x: 700, scaleX: 1.6, rotationY: -55, filter: "blur(18px)" },
-        "fly-top":   { y: -500, scaleY: 1.5, rotationX: -60, filter: "blur(18px)" },
-        "pop":       { scale: 0.3, filter: "blur(14px)" },
-        "spin":      { scale: 0.2, rotationY: 180, filter: "blur(12px)" },
+        "zoom":      { from: { scale: 0.3 }, blur: "14 14" },
+        "fly-left":  { from: { x: -520, scaleX: 1.3 }, blur: "60 0" },
+        "fly-right": { from: { x: 520, scaleX: 1.3 }, blur: "60 0" },
+        "fly-top":   { from: { y: -420, scaleY: 1.3 }, blur: "0 50" },
+        "fly-bottom":{ from: { y: 420, scaleY: 1.3 }, blur: "0 50" },
+        "pop":       { from: { scale: 0.4 }, blur: "12 12" },
       };
       const EXIT = {
-        sink:  { y: 320, rotation: -10, filter: "blur(14px)", opacity: 0 },
-        left:  { x: -800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
-        right: { x: 800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
-        up:    { y: -600, scaleY: 1.4, filter: "blur(20px)", opacity: 0 },
-        blur:  { scale: 1.3, filter: "blur(18px)", opacity: 0 },
+        sink:  { to: { y: 360, rotation: -6 }, blur: "0 40" },
+        left:  { to: { x: -800, scaleX: 1.3 }, blur: "70 0" },
+        right: { to: { x: 800, scaleX: 1.3 }, blur: "70 0" },
+        up:    { to: { y: -600, scaleY: 1.3 }, blur: "0 60" },
+        blur:  { to: { scale: 1.25 }, blur: "16 16" },
       };
       for (const w of D.words) {
-        const el = "#w-" + w.id, rot = w.rot || 0, dur = w.out - w.in;
-        tl.set(el, { x: w.x, y: w.y, xPercent: -50, yPercent: -50, rotation: rot, transformPerspective: 1000 }, 0);
+        const el = "#w-" + w.id, fb = "#mb-" + w.id + " feGaussianBlur", rot = w.rot || 0;
+        tl.set(el, { x: w.x, y: w.y, xPercent: -50, yPercent: -50, rotation: rot, scale: 1 }, 0);
         if (w.enter === "letters") {
           tl.set(el, { opacity: 1 }, w.in);
           const ls = document.querySelectorAll(el + " .l");
           const n = ls.length / 2;
           ls.forEach((l, i) => {
             const k = i % n;
-            tl.fromTo(l, { opacity: 0, scale: 0.1, y: 70, rotationX: -70 },
-              { opacity: 1, scale: 1.18, y: -8, rotationX: 0, duration: 0.12, ease: "power3.out", ...IR }, w.in + k * D.letterGap);
-            tl.to(l, { scale: 1, y: 0, duration: 0.12, ease: "back.out(3)" }, w.in + k * D.letterGap + 0.12);
+            tl.fromTo(l, { opacity: 0, scale: 0.15, y: 60 },
+              { opacity: 1, scale: 1.15, y: -6, duration: 0.1, ease: "power3.out", ...IR }, w.in + k * D.letterGap);
+            tl.to(l, { scale: 1, y: 0, duration: 0.1, ease: "power2.out" }, w.in + k * D.letterGap + 0.1);
           });
         } else {
-          const from = ENTER[w.enter || "pop"];
-          tl.fromTo(el, { opacity: 0, x: w.x, y: w.y, rotation: rot, scale: 1, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, ...from,
-              x: w.x + (from.x || 0), y: w.y + (from.y || 0) },
-            { opacity: 1, x: w.x, y: w.y, scale: 1.08, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, filter: "blur(0px)",
-              duration: 0.16, ease: "power3.out", ...IR }, w.in);
-          tl.to(el, { scale: 1, duration: 0.12, ease: "back.out(2.5)" }, w.in + 0.16);
+          const e = ENTER[w.enter || "zoom"], f = e.from;
+          tl.fromTo(el, { opacity: 0, x: w.x + (f.x || 0), y: w.y + (f.y || 0), scale: f.scale || 1, scaleX: f.scaleX || 1, scaleY: f.scaleY || 1 },
+            { opacity: 1, x: w.x, y: w.y, scale: 1.04, scaleX: 1, scaleY: 1, duration: 0.13, ease: "power3.out", ...IR }, w.in);
+          tl.fromTo(fb, { attr: { stdDeviation: e.blur } }, { attr: { stdDeviation: "0 0" }, duration: 0.13, ease: "power2.out", ...IR }, w.in);
+          tl.to(el, { scale: 1, duration: 0.1, ease: "power2.out" }, w.in + 0.13);
         }
-        // hold: slow 3D drift (never dead still, like the reference)
-        const hold = Math.max(0.1, dur - 0.32);
-        tl.to(el, { rotationY: w.slant === "left" ? 7 : -7, rotationX: 4, scale: 1.05, duration: hold, ease: "sine.inOut" }, w.in + 0.28);
-        const ex = EXIT[w.exit || "blur"];
-        tl.to(el, { ...ex, x: w.x + (ex.x || 0), y: w.y + (ex.y || 0), duration: 0.16, ease: "power2.in" }, w.out - 0.04);
+        // hold: almost still, slow push toward the camera (reference)
+        const hold = Math.max(0.05, w.out - w.in - 0.3);
+        tl.to(el, { scale: 1.05, duration: hold, ease: "none" }, w.in + 0.23);
+        const x = EXIT[w.exit || "blur"], t = x.to;
+        tl.to(el, { x: w.x + (t.x || 0), y: w.y + (t.y || 0), rotation: rot + (t.rotation || 0), scale: t.scale || 1.05,
+          scaleX: t.scaleX || 1, scaleY: t.scaleY || 1, opacity: 0, duration: 0.12, ease: "power2.in" }, w.out - 0.06);
+        tl.to(fb, { attr: { stdDeviation: x.blur }, duration: 0.12, ease: "power2.in" }, w.out - 0.06);
       }
 
       // ---------- small yellow captions ----------

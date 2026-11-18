@@ -48,7 +48,7 @@ def word_html(w):
     else:
         inner = (f'<span class="b" data-layout-allow-occlusion>{escape(w["text"])}</span>'
                  f'<span class="f">{escape(w["text"])}</span>')
-    return f'        <div id="w-{w["id"]}" class="{cls}" style="{style}">{inner}</div>'
+    return (f'        <div id="w-{w["id"]}" class="{cls}" style="{style}; filter: url(#mb-{w["id"]})">{inner}</div>')
 
 
 def burst_html(i):
@@ -142,7 +142,10 @@ def build(spec_path: Path) -> None:
     data = {"T": T, "cams": S.get("cams", []), "words": words, "captions": S.get("captions", []),
             "bursts": bursts, "card": card, "fields": field_items, "pops": pop_items, "flash": S.get("flash"),
             "letterGap": LETTER_GAP}
-    html = TEMPLATE.replace("{{T}}", str(T)).replace("{{MD}}", str(md)) \
+    filters = "\n".join(
+        f'      <filter id="mb-{w["id"]}" x="-60%" y="-60%" width="220%" height="220%">'
+        f'<feGaussianBlur stdDeviation="0 0" /></filter>' for w in words)
+    html = TEMPLATE.replace("{{FILTERS}}", filters).replace("{{T}}", str(T)).replace("{{MD}}", str(md)) \
         .replace("{{PLATE}}", S["plate"]).replace("{{PERSON}}", S["person"]) \
         .replace("{{BEHIND}}", "\n".join(behind_html)).replace("{{FRONT}}", "\n".join(front_html)) \
         .replace("{{AUDIO}}", "\n".join(audio)).replace("{{DATA}}", json.dumps(data))
@@ -158,6 +161,7 @@ TEMPLATE = r"""<!doctype html>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
       @font-face { font-family: "Poppins Black"; src: url("assets/fonts/poppins-black.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Lilita One"; src: url("assets/fonts/lilita-one.woff2") format("woff2"); }
       @font-face { font-family: "Poppins Black Italic"; src: url("assets/fonts/poppins-black-italic.woff2") format("woff2"); font-weight: 900; font-style: italic; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
@@ -167,19 +171,28 @@ TEMPLATE = r"""<!doctype html>
       #cam-back { z-index: 1; } #behind { z-index: 2; } #cam-front { z-index: 3; } #front { z-index: 4; } #flash { z-index: 6; }
       .layer { position: absolute; inset: 0; pointer-events: none; perspective: 1100px; }
 
-      /* 3D word: bright fill + top highlight, same-hue extrusion, light rim, big coloured glow (no black outline) */
-      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; transform-style: preserve-3d; }
-      .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: -0.01em; }
-      .w .b { color: var(--deep); -webkit-text-stroke: calc(var(--size) * 0.016) var(--rim); paint-order: stroke fill;
-        text-shadow: var(--dx1) 3px 0 var(--deep), var(--dx2) 6px 0 var(--deep), var(--dx3) 9px 0 var(--deep),
-          var(--dx4) 12px 0 var(--deep), var(--dx5) 15px 0 var(--deep), var(--dx6) 18px 0 var(--deep),
-          var(--dx6) 24px 14px rgba(0, 0, 0, 0.45), 0 0 34px var(--glow), 0 0 90px var(--glow); }
+      /* 3D word (reference look): condensed rounded heavy font, glossy top, deep extrusion straight down in a darker
+         shade, strong glow in the word's colour */
+      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; }
+      .w .b, .w .f { display: block; font-family: "Lilita One", sans-serif; font-size: var(--size); letter-spacing: 0.01em; }
+      .w .b { color: var(--deep); -webkit-text-stroke: calc(var(--size) * 0.03) var(--deep); paint-order: stroke fill;
+        text-shadow: 0 2px 0 var(--deep), 0 4px 0 var(--deep), 0 6px 0 var(--deep), 0 8px 0 var(--deep),
+          0 10px 0 var(--deep), 0 12px 0 var(--deep), 0 14px 0 var(--deep), 0 16px 0 var(--deep),
+          0 18px 0 var(--dark), 0 20px 0 var(--dark), 0 22px 0 var(--dark),
+          0 30px 22px rgba(0, 0, 0, 0.4), 0 0 18px var(--glow), 0 0 45px var(--glow), 0 0 110px var(--glow); }
       .w .f { position: absolute; left: 0; top: 0;
-        background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
+        background: linear-gradient(180deg, var(--hi) 0%, var(--hi) 12%, var(--c1) 30%, var(--c1) 58%, var(--c2) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .lime   { --hi: #fbffe0; --c1: #e9ff3a; --c2: #7fe12a; --deep: #2f9a1e; --dark: #1d6612; --glow: rgba(190, 255, 60, 0.75); }
+      .cyan   { --hi: #effeff; --c1: #74f2ff; --c2: #2bb8ff; --deep: #1f63d8; --dark: #143f92; --glow: rgba(60, 210, 255, 0.75); }
+      .pink   { --hi: #fff0fc; --c1: #ff8bf0; --c2: #f23fd0; --deep: #a51a9e; --dark: #6e0f6a; --glow: rgba(255, 70, 220, 0.8); }
+      .gold   { --hi: #fffde6; --c1: #ffec3d; --c2: #ffb300; --deep: #f05a00; --dark: #a82e00; --glow: rgba(255, 150, 0, 0.85); }
+      .red    { --hi: #ffe5df; --c1: #ff5d4a; --c2: #ff1e3c; --deep: #a3001f; --dark: #640012; --glow: rgba(255, 40, 60, 0.75); }
+      .neon   { --hi: #ffffff; --c1: #ffffff; --c2: #ffd6f2; --deep: #f0479e; --dark: #a51c66; --glow: rgba(255, 60, 150, 0.9); }
+      .purple { --hi: #fbf0ff; --c1: #e9a0ff; --c2: #b55bff; --deep: #6a26c4; --dark: #431680; --glow: rgba(200, 110, 255, 0.8); }
       .w .l { display: inline-block; }
       .w.lw .f { background: none; }
-      .w.lw .f .l { background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
+      .w.lw .f .l { background: linear-gradient(180deg, var(--hi) 0%, var(--hi) 12%, var(--c1) 30%, var(--c1) 58%, var(--c2) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent; }
       .w.left  { --dx1: -2px; --dx2: -4px; --dx3: -6px; --dx4: -8px; --dx5: -10px; --dx6: -12px; }
       .w.right { --dx1: 2px; --dx2: 4px; --dx3: 6px; --dx4: 8px; --dx5: 10px; --dx6: 12px; }
@@ -230,6 +243,7 @@ TEMPLATE = r"""<!doctype html>
         <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="7" result="n" />
         <feDisplacementMap in="SourceGraphic" in2="n" scale="90" xChannelSelector="R" yChannelSelector="G" />
       </filter>
+{{FILTERS}}
     </svg>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{{T}}" data-width="1920" data-height="1080">
       <div id="cam-back" class="cam">
@@ -263,47 +277,49 @@ TEMPLATE = r"""<!doctype html>
           tl.to(cams, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }, c.t + i * 0.04));
       }
 
-      // ---------- words ----------
+      // ---------- words (reference: fast entries with directional motion blur, near-still hold, blurred exits) ----------
       const ENTER = {
-        "fly-left":  { x: -700, scaleX: 1.6, rotationY: 55, filter: "blur(18px)" },
-        "fly-right": { x: 700, scaleX: 1.6, rotationY: -55, filter: "blur(18px)" },
-        "fly-top":   { y: -500, scaleY: 1.5, rotationX: -60, filter: "blur(18px)" },
-        "pop":       { scale: 0.3, filter: "blur(14px)" },
-        "spin":      { scale: 0.2, rotationY: 180, filter: "blur(12px)" },
+        "zoom":      { from: { scale: 0.3 }, blur: "14 14" },
+        "fly-left":  { from: { x: -520, scaleX: 1.3 }, blur: "60 0" },
+        "fly-right": { from: { x: 520, scaleX: 1.3 }, blur: "60 0" },
+        "fly-top":   { from: { y: -420, scaleY: 1.3 }, blur: "0 50" },
+        "fly-bottom":{ from: { y: 420, scaleY: 1.3 }, blur: "0 50" },
+        "pop":       { from: { scale: 0.4 }, blur: "12 12" },
       };
       const EXIT = {
-        sink:  { y: 320, rotation: -10, filter: "blur(14px)", opacity: 0 },
-        left:  { x: -800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
-        right: { x: 800, scaleX: 1.5, filter: "blur(20px)", opacity: 0 },
-        up:    { y: -600, scaleY: 1.4, filter: "blur(20px)", opacity: 0 },
-        blur:  { scale: 1.3, filter: "blur(18px)", opacity: 0 },
+        sink:  { to: { y: 360, rotation: -6 }, blur: "0 40" },
+        left:  { to: { x: -800, scaleX: 1.3 }, blur: "70 0" },
+        right: { to: { x: 800, scaleX: 1.3 }, blur: "70 0" },
+        up:    { to: { y: -600, scaleY: 1.3 }, blur: "0 60" },
+        blur:  { to: { scale: 1.25 }, blur: "16 16" },
       };
       for (const w of D.words) {
-        const el = "#w-" + w.id, rot = w.rot || 0, dur = w.out - w.in;
-        tl.set(el, { x: w.x, y: w.y, xPercent: -50, yPercent: -50, rotation: rot, transformPerspective: 1000 }, 0);
+        const el = "#w-" + w.id, fb = "#mb-" + w.id + " feGaussianBlur", rot = w.rot || 0;
+        tl.set(el, { x: w.x, y: w.y, xPercent: -50, yPercent: -50, rotation: rot, scale: 1 }, 0);
         if (w.enter === "letters") {
           tl.set(el, { opacity: 1 }, w.in);
           const ls = document.querySelectorAll(el + " .l");
           const n = ls.length / 2;
           ls.forEach((l, i) => {
             const k = i % n;
-            tl.fromTo(l, { opacity: 0, scale: 0.1, y: 70, rotationX: -70 },
-              { opacity: 1, scale: 1.18, y: -8, rotationX: 0, duration: 0.12, ease: "power3.out", ...IR }, w.in + k * D.letterGap);
-            tl.to(l, { scale: 1, y: 0, duration: 0.12, ease: "back.out(3)" }, w.in + k * D.letterGap + 0.12);
+            tl.fromTo(l, { opacity: 0, scale: 0.15, y: 60 },
+              { opacity: 1, scale: 1.15, y: -6, duration: 0.1, ease: "power3.out", ...IR }, w.in + k * D.letterGap);
+            tl.to(l, { scale: 1, y: 0, duration: 0.1, ease: "power2.out" }, w.in + k * D.letterGap + 0.1);
           });
         } else {
-          const from = ENTER[w.enter || "pop"];
-          tl.fromTo(el, { opacity: 0, x: w.x, y: w.y, rotation: rot, scale: 1, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, ...from,
-              x: w.x + (from.x || 0), y: w.y + (from.y || 0) },
-            { opacity: 1, x: w.x, y: w.y, scale: 1.08, scaleX: 1, scaleY: 1, rotationX: 0, rotationY: 0, filter: "blur(0px)",
-              duration: 0.16, ease: "power3.out", ...IR }, w.in);
-          tl.to(el, { scale: 1, duration: 0.12, ease: "back.out(2.5)" }, w.in + 0.16);
+          const e = ENTER[w.enter || "zoom"], f = e.from;
+          tl.fromTo(el, { opacity: 0, x: w.x + (f.x || 0), y: w.y + (f.y || 0), scale: f.scale || 1, scaleX: f.scaleX || 1, scaleY: f.scaleY || 1 },
+            { opacity: 1, x: w.x, y: w.y, scale: 1.04, scaleX: 1, scaleY: 1, duration: 0.13, ease: "power3.out", ...IR }, w.in);
+          tl.fromTo(fb, { attr: { stdDeviation: e.blur } }, { attr: { stdDeviation: "0 0" }, duration: 0.13, ease: "power2.out", ...IR }, w.in);
+          tl.to(el, { scale: 1, duration: 0.1, ease: "power2.out" }, w.in + 0.13);
         }
-        // hold: slow 3D drift (never dead still, like the reference)
-        const hold = Math.max(0.1, dur - 0.32);
-        tl.to(el, { rotationY: w.slant === "left" ? 7 : -7, rotationX: 4, scale: 1.05, duration: hold, ease: "sine.inOut" }, w.in + 0.28);
-        const ex = EXIT[w.exit || "blur"];
-        tl.to(el, { ...ex, x: w.x + (ex.x || 0), y: w.y + (ex.y || 0), duration: 0.16, ease: "power2.in" }, w.out - 0.04);
+        // hold: almost still, slow push toward the camera (reference)
+        const hold = Math.max(0.05, w.out - w.in - 0.3);
+        tl.to(el, { scale: 1.05, duration: hold, ease: "none" }, w.in + 0.23);
+        const x = EXIT[w.exit || "blur"], t = x.to;
+        tl.to(el, { x: w.x + (t.x || 0), y: w.y + (t.y || 0), rotation: rot + (t.rotation || 0), scale: t.scale || 1.05,
+          scaleX: t.scaleX || 1, scaleY: t.scaleY || 1, opacity: 0, duration: 0.12, ease: "power2.in" }, w.out - 0.06);
+        tl.to(fb, { attr: { stdDeviation: x.blur }, duration: 0.12, ease: "power2.in" }, w.out - 0.06);
       }
 
       // ---------- small yellow captions ----------

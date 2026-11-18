@@ -21,6 +21,15 @@ cards, music, sound files, fonts, exact text or graphics. Make our own versions 
 7. Hair in front of bright smoke must not look chopped or blink: soft, temporally smoothed edge
    (clean_matte defaults 0.38/0.85, 1.1 px, 3-frame smoothing) and smoke puffs fade in over 0.1 s.
 8. Never invent viewer comments; ask Sagar for real comment screenshots when he mentions comments.
+9. Text look like ref-2/ref-4 (v7): condensed rounded heavy font **Lilita One** (not wide Poppins Black), glossy
+   light top, deep 3D extrusion straight DOWN in a darker shade, strong 3-layer glow in the word's colour, huge
+   (260-430 px) but fully inside the frame (only a letter may hide behind the head).
+10. Text motion like ref-2 (v7): every word enters in ~0.13 s with **directional motion blur** (SVG blur 60 px along
+   the movement: fly-left/right/top, or zoom/pop with round blur), tiny overshoot, then almost still with a slow
+   push (scale 1 → 1.05); exits in 0.12 s with blur in the exit direction. No wobble or 3D spinning.
+11. Sound like ref-2 (v7): every big word = an airy **swish** just before it (peak on the word) + a deep **bass drop**
+   on the word (r-swish + r-drop); big moments add r-suck (reverse impact ending on the word) + r-boom + r-impact;
+   fly-ins use r-flyby. Small captions get a quiet r-pop. Final mix around -14 LUFS.
 
 ## Format
 - YouTube long video, landscape **1920x1080**, 60 fps source looks best (export 30 or 60 fps), 10-18 min.
