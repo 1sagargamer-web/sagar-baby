@@ -20,9 +20,10 @@ exact lines.
   - title: centre, top 250 px, Baloo 2 ExtraBold 84 px, first word yellow `#ffcf3a`, rest white, one emoji at the end
     (title is per video, short, Hinglish in Roman letters, e.g. "**Haar** Mat Maan 🔥")
   - picture: 1080x1080 at top 420 px, slow Ken Burns move (zoom in / zoom out / pan), short crossfade between pictures
-  - watermark: **"Made By Sagar Mishra"**, centre, inside the bottom of the picture (top 1440 px), faint white 30 px
+  - watermark: **"Made By Sagar Mishra"**, centre, inside the bottom of the picture (top 1436 px), white 30 px on a
+    light dark pill (a plain faint text failed the contrast check on bright pictures)
   - captions: centre, top 1560 px, Baloo 2 ExtraBold 62 px, **Hindi (Devanagari)**, word by word; spoken words white,
-    current word yellow, coming words faint white. Up to ~5 words per caption page.
+    current word yellow, coming words faint white. Up to 6 words (~32 characters) per caption page, so each page stays on screen long enough to read.
 - Fonts: `assets/fonts/` (Baloo 2, SIL Open Font License). Emoji: Noto Color Emoji (installed).
 
 ## Pictures

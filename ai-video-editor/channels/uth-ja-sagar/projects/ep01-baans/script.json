@@ -56,8 +56,8 @@
   {
    "hi": "और सिर्फ छह हफ्तों में... वो नब्बे फ़ीट ऊँचा हो गया!",
    "how": "josh aur hairani",
-   "prompt": "low angle view of one giant bamboo stalk rising high into the clouds, a tiny man at its base looking up in amazement",
-   "seed": 71,
+   "prompt": "a giant tall bamboo plant towering into the sky in a field, a tiny young man standing at the bottom looking up amazed, villagers shocked, low angle",
+   "seed": 7,
    "motion": "pan-right",
    "sfx": "soft-whoosh",
    "keep_audio": true

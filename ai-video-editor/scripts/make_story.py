@@ -66,21 +66,45 @@ def norm(w: str) -> str:
     return "".join(ch for ch in w if ch.isalnum())
 
 
+_MODEL = None
+
+
+def whisper_words(wav: Path):
+    """Whisper word timings for one file (model loaded once). Decodes with FFmpeg (faster-whisper's own av decode breaks)."""
+    global _MODEL
+    if _MODEL is None:
+        from faster_whisper import WhisperModel
+        mdir = HERE / "models" / "faster-whisper-large-v3"
+        _MODEL = WhisperModel(str(mdir) if mdir.exists() else "large-v3", device="cpu", compute_type="int8",
+                              cpu_threads=os.cpu_count() or 4)
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+                         check=True, capture_output=True).stdout
+    segs, _ = _MODEL.transcribe(np.frombuffer(pcm, dtype=np.float32), language="hi", word_timestamps=True,
+                                vad_filter=False, beam_size=5)
+    return [w for s in segs for w in (s.words or []) if norm(w.word)]
+
+
+def trim_tail(wav: Path, pad: float = 0.3) -> None:
+    """The clone sometimes leaves 2-3 s of noise/breath after the line. Cut 0.3 s after the last spoken word."""
+    ws = whisper_words(wav)
+    data, rate = sf.read(str(wav))
+    if not ws:
+        return
+    end = min(len(data), int((ws[-1].end + pad) * rate))
+    if end < len(data):
+        f = min(int(0.08 * rate), end)
+        data = data[:end].copy()
+        data[-f:] *= np.linspace(1, 0, f)
+        sf.write(str(wav), data, rate)
+        print(f"trimmed {wav.name}: {len(data) / rate:.2f}s")
+
+
 def word_times(wavs: list[Path], texts: list[str]) -> list[list[float]]:
     """Start time of every script word in each line, from Whisper word timings (one model load for all lines).
     The script's own spelling is shown; Whisper only gives the timing (matched by character position)."""
-    from faster_whisper import WhisperModel
-
-    mdir = HERE / "models" / "faster-whisper-large-v3"
-    model = WhisperModel(str(mdir) if mdir.exists() else "large-v3", device="cpu", compute_type="int8",
-                         cpu_threads=os.cpu_count() or 4)
     out = []
     for wav, text in zip(wavs, texts):
-        pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
-                             check=True, capture_output=True).stdout  # decode with FFmpeg (faster-whisper's own av decode breaks)
-        segs, _ = model.transcribe(np.frombuffer(pcm, dtype=np.float32), language="hi", word_timestamps=True,
-                                   vad_filter=False, beam_size=5)
-        ws = [w for s in segs for w in (s.words or []) if norm(w.word)]
+        ws = whisper_words(wav)
         words = [w for w in text.split() if norm(w)]
         dur = sf.info(str(wav)).duration
         if not ws:  # fall back: spread the words over the line by length
@@ -107,7 +131,7 @@ def word_times(wavs: list[Path], texts: list[str]) -> list[list[float]]:
     return out
 
 
-def pages(words: list[str], max_words: int = 5, max_chars: int = 28) -> list[list[int]]:
+def pages(words: list[str], max_words: int = 6, max_chars: int = 32) -> list[list[int]]:
     """Group word indexes into caption pages."""
     res, cur, chars = [], [], 0
     for i, w in enumerate(words):
@@ -212,6 +236,10 @@ def build(script_path: Path) -> None:
             clean(raw, raw.with_name(raw.name.replace(".raw", "")), CLONE["tempo"])
             raw.unlink()
 
+    for l, wav in zip(lines, wavs):  # clone lines only (recordings were already cut by pick_takes.py)
+        if not l.get("audio"):
+            trim_tail(wav)
+
     # ---- timeline ----------------------------------------------------------------------------------------------
     t = 0.2
     for l, wav in zip(lines, wavs):
@@ -312,10 +340,13 @@ TEMPLATE = """<!doctype html>
       #title {{ position: absolute; top: 250px; left: 0; width: 1080px; text-align: center; color: #fff; font-weight: 800;
         font-size: 84px; line-height: 1.05; }}
       #title b {{ color: #ffcf3a; }}
-      #frame {{ position: absolute; top: 420px; left: 0; width: 1080px; height: 1080px; overflow: hidden; background: #111; }}
+      #frame {{ position: absolute; top: 420px; left: 0; width: 1080px; height: 1080px; overflow: hidden; background: #111;
+        z-index: 0; }}  /* own stacking context, so the pictures never cover the watermark */
       .pic {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }}
-      #watermark {{ position: absolute; top: 1440px; left: 0; width: 1080px; text-align: center; font-weight: 600;
-        font-size: 30px; color: rgba(255,255,255,0.6); text-shadow: 0 2px 6px rgba(0,0,0,0.7); }}
+      @font-face {{ font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"), local("NotoColorEmoji"); }}
+      #watermark {{ position: absolute; top: 1436px; left: 0; width: 1080px; text-align: center; z-index: 5; }}
+      #watermark span {{ display: inline-block; font-weight: 600; font-size: 30px; color: rgba(255,255,255,0.92);
+        background: rgba(0,0,0,0.42); padding: 2px 20px; border-radius: 30px; }}
       .cap {{ position: absolute; top: 1560px; left: 0; width: 1080px; padding: 0 70px; text-align: center;
         font-weight: 800; font-size: 62px; line-height: 1.3; }}
       .cap span {{ color: rgba(255,255,255,0.28); }}
@@ -327,7 +358,7 @@ TEMPLATE = """<!doctype html>
       <div id="frame" class="clip" data-start="0" data-duration="{total}" data-track-index="0" data-layout-allow-overlap>
 {pics}
       </div>
-      <div id="watermark" class="clip" data-start="0" data-duration="{total}" data-track-index="8">{watermark}</div>
+      <div id="watermark" class="clip" data-start="0" data-duration="{total}" data-track-index="8"><span>{watermark}</span></div>
       <div id="captions" class="clip" data-start="0" data-duration="{total}" data-track-index="2" data-layout-allow-overlap>
 {captions}
       </div>
