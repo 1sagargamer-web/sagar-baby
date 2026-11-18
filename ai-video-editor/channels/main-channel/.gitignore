@@ -11,3 +11,13 @@ Reference/*.transcript.json
 projects/*/assets/audio/
 voices/sagar*
 Reference/analysis/
+# Project working files: Sagar's footage, cut-outs, voice and big generated files stay out of git
+projects/*/assets/*.mp4
+projects/*/assets/*.webm
+projects/*/assets/*.wav
+projects/*/assets/sfx/
+projects/*/assets/fonts/NotoColorEmoji.ttf
+projects/*/work/
+projects/*/.hyperframes/
+characters/profile-photo.png
+sfx/

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Luckiest Guy"; src: url("assets/fonts/luckiest-guy.woff2") format("woff2"); }
+      @font-face { font-family: "Titan One"; src: url("assets/fonts/titan-one.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Color Emoji"; src: url("assets/fonts/NotoColorEmoji.ttf") format("truetype"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Luckiest Guy", sans-serif; }
+
+      /* camera: the plate and the cut-out move together */
+      .cam { position: absolute; inset: 0; transform-origin: 50% 32%; }
+      .cam video { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+      #cam-back { z-index: 1; }
+      #behind { z-index: 2; }
+      #cam-front { z-index: 3; }
+      #front { z-index: 4; }
+      #flash { z-index: 6; }
+      .layer { position: absolute; inset: 0; pointer-events: none; }
+
+      /* big 3D word: back layer = outline + extrusion, front layer = glossy gradient fill */
+      .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; }
+      .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: 0.02em; }
+      .w .b {
+        color: var(--deep);
+        -webkit-text-stroke: calc(var(--size) * 0.07) #12081f;
+        paint-order: stroke fill;
+        text-shadow:
+          0 3px 0 var(--deep), 0 6px 0 var(--deep), 0 9px 0 var(--deep), 0 12px 0 var(--deep),
+          0 15px 0 var(--deep), 0 18px 0 #12081f, 0 22px 0 #12081f,
+          0 30px 30px rgba(0, 0, 0, 0.55), 0 0 40px var(--glow);
+      }
+      .w .f {
+        position: absolute; left: 0; top: 0;
+        background: linear-gradient(180deg, #ffffff 0%, var(--c1) 22%, var(--c1) 50%, var(--c2) 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lime   { --c1: #f4ff4a; --c2: #5fe83a; --deep: #1f7a1a; --glow: rgba(190, 255, 80, 0.55); }
+      .pink   { --c1: #ff6be6; --c2: #ff2a8a; --deep: #8a0f5a; --glow: rgba(255, 80, 200, 0.6); }
+      .fire   { --c1: #ffe94a; --c2: #ff5a00; --deep: #8a1d00; --glow: rgba(255, 140, 0, 0.6); }
+      .red    { --c1: #ff5e3a; --c2: #d4001f; --deep: #5e0010; --glow: rgba(255, 60, 40, 0.55); }
+      .cyan   { --c1: #7ff8ff; --c2: #1f8cff; --deep: #0a3d8a; --glow: rgba(80, 220, 255, 0.6); }
+      .candy  { --c1: #ffffff; --c2: #ff9ae6; --deep: #b0337f; --glow: rgba(255, 170, 230, 0.6); }
+
+      /* small yellow word captions, lower left */
+      .cap { position: absolute; left: 110px; top: 905px; opacity: 0; white-space: nowrap; font-size: 76px; color: #ffe23d;
+        -webkit-text-stroke: 9px #111; paint-order: stroke fill; text-shadow: 0 6px 0 #111, 0 10px 18px rgba(0,0,0,.6); }
+
+      /* explosion burst */
+      .burst { position: absolute; width: 900px; height: 600px; left: 0; top: 0; opacity: 0; }
+
+      /* channel card (our own design) */
+      #card { position: absolute; left: 70px; top: 760px; width: 800px; height: 190px; opacity: 0;
+        background: #ffffff; border-radius: 32px; box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 0 6px rgba(255,255,255,.35);
+        display: flex; align-items: center; gap: 26px; padding: 0 30px; font-family: "Poppins", sans-serif; }
+      #card img { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; border: 5px solid #ff2a2a; }
+      #card .name { font-weight: 800; font-size: 40px; color: #0f0f0f; display: flex; align-items: center; gap: 10px; }
+      #card .tick { width: 30px; height: 30px; border-radius: 50%; background: #606060; color: #fff; font-size: 20px;
+        display: inline-flex; align-items: center; justify-content: center; }
+      #card .meta { white-space: nowrap; font-weight: 600; font-size: 28px; color: #555; margin-top: 4px; }
+      #card .btn { position: relative; margin-top: 12px; width: 230px; height: 56px; border-radius: 28px; }
+      #card .btn span { position: absolute; inset: 0; border-radius: 28px; display: flex; align-items: center;
+        justify-content: center; font-weight: 700; font-size: 26px; }
+      #sub { background: #ff0033; color: #fff; }
+      #subbed { background: #e6e6e6; color: #333; opacity: 0; }
+      #cursor { position: absolute; left: 0; top: 0; width: 64px; height: 64px; opacity: 0; }
+
+      .emoji { position: absolute; left: 0; top: 0; font-family: "Noto Color Emoji"; font-size: 130px; opacity: 0; }
+      #flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+      <!-- footage (pauses already cut; light brightness fix baked in) -->
+      <div id="cam-back" class="cam">
+        <video id="plate" class="clip" src="assets/sagar.mp4" data-start="0" data-duration="6.633" data-track-index="0" muted></video>
+      </div>
+
+      <!-- big words that sit BEHIND Sagar -->
+      <div id="behind" class="clip layer" data-start="0" data-duration="7" data-track-index="1" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
+        <svg id="burst1" class="burst" viewBox="0 0 900 600">
+          <g fill="#ffd21f" stroke="#ff8a00" stroke-width="10">
+            <path d="M450 40 L520 190 L700 90 L640 250 L860 260 L680 360 L800 520 L600 450 L540 590 L450 460 L360 590 L300 450 L100 520 L220 360 L40 260 L260 250 L200 90 L380 190 Z"/>
+          </g>
+          <g fill="#fff6c4" opacity="0.9"><circle cx="450" cy="300" r="150"/><circle cx="330" cy="320" r="90"/><circle cx="570" cy="290" r="100"/></g>
+        </svg>
+        <svg id="burst2" class="burst" viewBox="0 0 900 600">
+          <g fill="#ff9ae6" stroke="#ffffff" stroke-width="10">
+            <path d="M450 40 L520 190 L700 90 L640 250 L860 260 L680 360 L800 520 L600 450 L540 590 L450 460 L360 590 L300 450 L100 520 L220 360 L40 260 L260 250 L200 90 L380 190 Z"/>
+          </g>
+          <g fill="#ffffff" opacity="0.9"><circle cx="450" cy="300" r="140"/><circle cx="320" cy="330" r="80"/><circle cx="590" cy="280" r="95"/></g>
+        </svg>
+        <div id="w-tahalka1" class="w pink" style="--size: 230px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-bigboss" class="w red" style="--size: 300px"><span class="b" data-layout-allow-occlusion>BIG BOSS</span><span class="f">BIG BOSS</span></div>
+        <div id="w-lo" class="w cyan" style="--size: 300px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
+        <div id="w-leke" class="w candy" style="--size: 200px"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
+        <div id="w-aagaya" class="w candy" style="--size: 165px"><span class="b" data-layout-allow-occlusion>AA GAYA!</span><span class="f">AA GAYA!</span></div>
+        <div id="w-video" class="w cyan" style="--size: 220px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
+      </div>
+
+      <!-- cut-out of Sagar, in front of the big words -->
+      <div id="cam-front" class="cam">
+        <video id="cutout" class="clip" src="assets/sagar-cutout.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
+      </div>
+
+      <!-- things in front of Sagar -->
+      <div id="front" class="clip layer" data-start="0" data-duration="7" data-track-index="3" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
+        <div id="w-ekdam" class="w lime" style="--size: 240px"><span class="b" data-layout-allow-occlusion>EKDAM</span><span class="f">EKDAM</span></div>
+        <div id="w-tahalka2" class="w fire" style="--size: 270px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="c-wali" class="cap">WALI</div>
+        <div id="c-kivideo" class="cap">KI VIDEO</div>
+        <div id="c-chahiye" class="cap">CHAHIYE THI</div>
+        <div id="c-itni" class="cap">ITNI</div>
+        <div id="card">
+          <img src="assets/profile-photo.png" alt="" />
+          <div>
+            <div class="name">The Real Sagar <span class="tick">&#10003;</span></div>
+            <div class="meta">@TheRealSagarr &middot; 200K subscribers</div>
+            <div class="btn"><span id="sub">SUBSCRIBE</span><span id="subbed">SUBSCRIBED &#10003;</span></div>
+          </div>
+        </div>
+        <svg id="cursor" viewBox="0 0 64 64"><path d="M10 4 L10 52 L22 41 L31 60 L39 56 L30 37 L46 37 Z" fill="#ffffff" stroke="#111" stroke-width="4" stroke-linejoin="round"/></svg>
+        <div id="e1" class="emoji">&#128293;</div>
+        <div id="e2" class="emoji">&#128293;</div>
+        <div id="e3" class="emoji">&#128293;</div>
+        <div id="e4" class="emoji">&#128514;</div>
+        <div id="e5" class="emoji">&#129315;</div>
+        <div id="e6" class="emoji">&#128514;</div>
+        <div id="e7" class="emoji">&#128293;</div>
+        <div id="e8" class="emoji">&#128514;</div>
+        <div id="e9" class="emoji">&#129315;</div>
+        <div id="e10" class="emoji">&#128514;</div>
+      </div>
+
+      <div id="flash" class="clip" data-start="0" data-duration="7" data-track-index="4"></div>
+
+      <!-- sound -->
+      <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="6.62" data-track-index="10" data-volume="1"></audio>
+      <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="7" data-track-index="11" data-volume="0.16" data-timeline-role="music"></audio>
+      <audio id="s01" class="clip" src="assets/sfx/pop-word.wav" data-start="0.13" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="s02" class="clip" src="assets/sfx/swoosh.wav" data-start="0.44" data-duration="0.38" data-track-index="13" data-volume="0.5"></audio>
+      <audio id="s03" class="clip" src="assets/sfx/pop-low.wav" data-start="1.09" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="s04" class="clip" src="assets/sfx/impact.wav" data-start="1.21" data-duration="0.9" data-track-index="14" data-volume="0.6"></audio>
+      <audio id="s05" class="clip" src="assets/sfx/pop-low.wav" data-start="1.73" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="s06" class="clip" src="assets/sfx/pop-low.wav" data-start="2.17" data-duration="0.2" data-track-index="13" data-volume="0.4"></audio>
+      <audio id="s07" class="clip" src="assets/sfx/pop-word.wav" data-start="2.52" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="s08" class="clip" src="assets/sfx/impact.wav" data-start="2.64" data-duration="0.9" data-track-index="15" data-volume="0.5"></audio>
+      <audio id="s09" class="clip" src="assets/sfx/swoosh.wav" data-start="2.84" data-duration="0.38" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="s10" class="clip" src="assets/sfx/click.wav" data-start="3.28" data-duration="0.14" data-track-index="12" data-volume="0.7"></audio>
+      <audio id="s11" class="clip" src="assets/sfx/ding.wav" data-start="3.32" data-duration="0.8" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="s12" class="clip" src="assets/sfx/pop-low.wav" data-start="3.69" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="s13" class="clip" src="assets/sfx/impact.wav" data-start="3.94" data-duration="0.9" data-track-index="14" data-volume="0.6"></audio>
+      <audio id="s14" class="clip" src="assets/sfx/pop-word.wav" data-start="4.49" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="s15" class="clip" src="assets/sfx/bubbles.wav" data-start="5.13" data-duration="1.4" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="s16" class="clip" src="assets/sfx/flash.wav" data-start="6.12" data-duration="0.55" data-track-index="15" data-volume="0.5"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const T = 7;
+
+      // ---------- camera: jump-cut zooms (footage cuts at 3.62, 4.68, 5.15) and punch-ins ----------
+      const cams = ["#cam-back", "#cam-front"];
+      const camSet = (t, v) => tl.set(cams, v, t);
+      const camTo = (t, v) => tl.to(cams, v, t);
+      camSet(0, { scale: 1, x: 0, y: 0 });
+      camTo(1.24, { scale: 1.2, duration: 0.14, ease: "power3.out" });           // BIG BOSS punch-in
+      [16, -14, 10, -7, 4, 0].forEach((x, i) => camTo(1.24 + i * 0.04, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }));
+      camTo(2.5, { scale: 1, y: 0, duration: 0.18, ease: "power2.inOut" });
+      camTo(2.66, { scale: 1.07, duration: 0.9, ease: "power1.out" });            // slow push on "leke aa gaya"
+      camSet(3.62, { scale: 1.16, x: 0, y: 0 });                                    // jump cut
+      camTo(3.96, { scale: 1.32, duration: 0.12, ease: "power3.out" });          // TAHALKA punch-in
+      [18, -16, 12, -8, 5, 0].forEach((x, i) => camTo(3.96 + i * 0.04, { x, y: i % 2 ? 6 : -6, duration: 0.04, ease: "none" }));
+      camSet(4.68, { scale: 1, x: 0, y: 0 });                                       // jump cut
+      camSet(5.15, { scale: 1.2, x: 0, y: 0 });                                     // jump cut
+      camTo(5.15, { scale: 1.26, duration: 1.4, ease: "none" });
+
+      // ---------- big 3D words ----------
+      // place(el, centre x, centre y, start rotation)
+      const pos = {};
+      const place = (id, x, y, rot = 0) => { pos[id] = { x, y, rotation: rot }; tl.set(id, { x, y, xPercent: -50, yPercent: -50, rotation: rot }, 0); };
+      const popIn = (id, t, from = {}) => {
+        tl.fromTo(id, { opacity: 0, scale: 0.35, filter: "blur(14px)", ...pos[id], ...from },
+          { opacity: 1, scale: 1.1, filter: "blur(0px)", ...pos[id], duration: 0.13, ease: "power3.out", immediateRender: false }, t);
+        tl.to(id, { scale: 1, duration: 0.1, ease: "power2.inOut" }, t + 0.13);
+      };
+      const out = (id, t, extra = {}) => tl.to(id, { opacity: 0, scale: 1.25, filter: "blur(16px)", duration: 0.12, ease: "power2.in", ...extra }, t);
+      const wobble = (id, t, dur, amt = 3) => {
+        for (let k = 0, s = t + 0.23; s < t + dur - 0.1; k++, s += 0.11) tl.to(id, { rotation: (k % 2 ? 1 : -1) * amt, duration: 0.11, ease: "sine.inOut" }, s);
+      };
+
+      place("#w-ekdam", 560, 860, -5);    popIn("#w-ekdam", 0.13, { rotation: -16 });  out("#w-ekdam", 0.5);
+      place("#w-tahalka1", 1450, 360, 5); popIn("#w-tahalka1", 0.47, { x: 1750 });    wobble("#w-tahalka1", 0.47, 0.6, 4); out("#w-tahalka1", 1.09, { x: 1600 });
+      place("#w-bigboss", 960, 250, -3);  popIn("#w-bigboss", 1.22, { scale: 2.2 });   wobble("#w-bigboss", 1.22, 0.95, 2); out("#w-bigboss", 2.17);
+      place("#w-lo", 360, 420, -10);      popIn("#w-lo", 2.52, { rotation: -30 });     out("#w-lo", 2.68, { x: 200 });
+      place("#w-leke", 370, 330, -6);     popIn("#w-leke", 2.64, { scale: 1.9 });      wobble("#w-leke", 2.64, 0.9, 2); out("#w-leke", 3.56);
+      place("#w-aagaya", 1555, 360, 5);   popIn("#w-aagaya", 2.98, { x: 1760 });       wobble("#w-aagaya", 2.98, 0.58, 2); out("#w-aagaya", 3.56);
+      place("#w-tahalka2", 960, 860, -3); popIn("#w-tahalka2", 3.94, { scale: 2.4 });  out("#w-tahalka2", 4.48);
+      for (let k = 0, s = 4.1; s < 4.46; k++, s += 0.045) tl.to("#w-tahalka2", { x: 960 + (k % 2 ? 10 : -10), duration: 0.045, ease: "none" }, s);
+      place("#w-video", 1440, 380, 6);    popIn("#w-video", 4.48, { x: 1700 });        out("#w-video", 4.9);
+
+      // bursts behind BIG BOSS and LEKE AA GAYA
+      tl.set("#burst1", { x: 960, y: 260, xPercent: -50, yPercent: -50 }, 0);
+      tl.fromTo("#burst1", { opacity: 1, scale: 0.2, rotation: -20 }, { scale: 1.45, rotation: 10, duration: 0.45, ease: "power3.out" }, 1.22);
+      tl.to("#burst1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 1.55);
+      tl.set("#burst2", { x: 960, y: 230, xPercent: -50, yPercent: -50 }, 0);
+      tl.fromTo("#burst2", { opacity: 1, scale: 0.2, rotation: 15 }, { scale: 1.5, rotation: -8, duration: 0.45, ease: "power3.out" }, 2.64);
+      tl.to("#burst2", { opacity: 0, duration: 0.3, ease: "power1.in" }, 2.98);
+
+      // ---------- small yellow captions ----------
+      const cap = (id, t, end) => {
+        tl.set(id, { skewX: -8, transformOrigin: "0% 100%" }, 0);
+        tl.fromTo(id, { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.1, ease: "back.out(3)" }, t);
+        tl.to(id, { opacity: 0, duration: 0.06 }, end);
+      };
+      cap("#c-wali", 1.09, 1.24);
+      cap("#c-kivideo", 1.73, 2.17);
+      cap("#c-chahiye", 2.17, 2.52);
+      cap("#c-itni", 3.69, 3.94);
+
+      // ---------- channel card + subscribe click ----------
+      tl.fromTo("#card", { opacity: 0, scale: 0.5, rotation: -9, x: -120 },
+        { opacity: 1, scale: 1, rotation: -3, x: 0, duration: 0.22, ease: "back.out(2)" }, 2.84);
+      tl.fromTo("#cursor", { opacity: 0, x: 900, y: 1050 }, { opacity: 1, x: 520, y: 905, duration: 0.3, ease: "power2.out" }, 2.95);
+      tl.to("#cursor", { scale: 0.8, duration: 0.05 }, 3.27);
+      tl.to("#cursor", { scale: 1, duration: 0.06 }, 3.32);
+      tl.to("#sub", { opacity: 0, duration: 0.05 }, 3.29);
+      tl.to("#subbed", { opacity: 1, duration: 0.05 }, 3.29);
+      tl.to("#card .btn", { scale: 0.92, duration: 0.05 }, 3.27);
+      tl.to("#card .btn", { scale: 1, duration: 0.1, ease: "back.out(3)" }, 3.32);
+      tl.to(["#card", "#cursor"], { opacity: 0, x: "-=60", filter: "blur(12px)", duration: 0.16, ease: "power2.in" }, 3.85);
+
+      // ---------- emoji ----------
+      const fires = [["#e1", 330, 640], ["#e2", 1600, 620], ["#e3", 1250, 820], ["#e7", 560, 860]];
+      fires.forEach(([id, x, y], i) => {
+        tl.fromTo(id, { opacity: 0, x, y, scale: 0.2, rotation: -20 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.15, ease: "back.out(3)", immediateRender: false }, 3.97 + i * 0.05);
+        tl.to(id, { y: y - 60, opacity: 0, duration: 0.25, ease: "power1.in" }, 4.4 + i * 0.03);
+      });
+      const laughs = [["#e4", 260], ["#e5", 1500], ["#e6", 1720], ["#e8", 420], ["#e9", 1300], ["#e10", 900]];
+      laughs.forEach(([id, x], i) => {
+        tl.fromTo(id, { opacity: 1, x, y: -180, rotation: -25, scale: 0.9 },
+          { y: 1150, rotation: 30, duration: 1.15, ease: "power1.in", immediateRender: false }, 5.15 + i * 0.08);
+      });
+
+      // ---------- white flash into the main video ----------
+      tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in" }, 6.25);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
