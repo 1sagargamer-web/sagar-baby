@@ -1,0 +1,14 @@
+# Big or private files stay out of git
+Raw/*
+!Raw/.gitkeep
+Export/*
+!Export/.gitkeep
+Reference/refs/
+Reference/*.mp4
+Reference/*.mov
+Reference/frames/
+Reference/*.transcript.json
+projects/*/assets/audio/
+voices/sagar*
+Reference/analysis/*.wav
+Reference/analysis/*.log
