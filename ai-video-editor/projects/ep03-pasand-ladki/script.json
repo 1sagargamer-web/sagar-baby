@@ -1,0 +1,40 @@
+{
+  "title": "Ep 03 - Pasand ki ladki (part 1)",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "भगवान जी, मुझे एक लड़की बहुत पसंद है... वो मुझे कैसे मिलेगी?",
+      "caption": "Bhagwan ji, mujhe ek ladki bahut pasand hai... woh mujhe kaise milegi?",
+      "face": {"eyes": "open", "brows": "sad", "mouth": "closed", "pose": "pray"}
+    },
+    {
+      "who": "krishna",
+      "hi": "पहले ये बताओ वत्स... कभी उससे बात की है?",
+      "caption": "Pehle ye batao Vatsa... kabhi usse baat ki hai?",
+      "face": {"eyes": "open"},
+      "sagar_face": {"eyes": "open", "brows": "normal", "mouth": "closed"},
+      "pause_before": 0.4
+    },
+    {
+      "who": "sagar",
+      "hi": "बात तो नहीं की प्रभु... पर उसकी हर स्टोरी सबसे पहले मैं ही देखता हूँ!",
+      "caption": "Baat toh nahi ki Prabhu... par uski har story sabse pehle main hi dekhta hoon!",
+      "face": {"eyes": "open", "brows": "normal", "mouth": "smirk", "pose": "thumb"}
+    },
+    {
+      "who": "krishna",
+      "hi": "और वो... तुम्हारी स्टोरी कब की म्यूट कर चुकी है।",
+      "caption": "Aur woh... tumhari story kab ki mute kar chuki hai.",
+      "face": {"eyes": "half"},
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "इतनी बेइज़्ज़ती, प्रभु?!",
+      "caption": "ITNI BEIZZATI, PRABHU?!",
+      "face": {"eyes": "closed", "brows": "sad", "mouth": "closed", "tears": true, "sweat": true},
+      "shake": true
+    }
+  ]
+}

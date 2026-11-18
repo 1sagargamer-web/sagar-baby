@@ -141,7 +141,8 @@ def build(script_path: Path) -> None:
         if line.get("audio"):  # a real recording for this line wins
             src = Path(line["audio"])
             src = src if src.is_absolute() else HERE / src
-            if line.get("vc"):  # Sagar recorded this character's line: convert it into the character's voice
+            # Sagar recorded Bhagwan's line: convert it into Bhagwan's voice (default for krishna; "vc": false skips)
+            if line.get("vc", line["who"] == "krishna"):
                 raw = wav.with_suffix(".vc.wav")
                 subprocess.run([str(TTS_PY), str(HERE / "scripts" / "convert_voice.py"), str(VOICES[line["who"]]["ref"]),
                                 str(src), str(raw)], check=True)
@@ -155,13 +156,15 @@ def build(script_path: Path) -> None:
             if "exaggeration" in line:
                 job["exaggeration"] = line["exaggeration"]
             jobs[line["who"]].append(job)
-    # Rule: Sagar records his own lines. The clone is used only when the script says "allow_clone": true
-    # (Sagar said he cannot record this time). Until the recordings arrive, prepare Bhagwan's lines and stop.
-    if jobs["sagar"] and not spec.get("allow_clone"):
-        synth("krishna", jobs["krishna"])
+    # Rule: Sagar records his own lines AND Bhagwan's lines (Bhagwan's are voice-converted). The clone is used only
+    # with "allow_clone": true, AI Bhagwan only with "allow_ai_bhagwan": true (Sagar said he cannot record).
+    need = [l for l in spec["lines"] if not l.get("audio") and not l.get("keep_audio")
+            and ((l["who"] == "sagar" and not spec.get("allow_clone"))
+                 or (l["who"] == "krishna" and not spec.get("allow_ai_bhagwan")))]
+    if need:
         print("WAITING FOR SAGAR'S RECORDINGS. Lines to record:")
-        for n, line in enumerate((l for l in spec["lines"] if l["who"] == "sagar" and not l.get("audio")), 1):
-            print(f"  {n}. {line['caption']}")
+        for n, line in enumerate(need, 1):
+            print(f"  {n}. [{'Sagar' if line['who'] == 'sagar' else 'Bhagwan'}] {line['caption']}")
         return
     for who, js in jobs.items():
         synth(who, js)

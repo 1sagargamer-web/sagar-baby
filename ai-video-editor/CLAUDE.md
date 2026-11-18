@@ -57,8 +57,9 @@ skills are already committed in `.agents/skills/` (reinstall with `npx skills ad
   Bhagwan = `voices/bhagwan-ref.wav` (synthetic reference, committed). Sagar = `voices/sagar-ref.wav`, cut from
   Sagar's own recording `voices/sagar-original.mp3` (private, gitignored; never upload or share it).
   Recreate the venv: `python3 -m venv .venv-tts && .venv-tts/bin/pip install chatterbox-tts "setuptools<81"`.
-- Sagar records Sagar's lines by default: the builder stops with "WAITING FOR SAGAR'S RECORDINGS" until each
-  Sagar line has `"audio"`; set `"allow_clone": true` only when Sagar says he cannot record.
+- Sagar records Sagar's lines AND Bhagwan's lines by default (Bhagwan's are voice-converted automatically into
+  `voices/bhagwan-ref.wav`). The builder stops with "WAITING FOR SAGAR'S RECORDINGS" until every line has
+  `"audio"`; `"allow_clone": true` / `"allow_ai_bhagwan": true` only when Sagar says he cannot record.
 - Build a reel: `python3 scripts/make_reel.py projects/<name>/script.json`, then in that folder run the
   HyperFrames `check`, `snapshot`, and `render --quality looks --fps 30 -o ../../Export/<name>-v1.mp4`.
 - Sagar's lines: cloned voice by default; a real recording (`"audio"` in script.json) replaces it.
