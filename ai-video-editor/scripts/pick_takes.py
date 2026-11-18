@@ -82,7 +82,7 @@ def main() -> None:
             quiet = 0
         elif s0 is not None:
             quiet += 1
-            if quiet * 0.02 >= 0.4:
+            if quiet * 0.02 >= 0.25:
                 islands.append([s0 * 0.02, (i - quiet + 1) * 0.02]); s0 = None
     if s0 is not None:
         islands.append([s0 * 0.02, len(loud) * 0.02])
