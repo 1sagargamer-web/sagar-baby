@@ -43,11 +43,20 @@ exact lines.
   (`{SAGAR}` in a scene prompt is replaced by it).
 - Everyone else (boy, girl, maa, papa, dost, teacher...) changes with each story.
 
-## Script
+## Script (Sagar's rules after episode 1, 2026-11-18: apply to EVERY video)
 - **Claude writes the script**, Sagar approves or rejects it before anything is built.
-- 8-12 short lines in simple Hindi (everyday words), one line per picture, ~85-110 words in total for 30-45 s.
-- Line 1 = hook (bold claim or question). Middle = a small real-life story. Second to last = the lesson (`"seekh": true`).
-  **Last line = a question to the viewer** so people comment (e.g. "Aap hote to kya karte?").
+- 9-13 short lines in simple, spoken Hindi (how people really talk, not bookish), one line per picture, ~100-120 words
+  for 35-45 s.
+- **Shape (always this order):**
+  1. **Hook = a question, in the viewer's own thoughts** (0-3 s). Say what people secretly think or feel, so they stop
+     scrolling: "Kya tumhe bhi lagta hai... itni mehnat ke baad bhi kuch nahi badal raha?" / "Kabhi socha hai log
+     tumpe hanste kyun hain?" Never start with the story itself.
+  2. **The story / the whole point**, told simply, with feeling (small real-life moments, "main", "tum").
+  3. **The lesson** (`"seekh": true`), one strong line.
+  4. **Emotional ending that makes people comment AND follow**, then the video ends (no extra hold):
+     ask them to comment something specific ("Comment mein likho 'main rukunga nahi'"), and give an emotional reason to
+     follow ("Follow kar lo... kyunki jis din tum haar maanne wale hoge, us din meri agli video tumhe rok legi.").
+     Use `"cta": true` on these last 1-2 lines.
 - Never copy a reference's exact story or lines.
 
 ## Voice (narrator = Sagar, always Sagar's voice)
@@ -65,4 +74,5 @@ exact lines.
 - Final mix about **-14 LUFS**, voice clearly on top.
 
 ## Ending
-- Lesson line, then the question line, hold the last picture ~1 s, end. No separate end card.
+- Lesson line, then the emotional comment + follow line(s) (see Script), end on the last word with only a short
+  breath (~0.6 s). No separate end card.

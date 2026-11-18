@@ -21,6 +21,7 @@ script.json:
      "audio": "Raw/ep01-line-01.wav",            # Sagar's recording (best take); missing -> clone if allowed
      "sfx": "soft-whoosh",                       # optional extra effect at the start of this line
      "seekh": true,                              # the lesson line: music lifts, riser + soft bell
+     "cta": true,                                # comment + follow ending line(s); the video ends 0.6 s after
      "pause_before": 0.3}
   ]
 }
@@ -246,7 +247,8 @@ def build(script_path: Path) -> None:
         t += l.get("pause_before", 0)
         l["_start"], l["_dur"] = round(t, 3), round(sf.info(str(wav)).duration, 3)
         t += l["_dur"] + gap
-    total = round(lines[-1]["_start"] + lines[-1]["_dur"] + 1.2, 2)
+    hold = 0.6 if lines[-1].get("cta") else 1.2  # comment/follow ending: stop right after the last word
+    total = round(lines[-1]["_start"] + lines[-1]["_dur"] + hold, 2)
     starts = [round(max(0.0, l["_start"] - 0.15), 3) for l in lines]
     starts[0] = 0.0
 

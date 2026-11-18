@@ -9,7 +9,7 @@ Reference/*.transcript.json
 Reference/frames/
 projects/*/assets/audio/
 # Private voice recordings, never commit
-voices/sagar*
+voices/
 projects/_pipeline-test/
 projects/*/assets/
 projects/*/work-*/
