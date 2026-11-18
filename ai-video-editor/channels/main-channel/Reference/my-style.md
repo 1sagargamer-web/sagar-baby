@@ -45,6 +45,9 @@ to the voice (Whisper word timings).
    greeting + name + a fun rhyming tagline (0-3 s) → "hello, kaise ho" (3-4 s) → "last video par aapne
    comments kiye the ki ye karo" (social proof, 4-9 s) → the question hook "kya aaj ye ho payega?" (10-13 s)
    → "aap bhi saath mein khelna" (13-15 s) → credit line → "let's get started" (17-18 s).
+   Reaction videos are quicker: ref-2 = greeting (0-5 s) → "chalo memes dekhte hain, let's go" → first meme at
+   ~6 s. ref-3 = greeting (0-4 s) → a short personal chat with viewers (news, "I do it for you guys") →
+   "aao reaction video dekhte hain" → first clip at ~35 s.
 5. A short subtitle line like "Let's get started" (white italic, bottom centre), then a **white flash** or
    whip transition into the main content. The whole intro is about 15-20 s.
 
