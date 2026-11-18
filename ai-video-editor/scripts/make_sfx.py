@@ -1,7 +1,10 @@
 """Original sound effects for the reels, all synthesised here (no licence issues).
 
-Usage:  python3 scripts/make_sfx.py <out_dir>
+Usage:  python3 scripts/make_sfx.py <out_dir>            (first channel, Bhagwan + Sagar)
 Writes: whoosh.wav, whoosh-short.wav, shimmer.wav, pop.wav, boom.wav, ding.wav
+
+        python3 scripts/make_sfx.py <out_dir> --story    ("Uth Ja Sagar" channel, soft and light)
+Writes only: soft-whoosh.wav, riser.wav, soft-bell.wav (the files above are not touched)
 
 When each one plays (make_reel.py): Bhagwan appears -> whoosh + shimmer; thumbs-up -> pop;
 punchline push-in -> whoosh-short; shock + camera shake -> boom.  A line can also ask for one with
@@ -82,6 +85,41 @@ def ding():
     return np.stack([x, x], 1)
 
 
+def soft_whoosh():
+    """Airy, quiet whoosh for a picture change (darker and slower than whoosh)."""
+    n = int(0.9 * SR)
+    t = np.linspace(0, 1, n)
+    noise = np.random.default_rng(7).normal(0, 1, n)
+    sweep = 0.01 + 0.12 * np.sin(np.pi * t) ** 2
+    body = onepole(noise, sweep) - onepole(noise, sweep * 0.2)
+    amp = np.sin(np.pi * t) ** 2
+    return np.stack([body * amp * (1 - 0.5 * t), body * amp * (0.5 + 0.5 * t)], 1)
+
+
+def riser():
+    """Soft rising swell (filtered noise + a rising tone) that leads into the lesson line."""
+    n = int(2.2 * SR)
+    t = np.linspace(0, 1, n)
+    noise = np.random.default_rng(8).normal(0, 1, n)
+    body = onepole(noise, 0.01 + 0.25 * t ** 2)
+    f = 220 * 2 ** (t * 1.5)
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.35
+    amp = t ** 2.2 * np.clip((1 - t) / 0.04, 0, 1)
+    x = (body + tone) * amp
+    return np.stack([x, np.roll(x, 300)], 1)
+
+
+def soft_bell():
+    """Warm, gentle bell when the lesson lands."""
+    n = int(2.4 * SR)
+    t = np.arange(n) / SR
+    x = np.zeros(n)
+    for f, a in [(523.25, 1.0), (659.25, 0.5), (783.99, 0.35)]:
+        x += a * (np.sin(2 * np.pi * f * t) + 0.3 * np.sin(2 * np.pi * f * 2.0 * t)) * np.exp(-t * 2.2)
+    x *= np.clip(t / 0.01, 0, 1)
+    return np.stack([x, np.roll(x, 500)], 1)
+
+
 def save(x, path, lufs=-18, reverb=False):
     x = x / max(1e-9, np.max(np.abs(x))) * 0.8
     with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
@@ -93,6 +131,12 @@ def save(x, path, lufs=-18, reverb=False):
 def main() -> None:
     out = Path(sys.argv[1])
     out.mkdir(parents=True, exist_ok=True)
+    if "--story" in sys.argv[2:]:
+        save(soft_whoosh(), out / "soft-whoosh.wav", lufs=-22)
+        save(riser(), out / "riser.wav", lufs=-22)
+        save(soft_bell(), out / "soft-bell.wav", lufs=-20, reverb=True)
+        print("saved story sfx to", out)
+        return
     save(whoosh(0.7), out / "whoosh.wav")
     save(whoosh(0.32), out / "whoosh-short.wav")
     save(shimmer(), out / "shimmer.wav", reverb=True)

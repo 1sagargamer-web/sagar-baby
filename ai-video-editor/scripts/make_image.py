@@ -1,7 +1,8 @@
 """Make an illustration with a free open-source image model (SDXL-Turbo), on the CPU, no internet needed once
 the model is in models/sdxl-turbo.
 
-Run with the image venv (.venv-img: new diffusers, shares torch from .venv-tts; see CLAUDE.md):
+Run with the image venv (.venv-img: its own new diffusers/transformers, torch shared from .venv-tts via a .pth file,
+so Chatterbox in .venv-tts is untouched; rebuild steps in channels/uth-ja-sagar/CLAUDE.md):
     .venv-img/bin/python scripts/make_image.py "<prompt>" out.png [--size 768] [--steps 4] [--seed 1] [--style "<text>"]
 
 Several images in one go (loads the model once):

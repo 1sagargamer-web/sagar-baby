@@ -10,3 +10,4 @@ Reference/frames/
 projects/*/assets/audio/
 # Private voice recordings, never commit
 voices/sagar*
+projects/_pipeline-test/

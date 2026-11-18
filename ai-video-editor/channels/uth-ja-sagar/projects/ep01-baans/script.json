@@ -1,0 +1,30 @@
+{
+  "title": "ep01-baans",
+  "heading": {"yellow": "Sabr", "white": "Rakho", "emoji": "🌱"},
+  "watermark": "Made By Sagar Mishra",
+  "allow_clone": false,
+  "lines": [
+    {"hi": "पाँच साल मेहनत की... और कुछ भी नहीं दिखा।", "how": "dheema, thoda thaka hua, hook jaisa",
+     "prompt": "{SAGAR} kneeling in an empty dry field, watering a small patch of bare soil with a tin watering can, seen from the side, golden sunrise", "seed": 1},
+    {"hi": "मैंने बाँस का एक छोटा सा बीज बोया, और रोज़ उसे पानी दिया।", "how": "kahani sunane jaisa, shaant",
+     "prompt": "close-up of two hands planting a tiny seed in dark soil, a tin watering can nearby, morning light", "seed": 2, "motion": "zoom-in"},
+    {"hi": "पहला साल... कुछ नहीं। दूसरा साल... फिर भी कुछ नहीं।", "how": "har 'kuch nahi' par halka ruk ke",
+     "prompt": "the same small patch of bare soil in a field shown through changing seasons, rain, autumn leaves, nothing growing, a tin watering can beside it", "seed": 3},
+    {"hi": "लोग हँसने लगे... पागल है, मिट्टी को पानी दे रहा है।", "how": "logon wali line thodi mazaak udate hue",
+     "prompt": "a group of Indian villagers laughing and pointing at a young man watering bare soil in a field, village houses behind, evening light", "seed": 4},
+    {"hi": "तीसरा साल, चौथा साल... मैं थक गया, पर रुका नहीं।", "how": "thakan, phir 'par ruka nahi' mein himmat",
+     "prompt": "{SAGAR} seen from behind, tired, walking through rain carrying a tin watering can toward a patch of bare soil in a field", "seed": 5},
+    {"hi": "और फिर पाँचवें साल... मिट्टी से एक छोटा सा अंकुर निकला।", "how": "ummeed, dheere se, khushi aati hui",
+     "prompt": "close-up of a tiny green bamboo sprout breaking out of dark soil, water drops, warm sunrise light behind", "seed": 6, "motion": "zoom-in", "pause_before": 0.2},
+    {"hi": "और सिर्फ छह हफ्तों में... वो नब्बे फ़ीट ऊँचा हो गया!", "how": "josh aur hairani",
+     "prompt": "a giant tall bamboo plant towering into the sky in a field, a tiny young man standing at the bottom looking up amazed, villagers shocked, low angle", "seed": 7, "motion": "pan-right", "sfx": "soft-whoosh"},
+    {"hi": "सब ने पूछा... ये छह हफ्तों में कैसे हुआ?", "how": "sawaal jaisa",
+     "prompt": "Indian villagers gathered around a tall bamboo plant, looking surprised and curious, golden afternoon light", "seed": 8},
+    {"hi": "नहीं... ये पाँच साल में हुआ। पाँच साल वो ज़मीन के नीचे अपनी जड़ें मज़बूत कर रहा था।", "how": "gehri, samjhane wali awaaz",
+     "prompt": "cross-section view of the ground showing a huge network of strong bamboo roots spreading underground, a small sprout on top, warm light", "seed": 9, "motion": "zoom-out", "pause_before": 0.3},
+    {"hi": "तुम्हारी मेहनत भी बेकार नहीं जा रही... वो तुम्हारी जड़ें बना रही है।", "how": "dil se, dheere, sabse emotional line",
+     "prompt": "{SAGAR} standing proudly beside a tall green bamboo plant at sunrise, seen from behind, hand on the bamboo", "seed": 10, "seekh": true},
+    {"hi": "बताओ... तुम कितने साल से पानी दे रहे हो?", "how": "muskurate hue, seedha viewer se poochhna",
+     "prompt": "a tin watering can resting on soil next to a young bamboo shoot, sunrise, hopeful mood", "seed": 11, "motion": "zoom-in"}
+  ]
+}
