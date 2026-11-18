@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
-      @font-face { font-family: "Luckiest Guy"; src: url("assets/fonts/luckiest-guy.woff2") format("woff2"); }
-      @font-face { font-family: "Titan One"; src: url("assets/fonts/titan-one.woff2") format("woff2"); }
-      @font-face { font-family: "Noto Color Emoji"; src: url("assets/fonts/NotoColorEmoji.ttf") format("truetype"); }
+      @font-face { font-family: "Poppins Black"; src: url("assets/fonts/poppins-black.woff2") format("woff2"); font-weight: 900; }
+      @font-face { font-family: "Poppins Black Italic"; src: url("assets/fonts/poppins-black-italic.woff2") format("woff2"); font-weight: 900; font-style: italic; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Luckiest Guy", sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Poppins Black", sans-serif; }
 
-      /* camera: the plate and the cut-out move together */
+      /* camera: the room and Sagar move together */
       .cam { position: absolute; inset: 0; transform-origin: 50% 32%; }
       .cam video { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
       #cam-back { z-index: 1; }
@@ -22,33 +21,38 @@
       #flash { z-index: 6; }
       .layer { position: absolute; inset: 0; pointer-events: none; }
 
-      /* big 3D word: back layer = outline + extrusion, front layer = glossy gradient fill */
+      /* big 3D word (reference look): bright fill, same-hue extrusion, white rim light, coloured glow, no black outline */
       .w { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 1; opacity: 0; }
-      .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: 0.02em; }
+      .w .b, .w .f { display: block; font-size: var(--size); letter-spacing: -0.01em; }
       .w .b {
         color: var(--deep);
-        -webkit-text-stroke: calc(var(--size) * 0.07) #12081f;
+        -webkit-text-stroke: calc(var(--size) * 0.018) var(--rim);
         paint-order: stroke fill;
         text-shadow:
-          0 3px 0 var(--deep), 0 6px 0 var(--deep), 0 9px 0 var(--deep), 0 12px 0 var(--deep),
-          0 15px 0 var(--deep), 0 18px 0 #12081f, 0 22px 0 #12081f,
-          0 30px 30px rgba(0, 0, 0, 0.55), 0 0 40px var(--glow);
+          var(--dx1) 3px 0 var(--deep), var(--dx2) 6px 0 var(--deep), var(--dx3) 9px 0 var(--deep),
+          var(--dx4) 12px 0 var(--deep), var(--dx5) 15px 0 var(--deep), var(--dx6) 18px 0 var(--deep),
+          var(--dx6) 22px 10px rgba(0, 0, 0, 0.45),
+          0 0 26px var(--glow), 0 0 60px var(--glow);
       }
       .w .f {
         position: absolute; left: 0; top: 0;
-        background: linear-gradient(180deg, #ffffff 0%, var(--c1) 22%, var(--c1) 50%, var(--c2) 100%);
+        background: linear-gradient(180deg, var(--hi) 0%, var(--c1) 30%, var(--c1) 55%, var(--c2) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent;
       }
-      .lime   { --c1: #f4ff4a; --c2: #5fe83a; --deep: #1f7a1a; --glow: rgba(190, 255, 80, 0.55); }
-      .pink   { --c1: #ff6be6; --c2: #ff2a8a; --deep: #8a0f5a; --glow: rgba(255, 80, 200, 0.6); }
-      .fire   { --c1: #ffe94a; --c2: #ff5a00; --deep: #8a1d00; --glow: rgba(255, 140, 0, 0.6); }
-      .red    { --c1: #ff5e3a; --c2: #d4001f; --deep: #5e0010; --glow: rgba(255, 60, 40, 0.55); }
-      .cyan   { --c1: #7ff8ff; --c2: #1f8cff; --deep: #0a3d8a; --glow: rgba(80, 220, 255, 0.6); }
-      .candy  { --c1: #ffffff; --c2: #ff9ae6; --deep: #b0337f; --glow: rgba(255, 170, 230, 0.6); }
+      .w.left  { --dx1: -2px; --dx2: -4px; --dx3: -6px; --dx4: -8px; --dx5: -10px; --dx6: -12px; }
+      .w.right { --dx1: 2px; --dx2: 4px; --dx3: 6px; --dx4: 8px; --dx5: 10px; --dx6: 12px; }
+      .w.down  { --dx1: 0px; --dx2: 0px; --dx3: 0px; --dx4: 0px; --dx5: 0px; --dx6: 0px; }
+      .lime  { --hi: #fdffd0; --c1: #f2ff3c; --c2: #8fe830; --deep: #3f9e1c; --rim: #fbffd8; --glow: rgba(205, 255, 70, 0.55); }
+      .cyan  { --hi: #e6feff; --c1: #79f1ff; --c2: #27b8ff; --deep: #1c52d6; --rim: #e8fdff; --glow: rgba(70, 215, 255, 0.6); }
+      .pink  { --hi: #ffe2fb; --c1: #ff86ee; --c2: #ff38c4; --deep: #b0158f; --rim: #ffe6fb; --glow: rgba(255, 70, 210, 0.6); }
+      .gold  { --hi: #fffbd0; --c1: #fff04a; --c2: #ffbb00; --deep: #ff5e00; --rim: #fff9c8; --glow: rgba(255, 110, 0, 0.75); }
+      .red   { --hi: #ffd9cf; --c1: #ff6c47; --c2: #ff2626; --deep: #9c0010; --rim: #ffe0d8; --glow: rgba(255, 50, 30, 0.6); }
+      .neon  { --hi: #ffffff; --c1: #ffffff; --c2: #ffd3f1; --deep: #ff3d9a; --rim: #ff6fb6; --glow: rgba(255, 30, 120, 0.9); }
 
-      /* small yellow word captions, lower left */
-      .cap { position: absolute; left: 110px; top: 905px; opacity: 0; white-space: nowrap; font-size: 76px; color: #ffe23d;
-        -webkit-text-stroke: 9px #111; paint-order: stroke fill; text-shadow: 0 6px 0 #111, 0 10px 18px rgba(0,0,0,.6); }
+      /* small word captions, lower left (yellow, heavy italic) */
+      .cap { position: absolute; left: 110px; top: 890px; opacity: 0; white-space: nowrap; font-family: "Poppins Black Italic";
+        font-style: italic; font-size: 92px; color: #ffe02e; letter-spacing: -0.01em;
+        -webkit-text-stroke: 7px #2a1600; paint-order: stroke fill; text-shadow: 0 6px 0 #2a1600, 0 12px 22px rgba(0,0,0,.55), 0 0 30px rgba(255,190,0,.45); }
 
       /* explosion burst */
       .burst { position: absolute; width: 900px; height: 600px; left: 0; top: 0; opacity: 0; }
@@ -69,15 +73,17 @@
       #subbed { background: #e6e6e6; color: #333; opacity: 0; }
       #cursor { position: absolute; left: 0; top: 0; width: 64px; height: 64px; opacity: 0; }
 
-      .emoji { position: absolute; left: 0; top: 0; font-family: "Noto Color Emoji"; font-size: 130px; opacity: 0; }
+      /* 3D emoji stickers (Microsoft Fluent 3D emoji, MIT licence) */
+      .emo { position: absolute; left: 0; top: 0; width: 300px; height: 300px; opacity: 0;
+        filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 3px #ffffff) drop-shadow(0 14px 18px rgba(0,0,0,.35)); }
       #flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="7" data-width="1920" data-height="1080">
-      <!-- footage (pauses already cut; light brightness fix baked in) -->
+      <!-- the new room (slightly blurred, webcam grain) -->
       <div id="cam-back" class="cam">
-        <video id="plate" class="clip" src="assets/sagar.mp4" data-start="0" data-duration="6.633" data-track-index="0" muted></video>
+        <video id="room" class="clip" src="assets/room.mp4" data-start="0" data-duration="6.633" data-track-index="0" muted></video>
       </div>
 
       <!-- big words that sit BEHIND Sagar -->
@@ -94,23 +100,23 @@
           </g>
           <g fill="#ffffff" opacity="0.9"><circle cx="450" cy="300" r="140"/><circle cx="320" cy="330" r="80"/><circle cx="590" cy="280" r="95"/></g>
         </svg>
-        <div id="w-tahalka1" class="w pink" style="--size: 230px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
-        <div id="w-bigboss" class="w red" style="--size: 300px"><span class="b" data-layout-allow-occlusion>BIG BOSS</span><span class="f">BIG BOSS</span></div>
-        <div id="w-lo" class="w cyan" style="--size: 300px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
-        <div id="w-leke" class="w candy" style="--size: 200px"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
-        <div id="w-aagaya" class="w candy" style="--size: 165px"><span class="b" data-layout-allow-occlusion>AA GAYA!</span><span class="f">AA GAYA!</span></div>
-        <div id="w-video" class="w cyan" style="--size: 220px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
+        <div id="w-tahalka1" class="w pink right" style="--size: 160px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-bigboss" class="w red down" style="--size: 290px"><span class="b" data-layout-allow-occlusion>BIG BOSS</span><span class="f">BIG BOSS</span></div>
+        <div id="w-lo" class="w cyan left" style="--size: 330px"><span class="b" data-layout-allow-occlusion>LO!</span><span class="f">LO!</span></div>
+        <div id="w-leke" class="w neon left" style="--size: 250px"><span class="b" data-layout-allow-occlusion>LEKE</span><span class="f">LEKE</span></div>
       </div>
 
-      <!-- cut-out of Sagar, in front of the big words -->
+      <!-- Sagar (cut out, warmed to the room, light wrap) -->
       <div id="cam-front" class="cam">
-        <video id="cutout" class="clip" src="assets/sagar-cutout.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
+        <video id="sagar" class="clip" src="assets/sagar-room.webm" data-start="0" data-media-start="0" data-duration="6.633" data-track-index="2" muted data-layout-allow-occlusion></video>
       </div>
 
       <!-- things in front of Sagar -->
       <div id="front" class="clip layer" data-start="0" data-duration="7" data-track-index="3" data-track-kind="graphics" data-layout-allow-overlap data-layout-allow-overflow>
-        <div id="w-ekdam" class="w lime" style="--size: 240px"><span class="b" data-layout-allow-occlusion>EKDAM</span><span class="f">EKDAM</span></div>
-        <div id="w-tahalka2" class="w fire" style="--size: 270px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-ekdam" class="w lime left" style="--size: 270px"><span class="b" data-layout-allow-occlusion>EKDAM</span><span class="f">EKDAM</span></div>
+        <div id="w-aagaya" class="w neon right" style="--size: 190px"><span class="b" data-layout-allow-occlusion>AA GAYA!</span><span class="f">AA GAYA!</span></div>
+        <div id="w-tahalka2" class="w gold down" style="--size: 290px"><span class="b" data-layout-allow-occlusion>TAHALKA</span><span class="f">TAHALKA</span></div>
+        <div id="w-video" class="w cyan right" style="--size: 210px"><span class="b" data-layout-allow-occlusion>VIDEO!</span><span class="f">VIDEO!</span></div>
         <div id="c-wali" class="cap">WALI</div>
         <div id="c-kivideo" class="cap">KI VIDEO</div>
         <div id="c-chahiye" class="cap">CHAHIYE THI</div>
@@ -124,16 +130,25 @@
           </div>
         </div>
         <svg id="cursor" viewBox="0 0 64 64"><path d="M10 4 L10 52 L22 41 L31 60 L39 56 L30 37 L46 37 Z" fill="#ffffff" stroke="#111" stroke-width="4" stroke-linejoin="round"/></svg>
-        <div id="e1" class="emoji">&#128293;</div>
-        <div id="e2" class="emoji">&#128293;</div>
-        <div id="e3" class="emoji">&#128293;</div>
-        <div id="e4" class="emoji">&#128514;</div>
-        <div id="e5" class="emoji">&#129315;</div>
-        <div id="e6" class="emoji">&#128514;</div>
-        <div id="e7" class="emoji">&#128293;</div>
-        <div id="e8" class="emoji">&#128514;</div>
-        <div id="e9" class="emoji">&#129315;</div>
-        <div id="e10" class="emoji">&#128514;</div>
+        <!-- fire burst on TAHALKA -->
+        <img id="f1" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="f2" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="f3" class="emo" src="assets/emoji/1f4af.webp" alt="" />
+        <img id="f4" class="emo" src="assets/emoji/1f525.webp" alt="" />
+        <img id="f5" class="emo" src="assets/emoji/1f929.webp" alt="" />
+        <!-- emoji rain at the end -->
+        <img id="r1" class="emo" src="assets/emoji/1f602.webp" alt="" />
+        <img id="r2" class="emo" src="assets/emoji/1f60d.webp" alt="" />
+        <img id="r3" class="emo" src="assets/emoji/1f923.webp" alt="" />
+        <img id="r4" class="emo" src="assets/emoji/1f61c.webp" alt="" />
+        <img id="r5" class="emo" src="assets/emoji/1f618.webp" alt="" />
+        <img id="r6" class="emo" src="assets/emoji/1f602.webp" alt="" />
+        <img id="r7" class="emo" src="assets/emoji/1f60d.webp" alt="" />
+        <img id="r8" class="emo" src="assets/emoji/1f923.webp" alt="" />
+        <img id="r9" class="emo" src="assets/emoji/1f929.webp" alt="" />
+        <img id="r10" class="emo" src="assets/emoji/1f61c.webp" alt="" />
+        <img id="r11" class="emo" src="assets/emoji/1f602.webp" alt="" />
+        <img id="r12" class="emo" src="assets/emoji/1f618.webp" alt="" />
       </div>
 
       <div id="flash" class="clip" data-start="0" data-duration="7" data-track-index="4"></div>
@@ -150,37 +165,36 @@
       <audio id="s07" class="clip" src="assets/sfx/pop-word.wav" data-start="2.52" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
       <audio id="s08" class="clip" src="assets/sfx/impact.wav" data-start="2.64" data-duration="0.9" data-track-index="15" data-volume="0.5"></audio>
       <audio id="s09" class="clip" src="assets/sfx/swoosh.wav" data-start="2.84" data-duration="0.38" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="s17" class="clip" src="assets/sfx/pop-word.wav" data-start="2.97" data-duration="0.16" data-track-index="16" data-volume="0.5"></audio>
       <audio id="s10" class="clip" src="assets/sfx/click.wav" data-start="3.28" data-duration="0.14" data-track-index="12" data-volume="0.7"></audio>
-      <audio id="s11" class="clip" src="assets/sfx/ding.wav" data-start="3.32" data-duration="0.8" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="s11" class="clip" src="assets/sfx/ding.wav" data-start="3.32" data-duration="0.8" data-track-index="17" data-volume="0.35"></audio>
       <audio id="s12" class="clip" src="assets/sfx/pop-low.wav" data-start="3.69" data-duration="0.2" data-track-index="12" data-volume="0.4"></audio>
       <audio id="s13" class="clip" src="assets/sfx/impact.wav" data-start="3.94" data-duration="0.9" data-track-index="14" data-volume="0.6"></audio>
       <audio id="s14" class="clip" src="assets/sfx/pop-word.wav" data-start="4.49" data-duration="0.16" data-track-index="12" data-volume="0.55"></audio>
-      <audio id="s15" class="clip" src="assets/sfx/bubbles.wav" data-start="5.13" data-duration="1.4" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="s15" class="clip" src="assets/sfx/bubbles.wav" data-start="5.13" data-duration="1.4" data-track-index="13" data-volume="0.4"></audio>
       <audio id="s16" class="clip" src="assets/sfx/flash.wav" data-start="6.12" data-duration="0.55" data-track-index="15" data-volume="0.5"></audio>
     </div>
 
     <script>
       const tl = gsap.timeline({ paused: true });
-      const T = 7;
 
       // ---------- camera: jump-cut zooms (footage cuts at 3.62, 4.68, 5.15) and punch-ins ----------
       const cams = ["#cam-back", "#cam-front"];
       const camSet = (t, v) => tl.set(cams, v, t);
       const camTo = (t, v) => tl.to(cams, v, t);
       camSet(0, { scale: 1, x: 0, y: 0 });
-      camTo(1.24, { scale: 1.2, duration: 0.14, ease: "power3.out" });           // BIG BOSS punch-in
+      camTo(1.24, { scale: 1.2, duration: 0.14, ease: "power3.out" });
       [16, -14, 10, -7, 4, 0].forEach((x, i) => camTo(1.24 + i * 0.04, { x, y: i % 2 ? 5 : -5, duration: 0.04, ease: "none" }));
       camTo(2.5, { scale: 1, y: 0, duration: 0.18, ease: "power2.inOut" });
-      camTo(2.66, { scale: 1.07, duration: 0.9, ease: "power1.out" });            // slow push on "leke aa gaya"
-      camSet(3.62, { scale: 1.16, x: 0, y: 0 });                                    // jump cut
-      camTo(3.96, { scale: 1.32, duration: 0.12, ease: "power3.out" });          // TAHALKA punch-in
+      camTo(2.66, { scale: 1.07, duration: 0.9, ease: "power1.out" });
+      camSet(3.62, { scale: 1.16, x: 0, y: 0 });
+      camTo(3.96, { scale: 1.32, duration: 0.12, ease: "power3.out" });
       [18, -16, 12, -8, 5, 0].forEach((x, i) => camTo(3.96 + i * 0.04, { x, y: i % 2 ? 6 : -6, duration: 0.04, ease: "none" }));
-      camSet(4.68, { scale: 1, x: 0, y: 0 });                                       // jump cut
-      camSet(5.15, { scale: 1.2, x: 0, y: 0 });                                     // jump cut
+      camSet(4.68, { scale: 1, x: 0, y: 0 });
+      camSet(5.15, { scale: 1.2, x: 0, y: 0 });
       camTo(5.15, { scale: 1.26, duration: 1.4, ease: "none" });
 
       // ---------- big 3D words ----------
-      // place(el, centre x, centre y, start rotation)
       const pos = {};
       const place = (id, x, y, rot = 0) => { pos[id] = { x, y, rotation: rot }; tl.set(id, { x, y, xPercent: -50, yPercent: -50, rotation: rot }, 0); };
       const popIn = (id, t, from = {}) => {
@@ -193,28 +207,28 @@
         for (let k = 0, s = t + 0.23; s < t + dur - 0.1; k++, s += 0.11) tl.to(id, { rotation: (k % 2 ? 1 : -1) * amt, duration: 0.11, ease: "sine.inOut" }, s);
       };
 
-      place("#w-ekdam", 560, 860, -5);    popIn("#w-ekdam", 0.13, { rotation: -16 });  out("#w-ekdam", 0.5);
-      place("#w-tahalka1", 1450, 360, 5); popIn("#w-tahalka1", 0.47, { x: 1750 });    wobble("#w-tahalka1", 0.47, 0.6, 4); out("#w-tahalka1", 1.09, { x: 1600 });
-      place("#w-bigboss", 960, 250, -3);  popIn("#w-bigboss", 1.22, { scale: 2.2 });   wobble("#w-bigboss", 1.22, 0.95, 2); out("#w-bigboss", 2.17);
-      place("#w-lo", 360, 420, -10);      popIn("#w-lo", 2.52, { rotation: -30 });     out("#w-lo", 2.68, { x: 200 });
-      place("#w-leke", 370, 330, -6);     popIn("#w-leke", 2.64, { scale: 1.9 });      wobble("#w-leke", 2.64, 0.9, 2); out("#w-leke", 3.56);
-      place("#w-aagaya", 1555, 360, 5);   popIn("#w-aagaya", 2.98, { x: 1760 });       wobble("#w-aagaya", 2.98, 0.58, 2); out("#w-aagaya", 3.56);
-      place("#w-tahalka2", 960, 860, -3); popIn("#w-tahalka2", 3.94, { scale: 2.4 });  out("#w-tahalka2", 4.48);
+      place("#w-ekdam", 560, 850, -5);    popIn("#w-ekdam", 0.13, { rotation: -16 });  out("#w-ekdam", 0.5);
+      place("#w-tahalka1", 1515, 330, 5); popIn("#w-tahalka1", 0.47, { x: 1750 });    wobble("#w-tahalka1", 0.47, 0.6, 4); out("#w-tahalka1", 1.09, { x: 1600 });
+      place("#w-bigboss", 960, 240, -3);  popIn("#w-bigboss", 1.22, { scale: 2.2 });   wobble("#w-bigboss", 1.22, 0.95, 2); out("#w-bigboss", 2.17);
+      place("#w-lo", 370, 400, -10);      popIn("#w-lo", 2.52, { rotation: -30 });     out("#w-lo", 2.68, { x: 200 });
+      place("#w-leke", 400, 300, -6);     popIn("#w-leke", 2.64, { scale: 1.9 });      wobble("#w-leke", 2.64, 0.9, 2); out("#w-leke", 3.56);
+      place("#w-aagaya", 1400, 870, 3);   popIn("#w-aagaya", 2.98, { x: 1600 });       wobble("#w-aagaya", 2.98, 0.58, 2); out("#w-aagaya", 3.56);
+      place("#w-tahalka2", 960, 850, -3); popIn("#w-tahalka2", 3.94, { scale: 2.4 });  out("#w-tahalka2", 4.48);
       for (let k = 0, s = 4.1; s < 4.46; k++, s += 0.045) tl.to("#w-tahalka2", { x: 960 + (k % 2 ? 10 : -10), duration: 0.045, ease: "none" }, s);
-      place("#w-video", 1440, 380, 6);    popIn("#w-video", 4.48, { x: 1700 });        out("#w-video", 4.9);
+      place("#w-video", 1480, 330, 6);    popIn("#w-video", 4.48, { x: 1700 });        out("#w-video", 4.9);
 
-      // bursts behind BIG BOSS and LEKE AA GAYA
-      tl.set("#burst1", { x: 960, y: 260, xPercent: -50, yPercent: -50 }, 0);
-      tl.fromTo("#burst1", { opacity: 1, scale: 0.2, rotation: -20 }, { scale: 1.45, rotation: 10, duration: 0.45, ease: "power3.out" }, 1.22);
+      // bursts behind BIG BOSS and LEKE
+      tl.set("#burst1", { x: 960, y: 250, xPercent: -50, yPercent: -50 }, 0);
+      tl.fromTo("#burst1", { opacity: 1, scale: 0.2, rotation: -20 }, { scale: 1.5, rotation: 10, duration: 0.45, ease: "power3.out", immediateRender: false }, 1.22);
       tl.to("#burst1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 1.55);
-      tl.set("#burst2", { x: 960, y: 230, xPercent: -50, yPercent: -50 }, 0);
-      tl.fromTo("#burst2", { opacity: 1, scale: 0.2, rotation: 15 }, { scale: 1.5, rotation: -8, duration: 0.45, ease: "power3.out" }, 2.64);
+      tl.set("#burst2", { x: 420, y: 300, xPercent: -50, yPercent: -50 }, 0);
+      tl.fromTo("#burst2", { opacity: 1, scale: 0.2, rotation: 15 }, { scale: 1.2, rotation: -8, duration: 0.45, ease: "power3.out", immediateRender: false }, 2.64);
       tl.to("#burst2", { opacity: 0, duration: 0.3, ease: "power1.in" }, 2.98);
 
       // ---------- small yellow captions ----------
       const cap = (id, t, end) => {
-        tl.set(id, { skewX: -8, transformOrigin: "0% 100%" }, 0);
-        tl.fromTo(id, { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.1, ease: "back.out(3)" }, t);
+        tl.set(id, { transformOrigin: "0% 100%" }, 0);
+        tl.fromTo(id, { opacity: 0, scale: 0.6, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.1, ease: "back.out(3)", immediateRender: false }, t);
         tl.to(id, { opacity: 0, duration: 0.06 }, end);
       };
       cap("#c-wali", 1.09, 1.24);
@@ -224,8 +238,8 @@
 
       // ---------- channel card + subscribe click ----------
       tl.fromTo("#card", { opacity: 0, scale: 0.5, rotation: -9, x: -120 },
-        { opacity: 1, scale: 1, rotation: -3, x: 0, duration: 0.22, ease: "back.out(2)" }, 2.84);
-      tl.fromTo("#cursor", { opacity: 0, x: 900, y: 1050 }, { opacity: 1, x: 520, y: 905, duration: 0.3, ease: "power2.out" }, 2.95);
+        { opacity: 1, scale: 1, rotation: -3, x: 0, duration: 0.22, ease: "back.out(2)", immediateRender: false }, 2.84);
+      tl.fromTo("#cursor", { opacity: 0, x: 900, y: 1050 }, { opacity: 1, x: 520, y: 905, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.95);
       tl.to("#cursor", { scale: 0.8, duration: 0.05 }, 3.27);
       tl.to("#cursor", { scale: 1, duration: 0.06 }, 3.32);
       tl.to("#sub", { opacity: 0, duration: 0.05 }, 3.29);
@@ -234,20 +248,32 @@
       tl.to("#card .btn", { scale: 1, duration: 0.1, ease: "back.out(3)" }, 3.32);
       tl.to(["#card", "#cursor"], { opacity: 0, x: "-=60", filter: "blur(12px)", duration: 0.16, ease: "power2.in" }, 3.85);
 
-      // ---------- emoji ----------
-      const fires = [["#e1", 330, 640], ["#e2", 1600, 620], ["#e3", 1250, 820], ["#e7", 560, 860]];
-      fires.forEach(([id, x, y], i) => {
-        tl.fromTo(id, { opacity: 0, x, y, scale: 0.2, rotation: -20 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.15, ease: "back.out(3)", immediateRender: false }, 3.97 + i * 0.05);
-        tl.to(id, { y: y - 60, opacity: 0, duration: 0.25, ease: "power1.in" }, 4.4 + i * 0.03);
-      });
-      const laughs = [["#e4", 260], ["#e5", 1500], ["#e6", 1720], ["#e8", 420], ["#e9", 1300], ["#e10", 900]];
-      laughs.forEach(([id, x], i) => {
-        tl.fromTo(id, { opacity: 1, x, y: -180, rotation: -25, scale: 0.9 },
-          { y: 1150, rotation: 30, duration: 1.15, ease: "power1.in", immediateRender: false }, 5.15 + i * 0.08);
+      // ---------- 3D emoji ----------
+      // fire burst around TAHALKA: [id, x, y, size]
+      [["#f1", 260, 560, 300], ["#f2", 1660, 520, 320], ["#f3", 1500, 180, 240], ["#f4", 420, 160, 260], ["#f5", 1250, 600, 220]]
+        .forEach(([id, x, y, s], i) => {
+          tl.set(id, { width: s, height: s, xPercent: -50, yPercent: -50 }, 0);
+          tl.fromTo(id, { opacity: 0, x, y, scale: 0.2, rotation: -25 },
+            { opacity: 1, scale: 1, rotation: i % 2 ? 8 : -8, duration: 0.18, ease: "back.out(2.5)", immediateRender: false }, 3.96 + i * 0.04);
+          tl.to(id, { y: y - 80, scale: 1.15, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power1.in" }, 4.42 + i * 0.02);
+        });
+      // emoji burst all over the screen, drifting up (positions, sizes and timing from a fixed seed)
+      let seed = 11;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const spots = [[180, 260], [520, 120], [1420, 140], [1760, 300], [300, 640], [1650, 700], [880, 90],
+                     [1180, 820], [120, 950], [1840, 960], [640, 880], [1300, 420]];
+      spots.forEach(([x, y], i) => {
+        const id = "#r" + (i + 1), s = 190 + rnd() * 230, t = 5.13 + i * 0.07 + rnd() * 0.05;
+        tl.set(id, { width: s, height: s, xPercent: -50, yPercent: -50 }, 0);
+        tl.fromTo(id, { opacity: 0, x, y, scale: 0.1, rotation: -30 + rnd() * 60 },
+          { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2.6)", immediateRender: false }, t);
+        tl.to(id, { y: y - 140 - rnd() * 120, x: x + (rnd() - 0.5) * 120, rotation: "+=" + (-20 + rnd() * 40),
+          duration: 1.0, ease: "sine.inOut" }, t + 0.2);
+        tl.to(id, { opacity: 0, scale: 1.25, filter: "blur(10px)", duration: 0.18, ease: "power1.in" }, 6.12 + rnd() * 0.12);
       });
 
       // ---------- white flash into the main video ----------
-      tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in" }, 6.25);
+      tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in", immediateRender: false }, 6.25);
 
       window.__timelines["main"] = tl;
       tl.seek(0);

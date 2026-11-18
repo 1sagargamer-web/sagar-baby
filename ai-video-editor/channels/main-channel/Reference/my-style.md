@@ -87,6 +87,25 @@ to the voice (Whisper word timings).
   to the references: music levels are *measured*, not heard.
 - Final mix around -14 LUFS.
 
+## Rules from Sagar's feedback on the demo intro (v1 → v2), always follow
+- **Big words = reference look:** font **Poppins Black** (`assets/fonts/poppins-black.woff2`), all caps, big
+  (160-330 px), **no black outline**. Bright fill with a light top highlight, a 3D extrusion in a darker shade of
+  the same colour (6 layers, 3 px apart, slanted left or right), a thin light rim and a glow in the word's colour.
+  Palettes: lime, cyan, pink, gold (orange glow), red, neon (white with pink neon rim). See
+  `projects/demo-intro/index.html` (`.w` classes) and reuse it.
+- Words behind Sagar must stay readable: a word may lose at most one letter behind the head; otherwise move it
+  to the side or put it in front at the bottom. Mix behind/front in every intro.
+- Small captions: Poppins Black Italic, yellow `#ffe02e`, thin dark-brown edge, lower left, 92 px.
+- **Emoji = 3D glossy stickers** (Microsoft Fluent 3D emoji, MIT licence, `@lobehub/fluent-emoji-3d` from npm),
+  thin white border, 180-420 px, 10-12 at once popping in all over the screen and drifting up (not tiny flat
+  emoji, not falling from the top).
+- **Background:** Sagar's own room is replaced with one of his room photos in `characters/backgrounds/`.
+  Default `room-1-silver.jpg` (it shows a silver play button, which matches 2 lakh subscribers; the other two
+  show a gold button, which would look fake). Made with `scripts/room_composite.py` (empty-room matte fix,
+  warm grade, light wrap, room blur + grain). Always check frames for holes or smudges in the cut-out.
+- Comments ("aapne comments mein bola tha"): ask Sagar for real comment screenshots when he says it; never
+  invent viewer comments.
+
 ## Still to decide with Sagar
 Channel name, what Sagar's own video will look like (facecam? game screen? reaction?), length, watermark,
 captions language. See CLAUDE.md once filled in.
