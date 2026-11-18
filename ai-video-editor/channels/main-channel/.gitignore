@@ -10,5 +10,4 @@ Reference/frames/
 Reference/*.transcript.json
 projects/*/assets/audio/
 voices/sagar*
-Reference/analysis/*.wav
-Reference/analysis/*.log
+Reference/analysis/
