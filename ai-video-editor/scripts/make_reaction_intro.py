@@ -22,7 +22,8 @@ intro.json (all times in seconds on the edited timeline):
   "emoji_fields": [{"in": 5.13, "out": 6.15, "count": 22, "layer": "behind", "set": ["1f602", ...], "seed": 3}],
   "emoji_pops": [{"t": 3.96, "out": 4.42, "items": [["1f525", 260, 560, 300], ...]}],
   "flash": 6.25,
-  "sfx": [["snap", 0.11, 0.6], ...]      # [name in assets/sfx, start, volume]; letter blips are added automatically
+  "sfx": [["snap", 0.11, 0.6], ...],     # [name in assets/sfx, start, volume]
+  "letter_blips": true                   # add a blip per letter of letter-by-letter words
 }
 Styles: lime, cyan, pink, gold, red, neon, purple. Layers: "behind" (between the room and Sagar) or "front".
 """
@@ -113,8 +114,8 @@ def build(spec_path: Path) -> None:
 
     # ---- sound ----
     sfx = list(S.get("sfx", []))
-    for w in words:  # a crisp blip per letter for letter-by-letter words
-        if w.get("enter") == "letters":
+    for w in words:  # a crisp blip per letter for letter-by-letter words ("letter_blips": false turns it off)
+        if w.get("enter") == "letters" and S.get("letter_blips", True):
             for k, ch in enumerate(w["text"]):
                 if ch != " ":
                     sfx.append(["blip", round(w["in"] + k * LETTER_GAP, 3), 0.35])

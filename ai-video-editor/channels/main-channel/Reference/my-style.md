@@ -99,10 +99,11 @@ to the voice (Whisper word timings).
 - **Emoji = 3D glossy stickers** (Microsoft Fluent 3D emoji, MIT licence, `@lobehub/fluent-emoji-3d` from npm),
   thin white border, 180-420 px, 10-12 at once popping in all over the screen and drifting up (not tiny flat
   emoji, not falling from the top).
-- **Background: keep Sagar's ORIGINAL room** (Sagar, v2 feedback: the replaced room looked fake/AI). Make him pop
-  instead: `scripts/person_glow.py` = brighter, warmer person with a soft glow through a feathered matte, room a
-  little dimmer with a soft vignette (no visible edge). Room photos in `characters/backgrounds/` are only used if
-  Sagar asks again.
+- **Background: keep Sagar's ORIGINAL footage, no glow/face light** (v2: replaced room looked fake; v3: the face glow
+  made a white halo and haze around hands and face). Only the light brightness fix of v1.
+- **Cut-out edges must be crisp:** always run `scripts/clean_matte.py` on the remove-background output (the raw
+  model matte keeps a soft dark fringe of the room around hair and moving hands that shows over bright words,
+  smoke and emoji). Check zoomed snapshots of hair and hands over the words before rendering.
 - **Animation (frame-by-frame study of the references at 30 fps, v3):** built by `scripts/make_reaction_intro.py`
   from `projects/<video>/intro.json`.
   - Some words come in **letter by letter** (each letter springs up from tiny, 0.03 s apart, overshoot), e.g. the
@@ -115,10 +116,11 @@ to the voice (Whisper word timings).
     plus a fast punch-in zoom with a small shake.
   - Emoji field: ~22 3D emoji **behind Sagar**, fade+scale in within 0.25 s all over the screen, drift up ~1 s.
   - Channel card slides up from the bottom with blur, Subscribe click, slides back down.
-- **Sound effects (v3, crispy):** `scripts/make_sfx_reaction.py` → snap (every word), blip (every letter, added
-  automatically), zip (flying words), burst (smoke explosion), zoom-in (punch-ins), swipe (card), click + ding
-  (subscribe), sparkle (emoji field), flash (white flash). Matched to the references' spectrograms (sharp click +
-  falling-pitch blips); measured, not heard.
+- **Sound effects (v4):** real recorded-style CC0 sounds from `sfx-library/` (SFXMint, see SOURCE.md), trimmed to
+  `r-*.wav`: r-pop (word appears), r-pop-big (big single word), r-whoosh (word flies in), r-exit (words fly out),
+  r-impact + r-boom (big moment / smoke burst), r-reveal (big bottom word), r-card + r-sub (channel card, subscribe),
+  r-sparkle + r-magic (emoji), r-riser (into the white flash). **One sound per text event, no per-letter blips**
+  (v3's synthesised sounds and blips were rejected). Measured, not heard.
 - Comments ("aapne comments mein bola tha"): ask Sagar for real comment screenshots when he says it; never
   invent viewer comments.
 

@@ -33,15 +33,16 @@ logos, channel cards, music, sound files, fonts, exact text or graphics.
 - HyperFrames: skills in `.agents/skills/`; always `check` + `snapshot` and look at frames before `render`.
 - Music / SFX: synthesised by us (`scripts/make_music.py`, `scripts/make_sfx.py`, or new channel versions).
 
-## Footage look (every video): original room + glowing Sagar
+## Footage + cut-out (every video)
 1. `npx hyperframes remove-background <footage> -o assets/sagar-cutout.webm --quality best` (first time on a new
    container: `npm install onnxruntime-node@1.21.1 --onnxruntime-node-install-cuda=skip --prefix
    ~/.cache/hyperframes/optional/onnxruntime-node@1.21.1`). About 0.7 s per 1080p frame on CPU.
-2. `python3 scripts/person_glow.py --footage assets/sagar.mp4 --matte assets/sagar-cutout.webm
-   --plate-out assets/plate.mp4 --person-out assets/sagar-glow.webm` (matte cleaned with the empty-room method).
-3. Intro: write `intro.json`, then `python3 scripts/make_reaction_intro.py projects/<video>/intro.json`
-   (needs `assets/sfx/*.wav` + `assets/sfx/durations.json`, fonts in `assets/fonts/`, emoji in `assets/emoji/`).
-   Layers: plate → words/emoji behind → `sagar-glow.webm` → words/cards/emoji in front.
+2. `python3 scripts/clean_matte.py --footage assets/sagar.mp4 --matte assets/sagar-cutout.webm --out assets/sagar-clean.webm`
+3. Intro: write `intro.json` (plate = `assets/sagar.mp4`, person = `assets/sagar-clean.webm`), then
+   `python3 scripts/make_reaction_intro.py projects/<video>/intro.json` (needs `assets/sfx/*.wav` +
+   `assets/sfx/durations.json`, fonts in `assets/fonts/`, emoji in `assets/emoji/`).
+   Layers: plate → words/emoji behind → clean cut-out → words/cards/emoji in front.
+- Not used any more (Sagar rejected): `scripts/room_composite.py` (new room), `scripts/person_glow.py` (face glow).
 
 ## Every video
 1. Download the raw video, transcribe it, and show Sagar the plan (intro words, cuts, clip layout, effects,
