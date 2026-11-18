@@ -1,0 +1,40 @@
+{
+  "title": "Ep 04 - Pasand ki ladki (part 2)",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, अब उससे बात कैसे करूँ? मुझे बहुत डर लगता है।",
+      "caption": "Prabhu, ab usse baat kaise karun? Mujhe bahut darr lagta hai.",
+      "face": {"eyes": "open", "brows": "sad", "mouth": "closed", "pose": "pray", "sweat": true}
+    },
+    {
+      "who": "krishna",
+      "hi": "डरो मत वत्स... उसे इंस्टाग्राम पे मैसेज कर दो।",
+      "caption": "Darro mat Vatsa... use Instagram pe message kar do.",
+      "face": {"eyes": "open"},
+      "sagar_face": {"eyes": "open", "brows": "normal", "mouth": "closed"},
+      "pause_before": 0.4
+    },
+    {
+      "who": "sagar",
+      "hi": "कर दिया प्रभु! अभी 'हाय' भेजा है... तीन 'आई' के साथ!",
+      "caption": "Kar diya Prabhu! Abhi 'Hiii' bheja hai... teen 'i' ke saath!",
+      "face": {"eyes": "open", "brows": "normal", "mouth": "smirk", "pose": "thumb"}
+    },
+    {
+      "who": "krishna",
+      "hi": "और उसने रिप्लाई किया है... भैया, कौन?",
+      "caption": "Aur usne reply kiya hai... 'Bhaiya, kaun?'",
+      "face": {"eyes": "half"},
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, फिर से भैया?!",
+      "caption": "PRABHU, PHIR SE BHAIYA?!",
+      "face": {"eyes": "shock", "brows": "sad", "mouth": "o", "sweat": true},
+      "shake": true
+    }
+  ]
+}
