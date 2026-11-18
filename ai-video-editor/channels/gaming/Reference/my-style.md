@@ -69,7 +69,8 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
 - Sagar's own voice, **cloned** from his recording (private, never in git). **Claude writes the whole commentary**;
   Sagar only sends gameplay.
 - Sagar's feedback (2026-11-18): options A (calm) and C (hype) both good, but still sounds AI -> make it more natural.
-  Chosen setup: see `CLAUDE.md` (Voice).
+  **Chosen: option D** (calm, conversational clone). Exact settings in `CLAUDE.md` (Voice).
+- **Sagar's real voiceover wins**: when he sends a recording for a video, use it; otherwise the D clone.
 - Commentary style in the references: casual live Hinglish, talking to viewers ("guys", "dekho", "bhai"),
   reacting to kills, chatting with teammates, ending on the ban reveal.
 - If Sagar's gameplay already has his live mic commentary, keep it (clean it up, cut fumbles) and use the
@@ -82,6 +83,16 @@ We take the *editing principles* only. Never reuse their footage, thumbnails, lo
   gameplay, dark suspense pad for the turning point, silence for 0.5 s before a big reveal.
 - SFX (`scripts/make_gaming_sfx.py` -> `sfx/gaming/`, all synthesised): whoosh on title cards, impact/boom on
   big words and reveals, riser before the reveal, glitch on the ban notice, pop on callouts, ding on kills.
+
+## Every video must feel new (Sagar's rule)
+- **Music: a new track every video**: `make_gaming_music.py --seed <from video name>` (new riff, key, tempo,
+  drum pattern). Never reuse a previous video's seed.
+- **SFX: a new pack every video**: `make_gaming_sfx.py projects/<name>/assets/sfx --seed <from video name>`
+  (same kinds of effects, different pitch/length/colour). The base set in `sfx/gaming/` is only for tests.
+- **Motion graphics in every video** (makes it look professional): animated hook word cards, "24 HOURS" style
+  title card, match/round title cards, pop-up callouts with arrows on UI details, kill counter / timer badge,
+  lower-third "info" boxes, glitch transition into the ban reveal, animated subscribe reminder, end card.
+  Vary colours/layout/animation per video within the channel look (black + white + yellow, red for danger).
 
 ## Never
 - No watermark. No copied memes, music, logos or creator footage. Never show panel names/links/prices.

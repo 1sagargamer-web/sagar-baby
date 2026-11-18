@@ -28,12 +28,23 @@ Sagar uploads to **private Hugging Face datasets** under his account `sagar5582`
 - Never make these datasets public and never push footage or voice files to GitHub (the repo is public).
 
 ## Voice
+**Rule (Sagar, 2026-11-18):**
+1. When Sagar sends a voiceover recording for a video, **use his real recording** (best takes with
+   `scripts/pick_takes.py`, cut fumbles/long pauses, highpass 80 + light compression, -16 LUFS). Do not clone over it.
+2. When he does not send one, use the clone **option D** (chosen by Sagar), always with exactly these settings:
+   reference `voices/sagar-ref-chat.wav`, Chatterbox Multilingual `--lang hi`, **exaggeration 0.55, cfg 0.3,
+   temperature 0.9, seed 11**, one sentence per job, excited lines exaggeration 0.70, then tempo 1.05
+   (rubberband, formant preserved), trim silence, drop stray tail, 0.25-0.35 s gaps between sentences,
+   highpass 80 + acompressor 3:1, -16 LUFS. Never change these between videos.
+3. If a video mixes both, his recording wins for the lines he recorded; D fills the rest.
+
+History:
 - Reference: `channels/gaming/voices/sagar-ref.wav` = 0.15-17.95 s (Hindi part) of Sagar's recording, high-pass
   70 Hz, -16 LUFS, 24 kHz mono. Rebuild from `voices/sagar-gaming-original.mp3` if missing.
 - Clone with `.venv-tts/bin/python scripts/clone_voice.py <ref> --batch jobs.json --seed 11` (per-job
   `exaggeration` / `cfg`), then speed 1.1x with rubberband (formant preserved), trim silence, -16 LUFS.
 - Options sent to Sagar (same line): A exag 0.45 cfg 0.4, B exag 0.7 cfg 0.3, C exag 0.95 cfg 0.25.
-  **Chosen: pending.** Once chosen, write it here and in my-style.md and never change it between videos.
+  (Round 1, not chosen.)
 - Round 2 (Sagar liked A and C but said "still sounds AI"): Chatterbox only uses the first ~10 s of the reference, and
   the start of his recording is him *reading*. New reference `voices/sagar-ref-chat.wav` (9.2 s) = 0.15-2.45 s
   ("namaste doston main Sagar hoon") + 25.55-32.4 s (casual "agar aapko koi problem...love you yaar").

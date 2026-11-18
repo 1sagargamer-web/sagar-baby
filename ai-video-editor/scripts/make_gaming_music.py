@@ -211,7 +211,9 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--bpm", type=float)
     a = ap.parse_args()
-    bpm = a.bpm or {"hype": 140, "suspense": 90, "ending": 96}[a.mood]
+    # every seed also gets its own tempo (unless --bpm is given), so no two videos share the same groove
+    lo, hi = {"hype": (128, 152), "suspense": (80, 100), "ending": (88, 104)}[a.mood]
+    bpm = a.bpm or float(np.random.default_rng(a.seed + 1000).integers(lo, hi + 1))
     x = build(a.seconds, a.mood, a.seed, bpm)
     with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
         sf.write(tmp.name, x, SR)
