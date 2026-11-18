@@ -68,6 +68,9 @@ change, add a new option or a new file instead.
 - Disk is limited (~25 GB): clear `~/.cache/pip` after installs.
 
 ## Lessons learned
+- Voice tests (2026-11-18): Sagar picked option A (= the builder's `CLONE` settings) over calmer best-of-3 (B), another
+  reference cut (C) and a 15% slower version (D). The clone speaks ~3.3-4.1 words/s, Sagar ~2.3. Samples in
+  `voices/options/` (private).
 - Never `git add -A` on the channel folder while a render runs: HyperFrames writes `work-*/` (with the voice audio) into the project. They are gitignored now; add files by name.
 - The clone can leave 2-3 s of noise after a line: the builder cuts 0.3 s after the last Whisper word (`trim_tail`).
 - ep01 v1 measured: voice -15 LUFS, music alone -30 LUFS (15 dB under), final -14.0 LUFS, Whisper heard all 124 words (confidence 0.97).

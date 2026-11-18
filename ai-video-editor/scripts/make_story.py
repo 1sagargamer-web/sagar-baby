@@ -44,7 +44,7 @@ FPS = 30
 TTS_PY = HERE / ".venv-tts" / "bin" / "python"
 IMG_PY = HERE / ".venv-img" / "bin" / "python"
 # Sagar's cloned voice (used only with "allow_clone": true). Tuned for a calm, natural narration.
-CLONE = {"exaggeration": 0.5, "cfg": 0.4, "temperature": 0.75, "seed": 11, "tempo": 1.0}
+CLONE = {"exaggeration": 0.5, "cfg": 0.4, "temperature": 0.75, "seed": 11, "tempo": 1.0}  # option "A", chosen by Sagar 2026-11-18
 CLEAN = (
     "highpass=f=70,"
     "silenceremove=start_periods=1:start_threshold=-42dB:start_silence=0.05,"

@@ -63,7 +63,10 @@ exact lines.
 - With every script, send Sagar the list of lines to record, with how to say each one (calm, emotional, pause at "...").
   Ask Sagar to say each line 2 times. Pick the best take with `scripts/pick_takes.py` and report the scores.
 - **If Sagar says there is no time to record**, use the clone of Sagar's voice (`voices/sagar-ref.wav`, cut from Sagar's 30-60 s recording;
-  private, never in git) via Chatterbox (`scripts/clone_voice.py`), tuned to sound natural, like Sagar. Set
+  private, never in git) via Chatterbox (`scripts/clone_voice.py`). **Settings fixed: option "A"** (chosen by Sagar
+  from 4 samples, 2026-11-18): exaggeration 0.5, cfg 0.4, temperature 0.75, seed 11, normal speed, reference
+  `voices/sagar-ref.wav` (3.0-22.5 s of `Raw/sagar-rec-01.mp3`). Do not change them without asking. The clone still
+  sounds a bit AI to Sagar, so always offer recording first; Sagar's real recording is the most natural. Set
   `"allow_clone": true` in script.json only when Sagar says so.
 
 ## Sound
