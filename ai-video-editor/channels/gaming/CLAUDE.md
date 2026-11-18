@@ -34,6 +34,14 @@ Sagar uploads to **private Hugging Face datasets** under his account `sagar5582`
   `exaggeration` / `cfg`), then speed 1.1x with rubberband (formant preserved), trim silence, -16 LUFS.
 - Options sent to Sagar (same line): A exag 0.45 cfg 0.4, B exag 0.7 cfg 0.3, C exag 0.95 cfg 0.25.
   **Chosen: pending.** Once chosen, write it here and in my-style.md and never change it between videos.
+- Round 2 (Sagar liked A and C but said "still sounds AI"): Chatterbox only uses the first ~10 s of the reference, and
+  the start of his recording is him *reading*. New reference `voices/sagar-ref-chat.wav` (9.2 s) = 0.15-2.45 s
+  ("namaste doston main Sagar hoon") + 25.55-32.4 s (casual "agar aapko koi problem...love you yaar").
+  Generate **one sentence per job**, temperature 0.9, seed 11, then tempo 1.05 (not 1.1), trim, drop stray tail,
+  join with 0.25-0.35 s gaps, light compression (highpass 80, acompressor 3:1), -16 LUFS.
+  D = exag 0.55 cfg 0.3 (calm), F = exag 0.85 cfg 0.3 (hype); excited lines get +0.15 exaggeration.
+- Next options if still not natural: a new 40-60 s *unscripted* recording from Sagar, or AI4Bharat IndicF5
+  (`ai4bharat/IndicF5`, MIT, gated: Sagar must click "Agree" on its Hugging Face page first).
 - Check every generated line with Whisper (words right, confidence) before using it; Claude cannot listen.
 
 ## Building a video (pipeline, builder to be written: `scripts/make_gaming_video.py`)
