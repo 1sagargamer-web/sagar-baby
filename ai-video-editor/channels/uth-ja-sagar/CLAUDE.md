@@ -14,9 +14,9 @@ change, add a new option or a new file instead.
 
 | Folder | What goes in it |
 |---|---|
-| `Raw/` | Sagar's recordings and photos. Never modify or delete. Not in git. |
+| `Raw/` | Sagar's recordings (and the photos Sagar sent; **never use them for faces**). Never modify. Not in git. |
 | `Reference/` | `my-style.md` (in git) + copies of the 5 reference reels and their transcripts (not in git). |
-| `characters/` | `sagar.json`: the fixed description of Sagar used in every picture prompt (`{SAGAR}`). |
+| `characters/` | `sagar.json`: the fixed (generic, not Sagar's real face) description of Sagar used in every picture prompt (`{SAGAR}`). |
 | `voices/` | `sagar-ref.wav` for the clone, cut from Sagar's recording. **Private: gitignored, never upload or share.** |
 | `projects/<name>/` | One HyperFrames project per video: `script.json`, generated `index.html`, `assets/`. |
 | `Export/` | Finished videos: `<name>-v1.mp4`, `-v2`... **never overwrite an old version.** Not in git. |
@@ -68,5 +68,9 @@ change, add a new option or a new file instead.
 - Disk is limited (~25 GB): clear `~/.cache/pip` after installs.
 
 ## Lessons learned
+- Sagar does not want a real face in the pictures. `make_image.py` can match a face (`"face"`), but never use it with Sagar's photos.
+- `make_image.py`: style text goes first in the prompt (CLIP reads only 77 tokens); keep scene prompts short.
+- Loading SDXL straight as bfloat16 peaks ~12 GB; the script loads fp16 then converts (peak ~11 GB). Do not run it next to Whisper/Chatterbox.
+- Downloads from Hugging Face stall without `HF_HUB_DISABLE_XET=1`; Chatterbox multilingual needs only: ve.pt, t3_mtl23ls_v2.safetensors, s3gen.pt, grapheme_mtl_merged_expanded_v1.json, conds.pt, Cangjie5_TC.json (download those with allow_patterns, the full repo is 7 GB).
 - Running 5 Whisper jobs in parallel ran out of memory: run them one at a time.
 - `diffusers` in `.venv-tts` (0.29) does not work with its transformers 5.x: that is why pictures use `.venv-img`.

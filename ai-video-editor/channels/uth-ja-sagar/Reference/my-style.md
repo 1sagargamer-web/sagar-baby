@@ -36,8 +36,10 @@ exact lines.
   or a wrong mood.
 
 ## Characters
-- **Sagar** (the owner) is the one fixed character in every video. Description in `characters/sagar.json`
-  (`{SAGAR}` in a scene prompt is replaced by it). Made from Sagar's photos.
+- **Sagar** is the one fixed character in every video, as a **generic cartoon man, NOT Sagar's real face**. Sagar said
+  "mera face mat lagao" (2026-11-18): never use Sagar's photos for face matching or to copy the face. Only the outfit stays
+  the same every video: white t-shirt + open navy leather jacket + blue jeans. Description in `characters/sagar.json`
+  (`{SAGAR}` in a scene prompt is replaced by it).
 - Everyone else (boy, girl, maa, papa, dost, teacher...) changes with each story.
 
 ## Script

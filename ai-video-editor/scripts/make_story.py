@@ -166,7 +166,14 @@ def build(script_path: Path) -> None:
             shutil.copyfile(cpath(l["image"]), img)
         elif not img.exists():
             prompt = l["prompt"].replace("{SAGAR}", sagar.get("prompt", "a young Indian man"))
-            jobs.append({"prompt": prompt, "out": str(img), "seed": l.get("seed", i + 1)})
+            job = {"prompt": prompt, "out": str(img), "seed": l.get("seed", i + 1)}
+            face = cpath(sagar["face_ref"]) if sagar.get("face_ref") else None  # off for Uth Ja Sagar: no real face
+            if "{SAGAR}" in l["prompt"] and face and l.get("face", True):
+                if face.exists() and (HERE / "models" / "ip-adapter").exists():
+                    job.update(face=str(face), face_scale=l.get("face_scale", sagar.get("face_scale", 0.55)))
+                else:
+                    print(f"note: no face match for scene {i + 1} (missing {face.name} or models/ip-adapter)")
+            jobs.append(job)
     if jobs:
         batch = idir / "_jobs.json"
         batch.write_text(json.dumps(jobs, ensure_ascii=False))
