@@ -12,3 +12,8 @@ projects/*/assets/audio/
 voices/sagar*
 projects/_pipeline-test/
 projects/*/assets/
+projects/*/work-*/
+projects/*/.render*/
+projects/*/.hyperframes/
+projects/*/snaps/
+projects/*/render.mp4
