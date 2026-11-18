@@ -68,6 +68,9 @@ change, add a new option or a new file instead.
 - Disk is limited (~25 GB): clear `~/.cache/pip` after installs.
 
 ## Lessons learned
+- Never `git add -A` on the channel folder while a render runs: HyperFrames writes `work-*/` (with the voice audio) into the project. They are gitignored now; add files by name.
+- The clone can leave 2-3 s of noise after a line: the builder cuts 0.3 s after the last Whisper word (`trim_tail`).
+- ep01 v1 measured: voice -15 LUFS, music alone -30 LUFS (15 dB under), final -14.0 LUFS, Whisper heard all 124 words (confidence 0.97).
 - Sagar does not want a real face in the pictures. `make_image.py` can match a face (`"face"`), but never use it with Sagar's photos.
 - `make_image.py`: style text goes first in the prompt (CLIP reads only 77 tokens); keep scene prompts short.
 - Loading SDXL straight as bfloat16 peaks ~12 GB; the script loads fp16 then converts (peak ~11 GB). Do not run it next to Whisper/Chatterbox.
