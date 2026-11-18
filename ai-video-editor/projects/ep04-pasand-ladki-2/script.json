@@ -4,37 +4,70 @@
   "lines": [
     {
       "who": "sagar",
-      "hi": "प्रभु, अब उससे बात कैसे करूँ? मुझे बहुत डर लगता है।",
-      "caption": "Prabhu, ab usse baat kaise karun? Mujhe bahut darr lagta hai.",
-      "face": {"eyes": "open", "brows": "sad", "mouth": "closed", "pose": "pray", "sweat": true}
+      "hi": "ओए कान्हा, अब मुझे ये बताओ... मैं अपनी क्रश से बात कैसे करूँ? मुझे बहुत डर लगता है।",
+      "caption": "Oye Kanha, ab mujhe ye batao... main apni crush se baat kaise karun? Mujhe bahut darr lagta hai.",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      },
+      "audio": "Raw/ep04-sagar-1.wav",
+      "keep_audio": true
     },
     {
       "who": "krishna",
-      "hi": "डरो मत वत्स... उसे इंस्टाग्राम पे मैसेज कर दो।",
-      "caption": "Darro mat Vatsa... use Instagram pe message kar do.",
-      "face": {"eyes": "open"},
-      "sagar_face": {"eyes": "open", "brows": "normal", "mouth": "closed"},
-      "pause_before": 0.4
+      "hi": "डरो मत सागर... उसे इंस्टाग्राम पे मैसेज कर दो।",
+      "caption": "Darro mat Sagar... use Instagram pe message kar do.",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4,
+      "audio": "Raw/ep04-bhagwan-1-vc.wav",
+      "vc": false
     },
     {
       "who": "sagar",
-      "hi": "कर दिया प्रभु! अभी 'हाय' भेजा है... तीन 'आई' के साथ!",
-      "caption": "Kar diya Prabhu! Abhi 'Hiii' bheja hai... teen 'i' ke saath!",
-      "face": {"eyes": "open", "brows": "normal", "mouth": "smirk", "pose": "thumb"}
+      "hi": "भगवान जी, बहुत हिम्मत करके मैंने उसे हाय भेज दिया!",
+      "caption": "Bhagwan ji, bahut himmat karke maine use 'Hi' bhej diya!",
+      "face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      },
+      "audio": "Raw/ep04-sagar-2.wav",
+      "keep_audio": true
     },
     {
       "who": "krishna",
-      "hi": "और उसने रिप्लाई किया है... भैया, कौन?",
-      "caption": "Aur usne reply kiya hai... 'Bhaiya, kaun?'",
-      "face": {"eyes": "half"},
-      "punch": true
+      "hi": "बेटा, अब ज़रा जाके देखो... तुम्हें उसने रिप्लाई क्या किया है... भैया, कौन? तुम्हारी नसीब ही ऐसी है।",
+      "caption": "Beta, ab zara jaake dekho... usne reply kya kiya hai... 'Bhaiya, kaun?' Tumhari naseeb hi aisi hai.",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true,
+      "audio": "Raw/ep04-bhagwan-2.wav"
     },
     {
       "who": "sagar",
       "hi": "प्रभु, फिर से भैया?!",
       "caption": "PRABHU, PHIR SE BHAIYA?!",
-      "face": {"eyes": "shock", "brows": "sad", "mouth": "o", "sweat": true},
-      "shake": true
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
+      "shake": true,
+      "audio": "Raw/ep04-sagar-3.wav",
+      "keep_audio": true
     }
   ]
 }
