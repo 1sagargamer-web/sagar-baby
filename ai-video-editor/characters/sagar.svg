@@ -133,6 +133,16 @@
       <circle cx="252" cy="420" r="3.5" fill="#120b07" />
       <circle cx="348" cy="420" r="3.5" fill="#120b07" />
     </g>
+    <g id="sg-eyes-heart" opacity="0" fill="#ff3b6b" stroke="#a3122f" stroke-width="3">
+      <path d="M250 440 C214 414 222 392 240 392 C248 392 252 398 250 402 C252 398 258 392 266 392 C284 392 290 414 250 440 Z" />
+      <path d="M350 440 C314 414 322 392 340 392 C348 392 352 398 350 402 C352 398 358 392 366 392 C384 392 390 414 350 440 Z" />
+    </g>
+    <g id="sg-eyes-side" opacity="0">
+      <path d="M226 422 Q250 402 278 418 Q252 434 226 422 Z" fill="#fbf7f2" /><path d="M374 422 Q350 402 322 418 Q348 434 374 422 Z" fill="#fbf7f2" />
+      <circle cx="268" cy="419" r="10.5" fill="#4b2e1a" /><circle cx="364" cy="419" r="10.5" fill="#4b2e1a" />
+      <circle cx="268" cy="419" r="5" fill="#120b07" /><circle cx="364" cy="419" r="5" fill="#120b07" />
+      <path d="M224 424 Q250 410 280 420" fill="none" stroke="#1a120e" stroke-width="7" /><path d="M376 424 Q350 410 320 420" fill="none" stroke="#1a120e" stroke-width="7" />
+    </g>
     <!-- nose -->
     <path d="M290 424 C288 446 282 460 284 468" fill="none" stroke="#c98d6b" stroke-width="3" opacity="0.8" />
     <ellipse cx="304" cy="454" rx="5" ry="10" fill="#ffffff" opacity="0.22" />

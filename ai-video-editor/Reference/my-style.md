@@ -62,6 +62,18 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   it splits the takes, scores them (Whisper confidence, completeness, clipping), saves the best de-clipped, and
   prints the scores to report to Sagar.
 
+## Variety in every video (Sagar's rule: never repeat the same look and sounds)
+- **Background**: a different theme each reel: park, temple, night, city, room, beach (`"scene": "..."` in
+  script.json, otherwise rotated by title). Pick the one that fits the story (temple for aashirwad, night for
+  late-night reels, room for phone/bed jokes, city for shaadi/office, beach for holiday). Do not use the same
+  theme as the previous reel. Add new themes in `scripts/scenes.py` when a topic needs one.
+- **Funny sound effects**, different per reel (`scripts/make_sfx.py`): scratch, boing, dundun, bonk, airhorn on
+  the punchline; bassdrop ("sigma moment" vibe, original), boom, slip, sad trombone on the shock. Picked from the
+  title, or choose by hand with `"sfx": [{"name": "bassdrop", "at": 0.1}]`. Never copy a real meme audio.
+- **Expressions**: Sagar eyes `heart`, `side` (suspicious), Krishna eyes `wink`, plus the existing ones. Use a
+  fresh expression whenever the joke allows. **Keep improving**: every new reel should add or improve something
+  (a new expression, effect, background, camera move) instead of repeating the last one.
+
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
 2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of Sagar's lines.

@@ -36,6 +36,8 @@ HERE = Path(__file__).resolve().parent.parent
 
 FPS = 30
 W, H = 1080, 1920
+FUNNY_PUNCH = ["scratch", "boing", "dundun", "bonk", "airhorn"]
+FUNNY_SHOCK = ["bassdrop", "boom", "slip", "sadtrombone", "bonk"]
 TTS_PY = HERE / ".venv-tts" / "bin" / "python"
 # Fixed voices. Bhagwan: a synthetic reference voice (no real person), spoken naturally by Chatterbox.
 # Sagar: cloned from Sagar's own recording (voices/sagar-ref.wav, private, not in git).
@@ -260,7 +262,7 @@ def build(script_path: Path) -> None:
 
     # sound effects on the visible actions (files made by scripts/make_sfx.py into sfx/)
     sfx_lib = HERE / "sfx"
-    if not (sfx_lib / "boom.wav").exists():
+    if not (sfx_lib / "bassdrop.wav").exists():
         subprocess.run([sys.executable, str(HERE / "scripts" / "make_sfx.py"), str(sfx_lib)], check=True)
     events = []
     if any(l["who"] == "krishna" for l in lines):
@@ -268,13 +270,17 @@ def build(script_path: Path) -> None:
     for l in lines:
         if l.get("face", {}).get("pose") == "thumb":
             events.append(("pop", l["start"] + 0.03))
+        # Funny hits vary per video: picked from the pool by the title so consecutive reels sound different.
+        seed_n = sum(map(ord, spec.get("title", proj.name)))
         if l.get("punch"):
             events.append(("whoosh-short", l["start"] - 0.05))
+            events.append((FUNNY_PUNCH[seed_n % len(FUNNY_PUNCH)], l["start"] + 0.35))
         if l.get("shake"):
-            events.append(("boom", l["start"] + 0.03))
+            events.append((FUNNY_SHOCK[(seed_n // 3) % len(FUNNY_SHOCK)], l["start"] + 0.03))
         for s in l.get("sfx", []):
             events.append((s["name"], l["start"] + s.get("at", 0)))
-    volumes = {"boom": 0.75, "shimmer": 0.5, "whoosh": 0.55, "whoosh-short": 0.45, "pop": 0.6, "ding": 0.5}
+    volumes = {"boing": 0.6, "scratch": 0.55, "sadtrombone": 0.6, "airhorn": 0.45, "slip": 0.6, "dundun": 0.7,
+               "bassdrop": 0.8, "bonk": 0.65, "boom": 0.75, "shimmer": 0.5, "whoosh": 0.55, "whoosh-short": 0.45, "pop": 0.6, "ding": 0.5}
     if spec.get("sfx", True) is not False:
         for k, (name, at) in enumerate(sorted(events, key=lambda e: e[1])):
             src = sfx_lib / f"{name}.wav"
@@ -287,7 +293,12 @@ def build(script_path: Path) -> None:
                 f'data-volume="{volumes.get(name, 0.5)}"></audio>'
             )
 
+    sys.path.insert(0, str(HERE / "scripts"))
+    import scenes
+    theme = scenes.THEMES[scenes.pick(spec.get("scene"), spec.get("title", proj.name))]
+    print("scene:", scenes.pick(spec.get("scene"), spec.get("title", proj.name)))
     html = TEMPLATE.format(
+        sky_css=theme["sky"], scene_back=theme["back"], scene_mid=theme["mid"], scene_front=theme["front"],
         total=total,
         watermark=spec.get("watermark", "Made By Sagar Mishra"),
         sagar=sagar_svg,
@@ -311,7 +322,7 @@ TEMPLATE = """<!doctype html>
       html, body {{ width: 1080px; height: 1920px; overflow: hidden; background: #8fd6ff; }}
       #root {{ position: relative; width: 100%; height: 100%; font-family: "Poppins", sans-serif; }}
       #world {{ position: absolute; inset: 0; transform-origin: 50% 55%; }}
-      #sky {{ position: absolute; inset: 0; background: linear-gradient(#58bff2 0%, #a9e3ff 58%, #d8f3ff 70%); }}
+      #sky {{ position: absolute; inset: 0; background: {sky_css}; }}
       .bg-svg {{ position: absolute; left: 0; width: 1080px; }}
       #char-sagar, #char-krishna {{ position: absolute; top: 690px; width: 560px; height: 933px; }}
       #char-sagar {{ left: -20px; }}
@@ -338,25 +349,11 @@ TEMPLATE = """<!doctype html>
       <div id="scene" class="clip" data-start="0" data-duration="{total}" data-track-index="0" data-layout-allow-overlap>
         <div id="world">
           <div id="sky"></div>
-          <svg class="bg-svg" id="clouds" style="top:120px;height:420px" viewBox="0 0 1080 420">
-            <g fill="#ffffff" opacity="0.95">
-              <ellipse cx="190" cy="120" rx="120" ry="48"/><ellipse cx="260" cy="95" rx="80" ry="55"/><ellipse cx="140" cy="100" rx="60" ry="40"/>
-              <ellipse cx="830" cy="230" rx="140" ry="52"/><ellipse cx="900" cy="200" rx="85" ry="58"/><ellipse cx="770" cy="210" rx="65" ry="42"/>
-            </g>
-          </svg>
-          <svg class="bg-svg" style="top:1080px;height:840px" viewBox="0 0 1080 840">
-            <path d="M0 220 C180 120 340 140 520 210 C700 120 900 110 1080 200 L1080 840 L0 840 Z" fill="#7fd36b"/>
-            <path d="M0 330 C240 270 520 290 1080 320 L1080 840 L0 840 Z" fill="#5cbf55"/>
-          </svg>
+          {scene_back}
+          {scene_mid}
           <div id="char-krishna">{krishna}</div>
           <div id="char-sagar">{sagar}</div>
-          <svg class="bg-svg" style="top:1560px;height:360px" viewBox="0 0 1080 360">
-            <g fill="#3fa34a" stroke="#2a7a35" stroke-width="6">
-              <circle cx="40" cy="150" r="110"/><circle cx="210" cy="190" r="120"/><circle cx="400" cy="170" r="105"/>
-              <circle cx="600" cy="200" r="125"/><circle cx="800" cy="165" r="110"/><circle cx="1000" cy="185" r="125"/>
-            </g>
-            <rect x="0" y="230" width="1080" height="130" fill="#3fa34a"/>
-          </svg>
+          {scene_front}
           <div id="flash"></div>
         </div>
       </div>
@@ -370,9 +367,9 @@ TEMPLATE = """<!doctype html>
       const D = {data};
       const tl = gsap.timeline({{ paused: true }});
       const parts = {{
-        sagar: {{ p: "sg", eyes: ["open", "closed", "shock"], brows: ["normal", "sad", "angry"],
+        sagar: {{ p: "sg", eyes: ["open", "closed", "shock", "heart", "side"], brows: ["normal", "sad", "angry"],
           mouth: ["closed", "open", "o", "sad", "smirk"], arms: ["pray", "thumb"], sweat: true, tears: true }},
-        krishna: {{ p: "kr", eyes: ["open", "closed", "half"], brows: [], mouth: ["closed", "open"], arms: [],
+        krishna: {{ p: "kr", eyes: ["open", "closed", "half", "wink"], brows: [], mouth: ["closed", "open"], arms: [],
           sweat: false, tears: false }},
       }};
       // face keyframes: show exactly one group of each kind at a time

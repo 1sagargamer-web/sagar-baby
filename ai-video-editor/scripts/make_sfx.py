@@ -82,6 +82,87 @@ def ding():
     return np.stack([x, x], 1)
 
 
+def boing():
+    n = int(0.9 * SR); t = np.arange(n) / SR
+    f = 260 + 180 * np.sin(2 * np.pi * 7 * t) * np.exp(-t * 3) - 120 * t
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 3.2)
+    return np.stack([x, x], 1)
+
+
+def scratch():
+    n = int(0.55 * SR); t = np.arange(n) / SR
+    f = 600 + 1800 * np.abs(np.sin(2 * np.pi * 2.2 * t))
+    x = (np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)) * 0.5 + rng.normal(0, 0.4, n)) * np.exp(-t * 3.5)
+    x = onepole(x, np.full(n, 0.35))
+    return np.stack([x, x], 1)
+
+
+def sadtrombone():
+    notes = [(233, 0.45), (220, 0.45), (208, 0.45), (196, 1.2)]
+    out = []
+    for f, d in notes:
+        n = int(d * SR); t = np.arange(n) / SR
+        fm = f * (1 + 0.012 * np.sin(2 * np.pi * 6 * t) * np.clip(t * 4, 0, 1))
+        if f == 196:
+            fm = fm * (1 - 0.06 * t / d)
+        ph = 2 * np.pi * np.cumsum(fm) / SR
+        w = sum(np.sin(h * ph) / h for h in range(1, 9))
+        w = onepole(w, np.full(n, 0.12 + 0.1 * np.sin(np.pi * np.minimum(t / d, 1))))
+        out.append(w * np.minimum(1, t * 30) * np.exp(-t * 0.8) * 0.8)
+        out.append(np.zeros(int(0.04 * SR)))
+    x = np.concatenate(out)
+    return np.stack([x, x], 1)
+
+
+def airhorn():
+    n = int(1.3 * SR); t = np.arange(n) / SR
+    gate = ((t % 0.42) < 0.30).astype(float) * (t < 1.26)
+    f = 520 + 8 * np.sin(2 * np.pi * 18 * t)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    w = sum(np.sin(h * ph) / (h ** 0.7) for h in range(1, 12))
+    x = np.tanh(w * 0.9) * onepole(gate, np.full(n, 0.01))
+    return np.stack([x, x], 1)
+
+
+def slip():
+    n = int(1.0 * SR); t = np.arange(n) / SR
+    f = 1800 * np.exp(-t * 3.2) + 200
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 2.2) * (t < 0.62)
+    th = int(0.66 * SR); m = n - th; tt = np.arange(m) / SR
+    x[th:] += (np.sin(2 * np.pi * 70 * tt) * np.exp(-tt * 14) + onepole(rng.normal(0, 1, m), np.full(m, 0.06)) * np.exp(-tt * 25)) * 1.4
+    return np.stack([x, x], 1)
+
+
+def dundun():
+    n = int(1.9 * SR); x = np.zeros(n)
+    for start, f in [(0.0, 82.4), (0.62, 61.7)]:
+        s0 = int(start * SR); m = n - s0; t = np.arange(m) / SR
+        h = np.sin(2 * np.pi * f * t) + 0.5 * np.sin(2 * np.pi * f * 2 * t) + 0.25 * np.sin(2 * np.pi * f * 3 * t)
+        x[s0:] += np.tanh(h * 1.6) * np.exp(-t * 3.2)
+    return np.stack([x, x], 1)
+
+
+def bassdrop():
+    """Deep 808-style drop with a short riser before it (original 'sigma moment' sound)."""
+    n = int(2.2 * SR); t = np.arange(n) / SR
+    rise_len = int(0.5 * SR)
+    f = 200 + 1200 * (t[:rise_len] / 0.5) ** 2
+    riser = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.linspace(0, 0.6, rise_len)
+    x = np.zeros(n); x[:rise_len] += riser
+    s0 = rise_len + int(0.08 * SR); m = n - s0; tt = np.arange(m) / SR
+    fd = 46 + 90 * np.exp(-tt * 14)
+    d = np.tanh(np.sin(2 * np.pi * np.cumsum(fd) / SR) * 2.6) * np.exp(-tt * 1.7)
+    x[s0:] += d + onepole(rng.normal(0, 1, m), np.full(m, 0.1)) * np.exp(-tt * 30) * 0.8
+    return np.stack([x, x], 1)
+
+
+def bonk():
+    n = int(0.5 * SR); t = np.arange(n) / SR
+    x = (np.sin(2 * np.pi * 330 * t) + 0.5 * np.sin(2 * np.pi * 740 * t)) * np.exp(-t * 22)
+    x += onepole(rng.normal(0, 1, n), np.full(n, 0.3)) * np.exp(-t * 90) * 0.6
+    return np.stack([x, x], 1)
+
+
 def save(x, path, lufs=-18, reverb=False):
     x = x / max(1e-9, np.max(np.abs(x))) * 0.8
     with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
@@ -99,6 +180,9 @@ def main() -> None:
     save(pop(), out / "pop.wav")
     save(boom(), out / "boom.wav", lufs=-14)
     save(ding(), out / "ding.wav", reverb=True)
+    for name, fn in [("boing", boing), ("scratch", scratch), ("sadtrombone", sadtrombone), ("airhorn", airhorn),
+                     ("slip", slip), ("dundun", dundun), ("bassdrop", bassdrop), ("bonk", bonk)]:
+        save(fn(), out / f"{name}.wav", lufs=-16)
     print("saved sfx to", out)
 
 
