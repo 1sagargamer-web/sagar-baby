@@ -64,3 +64,8 @@ skills are already committed in `.agents/skills/` (reinstall with `npx skills ad
   HyperFrames `check`, `snapshot`, and `render --quality looks --fps 30 -o ../../Export/<name>-v1.mp4`.
 - Sagar's lines: cloned voice by default; a real recording (`"audio"` in script.json) replaces it.
   `"keep_audio": true` reuses an already generated line instead of re-generating it.
+
+## Daily automation
+Read `DAILY_RUNBOOK.md` for the two daily scheduled runs (7:30 and 11:30 IST). YouTube upload tools:
+`scripts/yt_trends.py`, `scripts/make_thumb.py`, `scripts/yt_upload.py`. The YouTube login key lives only in the
+PRIVATE repo `sagar-private` (`secrets/youtube.json`). This repo is PUBLIC: never put recordings or keys here.
