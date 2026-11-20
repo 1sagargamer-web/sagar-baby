@@ -1,0 +1,12 @@
+{
+  "title": "Ep 06 - Reel ka nasha",
+  "allow_clone": true, "allow_ai_bhagwan": true,
+  "gap": 0.3,
+  "lines": [
+    {"who":"sagar","hi":"प्रभु, मैं सिर्फ़ पाँच मिनट रील देखने बैठा था।","caption":"Prabhu, main sirf paanch minute reel dekhne baitha tha.","face":{"eyes":"open","brows":"sad","mouth":"closed","pose":"pray"}},
+    {"who":"krishna","hi":"फिर क्या हुआ वत्स?","caption":"Phir kya hua Vatsa?","face":{"eyes":"open"},"sagar_face":{"eyes":"open","brows":"sad","mouth":"closed"},"pause_before":0.4},
+    {"who":"sagar","hi":"फिर सुबह के चार बज गए, प्रभु! ये रील नहीं, माया है!","caption":"Phir subah ke chaar baj gaye, Prabhu! Ye reel nahi, maya hai!","face":{"eyes":"open","brows":"sad","mouth":"closed","pose":"thumb","sweat":true}},
+    {"who":"krishna","hi":"हाँ वत्स, और इस माया का नेक्स्ट बटन तुम्हारे हाथ में है।","caption":"Haan Vatsa, aur is maya ka 'next' button tumhare haath mein hai.","face":{"eyes":"half"},"punch":true},
+    {"who":"sagar","hi":"प्रभु, इतना सच मत बोलिए!","caption":"PRABHU, ITNA SACH MAT BOLIYE!","face":{"eyes":"shock","brows":"sad","mouth":"o","sweat":true},"shake":true}
+  ]
+}
