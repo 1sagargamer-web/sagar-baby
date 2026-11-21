@@ -45,8 +45,9 @@ unless something is blocked.
    next slot at least 30 min ahead, never past 22:00). IST = UTC + 5:30, so 13:30 IST = 08:00Z and 20:00 IST = 14:30Z.
 7. Verify: the print-out shows `privacyStatus` and `publishAt`. Later (the next morning run) check with
    `videos.list?part=status&id=...` whether the videos actually became public at the slot. Write the result in
-   `daily/log.md`. **While the API project is un-audited, YouTube may keep them private: then tell Sagar in one line
-   to select both in YouTube Studio and make them Public.** When they do go public by themselves, stop telling Sagar.
+   `daily/log.md`. **Verified on 21 Nov 2026: a video uploaded with --publish-at DID become public by itself at its slot (Ep07), so no
+   audit and no manual Public step is needed.** Only if a check ever shows a past slot still private, tell Sagar in one
+   line to set it Public in YouTube Studio.
 8. Instagram package (Instagram cannot be automated: the Facebook account is closed): send both videos with
    `SendUserFile` and, for each, an Instagram caption (Hinglish, hook first line, 1 to 2 emojis, 8 to 12 hashtags),
    the best time (about 13:00 and 20:30 IST, 12 to 2 PM and 7 to 10 PM windows) and "Instagram app > + > Reel >
