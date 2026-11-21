@@ -79,3 +79,8 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of Sagar's lines.
 3. `python3 scripts/make_reel.py projects/<name>/script.json`
 4. Check, snapshot, render to `Export/<name>-v1.mp4` (see CLAUDE.md).
+
+## YouTube titles (Sagar's rule, 21 Nov 2026)
+Short titles, chosen by comparing the most-viewed recent Shorts in the niche (see DAILY_RUNBOOK.md step 5 and
+`scripts/yt_title_research.py`): visible title <= 35 chars / <= 6 words, topic keyword first, 1 to 2 emojis, then
+3 to 4 hashtags starting with #shorts. Never long sentences.

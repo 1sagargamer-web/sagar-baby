@@ -30,9 +30,16 @@ unless something is blocked.
    loudness (about -14 LUFS), check duration. Fix problems before going on. If a line is unclear after conversion, try
    other seeds / use the AI voice for that line.
 4. Thumbnail: `scripts/make_thumb.py` (two short punchy lines, 2 to 3 words each). LOOK at it. Fix marks.
-5. YouTube metadata (research, not guesses): look at the titles and tags of the trending list from Run 1 and decide
-   Hinglish vs English vs emoji style from what actually trends. Title <= 100 chars incl. `#shorts`. Description:
-   2 to 3 Hinglish lines + "Made By Sagar Mishra" + 5 to 8 hashtags. Tags: 8 to 12, relevant, honest.
+5. YouTube metadata, from DATA (Sagar's rule: titles must be SHORT and compared with what works):
+   run `python3 scripts/yt_title_research.py "<topic keywords>" "krishna comedy shorts hindi"` and compare the
+   most-viewed recent Shorts in this niche. Finding on 21 Nov 2026 (60 Shorts): top-20 visible title (text before the
+   first #) has a median of 32 chars / 6 words; videos with a visible title <= 35 chars averaged 38M views vs 22M for
+   > 45 chars; 85% use emoji (median 2); median 4 to 5 hashtags, 87% have `#shorts`; Hindi (Devanagari) vs Roman
+   showed no clear winner (n is small), so use Roman/Hinglish with the topic keyword in the title.
+   RULE: visible title <= 35 chars (<= 6 words), the topic keyword first (e.g. "GTA 6", "Maggi"), 1 to 2 emojis,
+   then 3 to 4 hashtags starting with `#shorts` (e.g. `#shorts #comedy #krishna`). Never a long sentence.
+   Description: 2 to 3 Hinglish lines + "Made By Sagar Mishra" + 5 to 8 hashtags. Tags: 8 to 12, relevant, honest.
+   Re-run the research each day, because what works changes. State the numbers you found in the chat message.
 6. Upload: `python3 scripts/yt_upload.py --video ... --meta meta.json --thumb thumb.jpg --publish-at <UTC ISO>
    [--synthetic]`. Slots (IST): video A at **13:30**, video B at **20:00** the same day (if a video is late, use the
    next slot at least 30 min ahead, never past 22:00). IST = UTC + 5:30, so 13:30 IST = 08:00Z and 20:00 IST = 14:30Z.
