@@ -78,3 +78,8 @@ Sagar ends either sad (tears) or happy/mast, never a flat line. If Sagar recorde
 No buildings, city, room or beach. Use Krishna's world only: `vrindavan` (kadamba trees, flowers), `gokul` (huts, cow,
 makhan matke), `yamuna` (river ghat, diyas), `govardhan` (mountain), `temple` (old mandir), `park`. They rotate
 automatically (scripts/scenes.py KRISHNA_ORDER); pick the one that fits the story and never repeat yesterday's.
+
+How to write the laugh line in script.json (works with the current builder, no code needed):
+`{"who":"sagar","hi":"हा हा हा हा हा हा!","caption":"😂😂😂","exaggeration":0.9,"face":{"eyes":"closed","mouth":"closed","brows":"normal"}}`
+(a sad ending: `"face":{"eyes":"closed","brows":"sad","tears":true}` with the laugh being Bhagwan's `{"who":"krishna","hi":"हे हे हे हा हा हा!","exaggeration":0.7}`).
+Prefer Sagar's own recorded laugh if it exists. Say in the chat which laugh was used.
