@@ -83,3 +83,11 @@ How to write the laugh line in script.json (works with the current builder, no c
 `{"who":"sagar","hi":"हा हा हा हा हा हा!","caption":"😂😂😂","exaggeration":0.9,"face":{"eyes":"closed","mouth":"closed","brows":"normal"}}`
 (a sad ending: `"face":{"eyes":"closed","brows":"sad","tears":true}` with the laugh being Bhagwan's `{"who":"krishna","hi":"हे हे हे हा हा हा!","exaggeration":0.7}`).
 Prefer Sagar's own recorded laugh if it exists. Say in the chat which laugh was used.
+
+## FIXED laughs (Sagar chose them on 22 Nov 2026): always use these two, do not regenerate
+- Sagar's laugh: `voices/sagar-laugh.wav` (private, copied from sagar-private by the setup script).
+  Line: `{"who":"sagar","hi":"हा हा हा","caption":"😂😂😂","audio":"voices/sagar-laugh.wav","face":{"eyes":"closed","brows":"normal","mouth":"closed"}}`
+- Bhagwan's laugh: `sfx/laugh-bhagwan.wav` (synthetic voice, public repo).
+  Line: `{"who":"krishna","hi":"हे हे हा हा","caption":"😂","audio":"sfx/laugh-bhagwan.wav","vc":false,"face":{"eyes":"closed"}}`
+Choose per story: after Bhagwan's punchline either Sagar laughs (or ends sad with tears: use `"face"` tears and no laugh)
+or Bhagwan laughs at Sagar's last line. A laugh line replaces the long final reaction line.
