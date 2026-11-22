@@ -5,7 +5,7 @@
   "lines": [
     {
       "who": "sagar",
-      "hi": "प्रभु, संडे की रात है... और कल सोमवार आ रहा है!",
+      "hi": "प्रभु, संडे की रात है... और कल मंडे आ रहा है!",
       "caption": "Prabhu, Sunday ki raat hai... aur kal Monday aa raha hai!",
       "face": {
         "eyes": "open",
@@ -13,7 +13,9 @@
         "mouth": "closed",
         "pose": "pray",
         "sweat": true
-      }
+      },
+      "keep_audio": false,
+      "exaggeration": 0.5
     },
     {
       "who": "krishna",
@@ -27,11 +29,12 @@
         "brows": "sad",
         "mouth": "closed"
       },
-      "pause_before": 0.4
+      "pause_before": 0.4,
+      "keep_audio": true
     },
     {
       "who": "sagar",
-      "hi": "प्रभु, बस एक सोमवार कैंसल कर दो न!",
+      "hi": "प्रभु, बस एक मंडे कैंसल कर दो न!",
       "caption": "Prabhu, bas ek Monday cancel kar do na!",
       "face": {
         "eyes": "closed",
@@ -39,7 +42,8 @@
         "mouth": "sad",
         "pose": "pray",
         "tears": true
-      }
+      },
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -48,7 +52,8 @@
       "face": {
         "eyes": "wink"
       },
-      "punch": true
+      "punch": true,
+      "keep_audio": true
     },
     {
       "who": "sagar",
@@ -60,7 +65,8 @@
         "mouth": "o",
         "sweat": true
       },
-      "shake": true
+      "shake": true,
+      "keep_audio": true
     }
   ],
   "allow_clone": true,

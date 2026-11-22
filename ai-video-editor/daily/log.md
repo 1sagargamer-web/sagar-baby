@@ -24,3 +24,8 @@ Already made (do not repeat these topics):
 - Run 1 done (7:28 IST). Trends: Tulsi Vivah/Dev Uthani (shaadi season starts), GTA 6 still big, Hindi comedy shorts.
 - Video A: Ep09 "Save the date" (trend: shaadi season, scene temple, heart eyes)
 - Video B: Ep10 "Sunday raat ka darr" (evergreen, scene night, tears + wink)
+- Run 2 done (11:33 IST, 22 Nov). No recordings arrived: clone + AI Bhagwan (marked synthetic). Fixed: "सोमवार" mispronounced by clone, so Hindi text uses "मंडे"; line 1 of Ep10 had stray babble, regenerated with exaggeration 0.5.
+- Ep09 Save the Date: YouTube id j_3i8ul9phQ, "Shaadi Season: Save the Date 😭 #shorts #comedy #krishna #shaadi", slot 13:30 IST (08:00Z), scene temple, 22.6 s
+- Ep10 Sunday night ka dard: YouTube id uxZJnQ0tJ68, "Sunday Night ka Dard 😭 #shorts #comedy #krishna #monday", slot 20:00 IST (14:30Z), scene night, 21.9 s
+- Title research numbers today: shaadi/family comedy top-20 visible title median 36 chars / 7 words, hashtags 5, emoji 2; Sunday/Monday niche has few big videos (0.0M), pattern = short title, 1 emoji, #shorts.
+- Titles of yesterday's videos could not be compared yet (views: Ep07 463, Ep08 82 on the morning of 22 Nov).
