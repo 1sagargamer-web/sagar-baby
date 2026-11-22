@@ -1,0 +1,64 @@
+{
+  "title": "Ep 09 - Save the date shaadi season",
+  "scene": "temple",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, आपके उठते ही शादियों का सीज़न शुरू... पर मेरे पास कोई सेव द डेट नहीं आया!",
+      "caption": "Prabhu, aapke uthte hi shaadiyon ka season shuru... par mere paas koi 'Save the Date' nahi aaya!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, पहले ये बताओ... तुमने किसी का नंबर सेव किया है?",
+      "caption": "Vatsa, pehle ye batao... tumne kisi ka number save kiya hai?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, मम्मी का, पापा का, और पिज़्ज़ा वाले का!",
+      "caption": "Prabhu, Mummy ka, Papa ka, aur pizza wale ka!",
+      "face": {
+        "eyes": "heart",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "तो वत्स, शादी का कार्ड भी उन्हीं तीनों से आएगा।",
+      "caption": "Toh Vatsa, shaadi ka card bhi unhi teeno se aayega.",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, ये तो सीधा दिल पे लगा!",
+      "caption": "PRABHU, YE TOH SEEDHA DIL PE LAGA!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
+      "shake": true
+    }
+  ]
+}
