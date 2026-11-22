@@ -8,12 +8,16 @@ unless something is blocked.
 1. Read `CLAUDE.md`, `Reference/my-style.md`, `daily/log.md` (what was already made, which scenes/sfx were used).
 2. Trends: `python3 scripts/yt_trends.py --n 25`, plus `--category 23` (comedy) and `--category 24`. Use WebSearch
    only as a secondary source (it is US-only and often dated). Write what you found in 3 lines.
-3. Pick 2 topics: **video A = a trend** (festival/season/meme/format that is trending in India right now) and
-   **video B = an evergreen relatable joke**. Use the trend as a *theme* only: never copy a creator's joke, title,
-   audio or characters. Skip anything about a tragedy, politics, real people, or anything that mocks Bhagwan or hurts
-   religious feelings (jokes are on Sagar / the situation; Bhagwan stays witty but respectful).
-   If nothing fits, make something funny and relatable. Do not repeat a topic from `daily/log.md`.
-4. Write `projects/epNN-<slug>/script.json` for both (5 lines each, 14 to 22 s). Make them different from the last
+3. Pick 2 topics. Sagar's feedback (22 Nov 2026): the jokes were NOT funny and NOT relatable. So every script must
+   start from a REAL everyday situation that Indian 18-30 year olds have lived (examples: Mummy ka phone/khana, exam
+   ke last din, wifi ya data khatam, "5 minute aur" neend, salary/paise, crush ka seen, relatives ke sawal, gym kal se,
+   charger 1 percent, delivery late, Maggi/chai, bike petrol, group project). Use today's trend only as a TWIST on
+   that situation, never as the whole idea. Write the pain in specific details (numbers, objects, names like Mummy,
+   Guddu, aunty) and make Bhagwan's punchline a surprising but kind twist that Sagar's audience would repeat.
+   Test each script: "would a friend send this reel with 'bhai ye tu hai'?" If not, rewrite. Do not copy any creator's
+   joke. Skip tragedy, politics, real people, and anything that mocks Bhagwan or hurts religious feelings.
+4. Write `projects/epNN-<slug>/script.json` for both: 4 to 5 lines, 12 to 18 s, short fast lines (about 8 to 10 words
+   each), and END WITH A LAUGH (see below). Make them different from the last
    videos: new `scene`, new expressions (heart/side/wink), and a new funny sfx via `"sfx"` when it fits.
 5. Run `python3 scripts/make_reel.py projects/<ep>/script.json` (it stops with the list of lines to record).
 6. Post in chat: for each video, the topic + why it is trending, and **the exact lines Sagar should record** (Sagar's
@@ -63,3 +67,14 @@ unless something is blocked.
 - Never publish the same video twice; never overwrite an exported version (use v2, v3).
 - If anything fails (tools missing, upload error): fix it if you can, otherwise write it in `daily/log.md` and tell
   Sagar in one clear Hinglish line.
+
+## Ending (Sagar's rule, 22 Nov 2026)
+After Bhagwan's punchline there must be a funny LAUGH, not a long reaction line: the last line is
+`{"who":"sagar","laugh":true,...}` (Sagar laughs, or "sad then laughs") or Krishna laughs `{"who":"krishna","laugh":true}`.
+Sagar ends either sad (tears) or happy/mast, never a flat line. If Sagar recorded his own laugh
+(`Raw/<ep>-laugh.wav`), use it as `"audio"`.
+
+## Backgrounds (Sagar's rule, 22 Nov 2026)
+No buildings, city, room or beach. Use Krishna's world only: `vrindavan` (kadamba trees, flowers), `gokul` (huts, cow,
+makhan matke), `yamuna` (river ghat, diyas), `govardhan` (mountain), `temple` (old mandir), `park`. They rotate
+automatically (scripts/scenes.py KRISHNA_ORDER); pick the one that fits the story and never repeat yesterday's.

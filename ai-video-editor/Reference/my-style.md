@@ -84,3 +84,10 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
 Short titles, chosen by comparing the most-viewed recent Shorts in the niche (see DAILY_RUNBOOK.md step 5 and
 `scripts/yt_title_research.py`): visible title <= 35 chars / <= 6 words, topic keyword first, 1 to 2 emojis, then
 3 to 4 hashtags starting with #shorts. Never long sentences.
+
+## Feedback of 22 Nov 2026 (applies to every future reel)
+1. Jokes must be genuinely funny and relatable (real everyday situations, see DAILY_RUNBOOK.md step 3).
+2. After Bhagwan's punchline, END with a funny laugh (Sagar's or Bhagwan's), not a flat voice line.
+3. Backgrounds from Krishna's world only (vrindavan, gokul, yamuna, govardhan, temple, park). No buildings.
+4. Study the 5 reference reels and the top niche Shorts before writing: skit-style, one clear relatable situation,
+   fast short lines, 10 to 22 s.

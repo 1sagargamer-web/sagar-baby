@@ -93,7 +93,69 @@ THEMES = {
     ),
 }
 
-ORDER = ["park", "temple", "night", "city", "room", "beach"]
+def tree_kadamba(x, scale=1.0):
+    return f"""<g transform="translate({x},0) scale({scale})"><rect x="-26" y="260" width="52" height="330" fill="#6b4423"/>
+<g fill="#2f8f3a"><circle cx="0" cy="200" r="140"/><circle cx="-120" cy="260" r="100"/><circle cx="120" cy="260" r="100"/><circle cx="-40" cy="120" r="90"/><circle cx="70" cy="130" r="80"/></g>
+<g fill="#ffd84d"><circle cx="-70" cy="190" r="12"/><circle cx="40" cy="230" r="12"/><circle cx="100" cy="170" r="12"/><circle cx="-10" cy="150" r="12"/><circle cx="-130" cy="270" r="12"/></g></g>"""
+
+
+THEMES["vrindavan"] = dict(
+    sky="linear-gradient(#8fe0ff 0%, #c9f3d8 55%, #fff6c8 78%)",
+    back="""<svg class="bg-svg" id="clouds" style="top:60px;height:760px" viewBox="0 0 1080 760">
+<g fill="#ffffff" opacity="0.9"><ellipse cx="820" cy="120" rx="120" ry="44"/><ellipse cx="880" cy="96" rx="70" ry="46"/><ellipse cx="200" cy="170" rx="100" ry="38"/></g>"""
+    + tree_kadamba(230, 0.95) + tree_kadamba(900, 0.7) + """</svg>""",
+    mid=hills("#8ed36b", "#62bd55"),
+    front="""<svg class="bg-svg" style="top:1560px;height:360px" viewBox="0 0 1080 360"><rect y="210" width="1080" height="150" fill="#4aa84a"/>
+<g stroke="#2d7a35" stroke-width="5" fill="none"><path d="M60 210 V150 M120 210 V120 M300 210 V140 M700 210 V130 M880 210 V150 M1000 210 V120"/></g>
+<g fill="#ff7eb6"><circle cx="60" cy="146" r="16"/><circle cx="120" cy="116" r="16"/><circle cx="300" cy="136" r="16"/><circle cx="700" cy="126" r="16"/><circle cx="880" cy="146" r="16"/><circle cx="1000" cy="116" r="16"/></g>
+<g fill="#ffffff"><circle cx="60" cy="146" r="6"/><circle cx="120" cy="116" r="6"/><circle cx="700" cy="126" r="6"/><circle cx="1000" cy="116" r="6"/></g></svg>""",
+)
+
+THEMES["gokul"] = dict(
+    sky="linear-gradient(#ffd27a 0%, #ffe9b0 50%, #fff6dc 78%)",
+    back="""<svg class="bg-svg" id="clouds" style="top:120px;height:760px" viewBox="0 0 1080 760">
+<g fill="#fff" opacity="0.8"><ellipse cx="880" cy="90" rx="110" ry="40"/><ellipse cx="170" cy="130" rx="90" ry="34"/></g>
+<g><rect x="60" y="360" width="260" height="190" fill="#d9a46b"/><polygon points="30,360 190,230 350,360" fill="#b9791f"/><rect x="150" y="440" width="80" height="110" fill="#6b4423"/>
+<rect x="640" y="380" width="300" height="170" fill="#d9a46b"/><polygon points="610,380 790,250 970,380" fill="#c98a2e"/><rect x="760" y="450" width="70" height="100" fill="#6b4423"/></g></svg>""",
+    mid="""<svg class="bg-svg" style="top:1200px;height:720px" viewBox="0 0 1080 720"><rect width="1080" height="720" fill="#d8b27a"/>
+<path d="M0 0 C300 40 700 40 1080 0 V80 H0Z" fill="#c9a164"/>
+<g fill="#ffffff" stroke="#3b2a1a" stroke-width="5"><ellipse cx="520" cy="190" rx="95" ry="48"/><circle cx="440" cy="168" r="30"/><rect x="450" y="215" width="14" height="50"/><rect x="590" y="215" width="14" height="50"/></g>
+<g fill="#3b2a1a"><circle cx="470" cy="190" r="14"/><circle cx="560" cy="170" r="12"/><circle cx="430" cy="160" r="4"/></g></svg>""",
+    front="""<svg class="bg-svg" style="top:1560px;height:360px" viewBox="0 0 1080 360"><rect y="200" width="1080" height="160" fill="#c49a5e"/>
+<g stroke="#5a3a1a" stroke-width="6"><path d="M70 90 C10 120 10 200 70 230 C130 200 130 120 70 90Z" fill="#c8572b"/><path d="M990 90 C930 120 930 200 990 230 C1050 200 1050 120 990 90Z" fill="#c8572b"/></g>
+<g fill="#fff4cf"><ellipse cx="70" cy="100" rx="42" ry="14"/><ellipse cx="990" cy="100" rx="42" ry="14"/></g></svg>""",
+)
+
+THEMES["yamuna"] = dict(
+    sky="linear-gradient(#ff9d6b 0%, #ffcf94 48%, #fff0c8 74%)",
+    back="""<svg class="bg-svg" id="clouds" style="top:100px;height:760px" viewBox="0 0 1080 760">
+<circle cx="540" cy="360" r="130" fill="#fff3c4" opacity="0.9"/>
+<g fill="#ffb577" opacity="0.8"><ellipse cx="200" cy="130" rx="120" ry="34"/><ellipse cx="860" cy="200" rx="130" ry="36"/></g>"""
+    + tree_kadamba(120, 0.8) + tree_kadamba(980, 0.75).replace("#2f8f3a", "#2a7a36") + """</svg>""",
+    mid="""<svg class="bg-svg" style="top:1130px;height:790px" viewBox="0 0 1080 790"><rect width="1080" height="330" fill="#2f9bd6"/>
+<path d="M0 40 Q90 10 180 40 T360 40 T540 40 T720 40 T900 40 T1080 40 V90 H0Z" fill="#6ccbf2"/>
+<path d="M0 150 Q120 120 240 150 T480 150 T720 150 T960 150 T1200 150 V200 H0Z" fill="#59b9e8" opacity="0.8"/>
+<path d="M0 320 H1080 V790 H0Z" fill="#c9a06a"/><path d="M0 320 H1080 V350 H0Z" fill="#a98150"/></svg>""",
+    front="""<svg class="bg-svg" style="top:1530px;height:390px" viewBox="0 0 1080 390"><rect y="210" width="1080" height="180" fill="#b88b58"/>
+<g fill="#d8a96d" stroke="#8a5f2e" stroke-width="4"><rect x="0" y="150" width="1080" height="60"/><rect x="0" y="210" width="1080" height="40"/></g>
+<g fill="#ffb02e"><ellipse cx="120" cy="140" rx="44" ry="20"/><ellipse cx="540" cy="140" rx="44" ry="20"/><ellipse cx="960" cy="140" rx="44" ry="20"/></g>
+<g fill="#ffe27a"><path d="M120 122 C100 94 120 74 120 54 C140 74 140 94 120 122Z"/><path d="M540 122 C520 94 540 74 540 54 C560 74 560 94 540 122Z"/><path d="M960 122 C940 94 960 74 960 54 C980 74 980 94 960 122Z"/></g></svg>""",
+)
+
+THEMES["govardhan"] = dict(
+    sky="linear-gradient(#5cc6ff 0%, #a9e6ff 56%, #e3f7ff 76%)",
+    back="""<svg class="bg-svg" id="clouds" style="top:80px;height:820px" viewBox="0 0 1080 820">
+<g fill="#fff" opacity="0.95"><ellipse cx="190" cy="110" rx="120" ry="44"/><ellipse cx="880" cy="190" rx="130" ry="46"/><ellipse cx="940" cy="160" rx="80" ry="48"/></g>
+<path d="M-40 640 C120 420 300 300 540 250 C780 300 960 440 1120 640 Z" fill="#7a8f57"/>
+<path d="M120 640 C260 480 420 400 560 380 C720 410 860 500 980 640 Z" fill="#5f7a3f"/>
+<g fill="#2f6b34"><circle cx="330" cy="470" r="34"/><circle cx="420" cy="430" r="30"/><circle cx="660" cy="420" r="32"/><circle cx="760" cy="470" r="36"/><circle cx="540" cy="380" r="28"/></g></svg>""",
+    mid=hills("#84cc62", "#5eb74f"),
+    front=bushes("#3fa34a", "#2a7a35"),
+)
+
+KRISHNA_ORDER = ["vrindavan", "gokul", "yamuna", "govardhan", "temple", "park"]
+
+ORDER = KRISHNA_ORDER
 
 
 def pick(name, title):
