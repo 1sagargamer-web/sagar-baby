@@ -147,7 +147,8 @@ object Engine {
         val m = message.lowercase()
         return listOf(
             "empty media response", "login required", "rate-limit", "rate limit",
-            "--cookies", "log in", "not available",
+            "--cookies", "log in", "not available", "isn't available", "available to everyone",
+            "certain audiences", "restricted",
         ).any { it in m }
     }
 
