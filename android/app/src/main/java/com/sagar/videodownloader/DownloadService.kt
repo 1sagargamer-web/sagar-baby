@@ -119,7 +119,20 @@ class DownloadService : Service() {
                         break
                     } catch (e: YoutubeDL.CanceledException) {
                         throw e
+                    } catch (e: CancellationException) {
+                        throw e
                     } catch (e: Exception) {
+                        // Instagram ne yt-dlp ko roka? Phone ke asli browser engine se koshish
+                        if (Engine.isInstagram(url) && Engine.looksBlocked(e.message.orEmpty())) {
+                            try {
+                                title = browserDownload(url, tempDir, id)
+                                break
+                            } catch (w: CancellationException) {
+                                throw w
+                            } catch (w: Exception) {
+                                throw UserError(Engine.instagramBlockedMessage(e.message.orEmpty(), w.message ?: w.javaClass.simpleName))
+                            }
+                        }
                         // Site ne kuch badla? Engine update karke ek baar dobara try
                         if (retried || !Engine.looksOutdated(e.message.orEmpty())) throw e
                         retried = true
@@ -153,7 +166,7 @@ class DownloadService : Service() {
             } catch (e: CancellationException) {
                 DownloadState.flow.value = Dl.Cancelled(url)
             } catch (e: Exception) {
-                val msg = Engine.cleanError(e)
+                val msg = if (e is UserError) e.message.orEmpty() else Engine.cleanError(e)
                 DownloadState.flow.value = Dl.Failed(url, msg)
                 notifySimple(NOTIF_RESULT, "❌ Download nahi hua", msg, null)
             } finally {
@@ -164,6 +177,43 @@ class DownloadService : Service() {
                 stopSelf()
             }
         }
+    }
+
+    /** Browser engine se video ka link nikaalo aur download karo. File ka title return karta hai. */
+    private suspend fun browserDownload(url: String, tempDir: File, id: String): String {
+        DownloadState.flow.value = Dl.Running(url, "", 0, true, "Browser se koshish kar rahe…", "", 0)
+        notifyProgress("Video", "Browser se koshish kar rahe…", 0, true, 0, force = true)
+
+        val media = WebExtract.instagram(this, url)
+        val safe = media.title.replace(Regex("[\\\\/:*?\"<>|\\r\\n]"), "_").take(100).trim()
+            .ifBlank { "Instagram video" }
+
+        // Video ki photo (na aaye to koi baat nahi)
+        media.thumbUrl?.let { t ->
+            try {
+                val dest = File(cacheDir, "thumbs/$id.jpg")
+                WebExtract.download(this, t, dest) { _, _, _ -> }
+                DownloadState.thumb.value = dest.absolutePath
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+            }
+        }
+
+        val out = File(tempDir, "$safe.mp4")
+        WebExtract.download(this, media.videoUrl, out) { done, total, bps ->
+            val p = if (total > 0) (done * 100 / total).toInt().coerceIn(0, 99) else 0
+            val eta = if (total > 0 && bps > 0) (total - done) / bps else 0L
+            val speed = if (bps > 0) "%.1f MB/s".format(bps / 1048576.0) else ""
+            DownloadState.flow.value = Dl.Running(url, safe, p, total <= 0, "Download ho raha hai…", speed, eta)
+            val text = buildString {
+                append(if (total > 0) "$p%" else "Download ho raha hai…")
+                if (speed.isNotBlank()) append("  •  ⚡ $speed")
+                if (eta > 0) append("  •  ⏱ ${fmt(eta)} bache")
+            }
+            notifyProgress(safe, text, p, total <= 0, eta)
+        }
+        return safe
     }
 
     private fun onProgress(url: String, title: String, progress: Float, eta: Long, line: String) {

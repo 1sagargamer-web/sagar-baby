@@ -140,6 +140,26 @@ object Engine {
         ).any { it in m }
     }
 
+    fun isInstagram(url: String) = url.contains("instagram.com", ignoreCase = true)
+
+    /** Instagram ne yt-dlp ko rok diya (login / rate-limit / khaali jawab) */
+    fun looksBlocked(message: String): Boolean {
+        val m = message.lowercase()
+        return listOf(
+            "empty media response", "login required", "rate-limit", "rate limit",
+            "--cookies", "log in", "not available",
+        ).any { it in m }
+    }
+
+    fun instagramBlockedMessage(ytdlp: String, browser: String): String {
+        val short = ytdlp.lines().firstOrNull { it.isNotBlank() }.orEmpty()
+            .replace("ERROR: ", "").trim().take(140)
+        return "📵 Instagram ne abhi ye video dene se mana kar diya.\n\n" +
+            "• Ye link phone ke browser (private tab) me kholke dekho. Wahan bhi login maange to ye post bina login nahi milegi.\n" +
+            "• Wahan chal jaye to thodi der baad, ya Wi-Fi ↔ mobile data badal ke dobara try karo.\n\n" +
+            "Detail: $short\nBrowser: $browser"
+    }
+
     fun cleanError(e: Throwable): String {
         val msg = e.message ?: return "Kuch gadbad ho gayi."
         val errLine = msg.lines().lastOrNull { it.contains("ERROR") } ?: msg.lines().firstOrNull() ?: msg
@@ -155,3 +175,6 @@ object Engine {
         }
     }
 }
+
+/** Aisa error jiska message seedha user ko dikhana hai (cleanError se nahi guzarna) */
+class UserError(message: String) : Exception(message)
