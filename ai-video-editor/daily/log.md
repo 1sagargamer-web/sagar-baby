@@ -29,3 +29,9 @@ Already made (do not repeat these topics):
 - Ep10 Sunday night ka dard: YouTube id uxZJnQ0tJ68, "Sunday Night ka Dard 😭 #shorts #comedy #krishna #monday", slot 20:00 IST (14:30Z), scene night, 21.9 s
 - Title research numbers today: shaadi/family comedy top-20 visible title median 36 chars / 7 words, hashtags 5, emoji 2; Sunday/Monday niche has few big videos (0.0M), pattern = short title, 1 emoji, #shorts.
 - Titles of yesterday's videos could not be compared yet (views: Ep07 463, Ep08 82 on the morning of 22 Nov).
+
+## 2026-11-23 (Mon)
+- Performance on 23 Nov morning (views/likes): Ep08 Maggi moksh 1133/10, Ep10 Sunday night 661/15, Ep07 GTA 6 572/2, Ep09 Save the Date 423/1. Relatable everyday situations beat trend topics (small numbers, but matches Sagar's feedback). All four became public by themselves at their slots.
+- Run 1 done (7:28 IST), first run with the new rules (relatable story, laugh ending, Krishna-world scenes, 12 to 18 s).
+- Video A: Ep11 "Mummy ki chappal" (relatable, scene gokul, Maiya/okhli twist, Sagar's laugh at the end)
+- Video B: Ep12 "Paper ke baad roll number yaad" (relatable, scene govardhan, Geeta twist, Bhagwan laughs at the end)

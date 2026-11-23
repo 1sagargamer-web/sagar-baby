@@ -1,0 +1,65 @@
+{
+  "title": "Ep 11 - Mummy ki chappal",
+  "scene": "gokul",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, मम्मी ने आज फिर चप्पल उठा ली!",
+      "caption": "Prabhu, Mummy ne aaj phir chappal utha li!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "क्या किया था वत्स?",
+      "caption": "Kya kiya tha Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "बस इतना बोला... मैं अब बड़ा हो गया हूँ!",
+      "caption": "Bas itna bola... main ab bada ho gaya hoon!",
+      "face": {
+        "eyes": "side",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, मुझे मैया ने ओखली से बाँधा था... तुम्हें तो सिर्फ़ चप्पल मिली!",
+      "caption": "Vatsa, mujhe Maiya ne okhli se baandha tha... tumhe toh sirf chappal mili!",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "हा हा हा!",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "audio": "voices/sagar-laugh.wav",
+      "laugh": true
+    }
+  ]
+}
