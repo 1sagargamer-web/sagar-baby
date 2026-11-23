@@ -35,3 +35,7 @@ Already made (do not repeat these topics):
 - Run 1 done (7:28 IST), first run with the new rules (relatable story, laugh ending, Krishna-world scenes, 12 to 18 s).
 - Video A: Ep11 "Mummy ki chappal" (relatable, scene gokul, Maiya/okhli twist, Sagar's laugh at the end)
 - Video B: Ep12 "Paper ke baad roll number yaad" (relatable, scene govardhan, Geeta twist, Bhagwan laughs at the end)
+- Run 2 done (11:33 IST, 23 Nov). No recordings arrived: clone + AI Bhagwan (synthetic label), fixed laughs used (Sagar's in Ep11, Bhagwan's in Ep12). Fixed: Ep12 line 3 clone dropped "रोल नंबर" -> regenerated (exaggeration 0.5). Fixed: Govardhan mountain floated above the hills -> widened and joined to the ground in scripts/scenes.py.
+- Ep11 Mummy ki chappal: YouTube id voWzeEx8dd4, "Mummy ki Chappal 😱😭 #shorts #funny #maa #krishna", slot 13:30 IST (08:00Z), scene gokul, 13.8 s
+- Ep12 Paper ke baad roll number: YouTube id f9Y3rIFsmv8, "Paper ke Baad Roll Number 😭 #shorts #funny #exam #krishna", slot 20:00 IST (14:30Z), scene govardhan, 15.2 s
+- Title research numbers today: mummy/chappal top-20 visible title median 38 chars / 8 words, hashtags 2, emoji 1 (e.g. "Are meri chappal 😱😭"); exam/paper top-20 median 34 chars / 6 words, hashtags 5, emoji 2 (e.g. "Students in Exam Hall 📝").

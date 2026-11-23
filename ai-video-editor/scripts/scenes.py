@@ -144,10 +144,10 @@ THEMES["yamuna"] = dict(
 
 THEMES["govardhan"] = dict(
     sky="linear-gradient(#5cc6ff 0%, #a9e6ff 56%, #e3f7ff 76%)",
-    back="""<svg class="bg-svg" id="clouds" style="top:80px;height:820px" viewBox="0 0 1080 820">
+    back="""<svg class="bg-svg" id="clouds" style="top:80px;height:1250px" viewBox="0 0 1080 1250">
 <g fill="#fff" opacity="0.95"><ellipse cx="190" cy="110" rx="120" ry="44"/><ellipse cx="880" cy="190" rx="130" ry="46"/><ellipse cx="940" cy="160" rx="80" ry="48"/></g>
-<path d="M-40 640 C120 420 300 300 540 250 C780 300 960 440 1120 640 Z" fill="#7a8f57"/>
-<path d="M120 640 C260 480 420 400 560 380 C720 410 860 500 980 640 Z" fill="#5f7a3f"/>
+<path d="M-300 1250 L-300 820 C0 480 300 300 540 250 C780 300 1080 480 1380 820 L1380 1250 Z" fill="#7a8f57"/>
+<path d="M-100 1250 L-100 920 C200 640 420 420 560 390 C720 420 900 640 1180 920 L1180 1250 Z" fill="#5f7a3f"/>
 <g fill="#2f6b34"><circle cx="330" cy="470" r="34"/><circle cx="420" cy="430" r="30"/><circle cx="660" cy="420" r="32"/><circle cx="760" cy="470" r="36"/><circle cx="540" cy="380" r="28"/></g></svg>""",
     mid=hills("#84cc62", "#5eb74f"),
     front=bushes("#3fa34a", "#2a7a35"),

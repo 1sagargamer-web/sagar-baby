@@ -13,7 +13,8 @@
         "mouth": "closed",
         "pose": "pray",
         "sweat": true
-      }
+      },
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -27,18 +28,21 @@
         "brows": "sad",
         "mouth": "closed"
       },
-      "pause_before": 0.3
+      "pause_before": 0.3,
+      "keep_audio": true
     },
     {
       "who": "sagar",
-      "hi": "प्रभु... बस रोल नंबर!",
+      "hi": "प्रभु, बस रोल नंबर याद रहा!",
       "caption": "Prabhu... bas roll number!",
       "face": {
         "eyes": "closed",
         "brows": "sad",
         "mouth": "sad",
         "tears": true
-      }
+      },
+      "exaggeration": 0.5,
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -47,7 +51,8 @@
       "face": {
         "eyes": "half"
       },
-      "punch": true
+      "punch": true,
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -64,7 +69,8 @@
         "brows": "sad",
         "mouth": "sad",
         "tears": true
-      }
+      },
+      "keep_audio": true
     }
   ],
   "allow_clone": true,
