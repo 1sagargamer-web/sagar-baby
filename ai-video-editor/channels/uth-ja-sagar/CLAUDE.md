@@ -51,6 +51,13 @@ change, add a new option or a new file instead.
 7. Send the video, list every change. Commit + push (no recordings, photos, voices or exports in git).
 8. Say plainly what was only measured, not heard or seen (music quality, voice naturalness).
 
+## Daily automation (set up 2026-11-24)
+Read `DAILY_RUNBOOK.md` in this folder. Roz 2 videos, public at 19:00 and 21:30 IST (13:30Z, 16:00Z); research 08:30,
+build + upload 12:10 (recording cutoff). Upload with `--channel uth-ja-sagar` on every `yt_*.py` command: the login lives
+only in `sagar-private/secrets/youtube-uth-ja-sagar.json` (the first channel's `youtube.json` is never touched; no flag =
+first channel). Same Google project as the first channel: max 6 uploads/day in total. Instagram: package sent in chat.
+Status: YouTube channel + login + scheduled tasks are set up only after Sagar creates the channel (see `daily/log.md`).
+
 ## Setup in a fresh container (models and venvs are not in git)
 - Environment **"sagar-baby"** (Hugging Face allowed). Whisper: see the first channel's `CLAUDE.md`.
 - `pip3 install soundfile faster-whisper` (system Python).
