@@ -45,3 +45,8 @@ Already made (do not repeat these topics):
 - Run 1 done (7:28 IST). Trends: Avengers Doomsday trailer, Panchayat S5 trailer, GTA 6, Tulsi Vivah; winter starting.
 - Video A: Ep13 "Sardi mein razai" (relatable, scene yamuna, Sagar-manthan pun on Sagar's name, Bhagwan laughs)
 - Video B: Ep14 "Fridge baar baar" (relatable, scene vrindavan, makhan-chori twist, Sagar laughs)
+- Run 2 done (11:33 IST, 24 Nov). No recordings arrived: clone + AI Bhagwan (synthetic label); fixed laughs used (Bhagwan's in Ep13, Sagar's in Ep14). Voice clarity 94 to 99 %.
+- Ep13 Sardi mein razai: YouTube id YcPAIUED2iQ, "Sardi mein Razai se Nikalna 🥶😭 #shorts #funny #krishna", slot 13:30 IST (08:00Z), scene yamuna, 18.5 s. Thumbnail frame chosen at 80 % (earlier frames showed a tree trunk block behind the text).
+- Ep14 Fridge baar baar: YouTube id 3ZshxLTi_rg, "Fridge Baar Baar Kholna 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene vrindavan, 17.6 s.
+- Title research numbers: winter/razai niche top-20 visible title median 53 chars (weak data, mostly tiny videos); fridge niche median 58 chars but nearly all under 1M views. Kept our titles at about 40 chars, 1 to 2 emoji, 3 hashtags (shorter titles did better in the 21 Nov analysis).
+- Note for the next run: thumbnails with a tree at the top-left can show a brown block behind the text; check the frame at 0.5/0.8 and look at it before uploading.
