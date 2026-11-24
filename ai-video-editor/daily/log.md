@@ -39,3 +39,9 @@ Already made (do not repeat these topics):
 - Ep11 Mummy ki chappal: YouTube id voWzeEx8dd4, "Mummy ki Chappal 😱😭 #shorts #funny #maa #krishna", slot 13:30 IST (08:00Z), scene gokul, 13.8 s
 - Ep12 Paper ke baad roll number: YouTube id f9Y3rIFsmv8, "Paper ke Baad Roll Number 😭 #shorts #funny #exam #krishna", slot 20:00 IST (14:30Z), scene govardhan, 15.2 s
 - Title research numbers today: mummy/chappal top-20 visible title median 38 chars / 8 words, hashtags 2, emoji 1 (e.g. "Are meri chappal 😱😭"); exam/paper top-20 median 34 chars / 6 words, hashtags 5, emoji 2 (e.g. "Students in Exam Hall 📝").
+
+## 2026-11-24 (Tue)
+- Performance morning of 24 Nov (views/likes): Ep10 Sunday night 1383/28, Ep08 Maggi 1142/10, Ep07 GTA 588/2, Ep09 Save the Date 567/2, Ep11 Mummy chappal 336/1 (posted 13:30 IST yesterday), Ep12 Roll number 138/2 (posted 20:00 IST yesterday, only ~11 h old). All six public by themselves.
+- Run 1 done (7:28 IST). Trends: Avengers Doomsday trailer, Panchayat S5 trailer, GTA 6, Tulsi Vivah; winter starting.
+- Video A: Ep13 "Sardi mein razai" (relatable, scene yamuna, Sagar-manthan pun on Sagar's name, Bhagwan laughs)
+- Video B: Ep14 "Fridge baar baar" (relatable, scene vrindavan, makhan-chori twist, Sagar laughs)

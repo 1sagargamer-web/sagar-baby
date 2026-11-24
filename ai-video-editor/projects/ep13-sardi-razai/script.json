@@ -1,0 +1,70 @@
+{
+  "title": "Ep 13 - Sardi mein razai",
+  "scene": "yamuna",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, सर्दी में रज़ाई से निकलना सबसे बड़ी तपस्या है!",
+      "caption": "Prabhu, sardi mein razai se nikalna sabse badi tapasya hai!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "pose": "pray",
+        "tears": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, तो रोज़ क्या करते हो?",
+      "caption": "Vatsa, toh roz kya karte ho?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, पहले दस मिनट रज़ाई में नहाने की प्लानिंग!",
+      "caption": "Prabhu, pehle das minute razai mein nahane ki planning!",
+      "face": {
+        "eyes": "side",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, सागर मंथन से अमृत निकल आया... पर तुम्हारा सागर रज़ाई से नहीं निकला!",
+      "caption": "Vatsa, Sagar manthan se amrit nikal aaya... par tumhara Sagar razai se nahi nikla!",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false,
+      "laugh": true,
+      "sagar_face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      }
+    }
+  ]
+}
