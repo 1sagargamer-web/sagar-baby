@@ -1,0 +1,67 @@
+{
+  "title": "Ep 08 - Mahine ka end maggi moksh",
+  "scene": "city",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, महीने की बीस तारीख हो गई, और अकाउंट में बस बीस रुपये हैं!",
+      "caption": "Prabhu, mahine ki bees tareekh ho gayi, aur account mein bas bees rupaye hain!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, सैलरी आने में कितने दिन बाकी हैं?",
+      "caption": "Vatsa, salary aane mein kitne din baaki hain?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4
+    },
+    {
+      "who": "sagar",
+      "hi": "दस दिन, प्रभु! पर मैगी का स्टॉक पूरा है!",
+      "caption": "Das din, Prabhu! Par Maggi ka stock poora hai!",
+      "face": {
+        "eyes": "heart",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "तो ये दस दिन मैगी मोक्ष समझो वत्स... तपस्या भी हो जाएगी।",
+      "caption": "Toh ye das din 'Maggi moksh' samjho Vatsa... tapasya bhi ho jaayegi.",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, तपस्या में कम से कम पनीर तो डलवा दो!",
+      "caption": "PRABHU, TAPASYA MEIN KAM SE KAM PANEER TOH DALWA DO!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
+      "shake": true
+    }
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
+}

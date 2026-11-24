@@ -1,0 +1,71 @@
+{
+  "title": "Ep 07 - GTA 6 cheat code",
+  "scene": "room",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, जीटीए सिक्स के सारे मिशन पूरे कर लिए... पर असली ज़िंदगी में लेवल अप नहीं हो रहा!",
+      "caption": "Prabhu, GTA 6 mein maine saare mission poore kar liye... par asli zindagi mein level up nahi ho raha!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray"
+      },
+      "keep_audio": false
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, गेम में तो हर मिशन पूरा करते हो... असली मिशन कब शुरू करोगे?",
+      "caption": "Vatsa, game mein toh har mission poora karte ho... asli mission kab shuru karoge?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4,
+      "keep_audio": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, असली मिशन का चीट कोड बता दो!",
+      "caption": "Prabhu, asli mission ka cheat code bata do!",
+      "face": {
+        "eyes": "side",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      },
+      "keep_audio": true
+    },
+    {
+      "who": "krishna",
+      "hi": "चीट कोड है वत्स... सुबह जल्दी उठो, और फ़ोन रख दो।",
+      "caption": "Cheat code hai Vatsa... subah jaldi utho, aur phone rakh do.",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true,
+      "keep_audio": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, ये तो सबसे मुश्किल लेवल है!",
+      "caption": "PRABHU, YE TOH SABSE MUSHKIL LEVEL HAI!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
+      "shake": true,
+      "keep_audio": true
+    }
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
+}

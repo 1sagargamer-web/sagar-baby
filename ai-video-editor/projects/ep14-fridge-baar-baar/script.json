@@ -1,0 +1,67 @@
+{
+  "title": "Ep 14 - Fridge baar baar",
+  "scene": "vrindavan",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, फ्रिज खोला, कुछ नहीं था... दो मिनट बाद फिर खोल दिया!",
+      "caption": "Prabhu, fridge khola, kuch nahi tha... do minute baad phir khol diya!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "इस बार क्या मिला वत्स?",
+      "caption": "Is baar kya mila Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु... वही ठंडी रोशनी और मेरी उम्मीद!",
+      "caption": "Prabhu... wahi thandi roshni aur meri ummeed!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, मैंने मैया का माखन चुराया था... तुम तो सिर्फ़ फ्रिज की रोशनी चुरा रहे हो!",
+      "caption": "Vatsa, maine Maiya ka makhan churaya tha... tum toh sirf fridge ki roshni chura rahe ho!",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "हा हा हा!",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "audio": "voices/sagar-laugh.wav",
+      "laugh": true
+    }
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
+}

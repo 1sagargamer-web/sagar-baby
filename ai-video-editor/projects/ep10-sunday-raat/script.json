@@ -1,0 +1,74 @@
+{
+  "title": "Ep 10 - Sunday raat ka darr",
+  "scene": "night",
+  "gap": 0.3,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, संडे की रात है... और कल मंडे आ रहा है!",
+      "caption": "Prabhu, Sunday ki raat hai... aur kal Monday aa raha hai!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      },
+      "keep_audio": false,
+      "exaggeration": 0.5
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, सोमवार तो हर हफ़्ते आता है।",
+      "caption": "Vatsa, Monday toh har hafte aata hai.",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.4,
+      "keep_audio": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, बस एक मंडे कैंसल कर दो न!",
+      "caption": "Prabhu, bas ek Monday cancel kar do na!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "pose": "pray",
+        "tears": true
+      },
+      "keep_audio": true
+    },
+    {
+      "who": "krishna",
+      "hi": "कैंसल नहीं होगा वत्स... स्नूज़ दबा लो। वो भी तुम्हारी तरह रोज़ पाँच मिनट और माँगता है।",
+      "caption": "Cancel nahi hoga Vatsa... snooze daba lo. Woh bhi tumhari tarah roz paanch minute aur maangta hai.",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true,
+      "keep_audio": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, अलार्म से भी तुलना?!",
+      "caption": "PRABHU, ALARM SE BHI TULNA?!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      },
+      "shake": true,
+      "keep_audio": true
+    }
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
+}

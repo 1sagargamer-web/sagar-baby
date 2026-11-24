@@ -56,12 +56,38 @@ Learned from 5 reference reels (`Reference/ref-1.mp4` ... `ref-5.mp4`, 10-22 s e
   Change the text with `"watermark": "..."` in script.json.
 
 ## Sagar's recordings
+- **Sagar may change words while recording (Sagar's own wording). Always transcribe the chosen take and update that
+  line's `hi` and `caption` in script.json to what Sagar actually said.** Tell Sagar which lines changed.
 - Sagar often says each line 2+ times. Run `python3 scripts/pick_takes.py Raw/<file> "<hi text>" Raw/<reel>-sagar-<n>.wav`:
   it splits the takes, scores them (Whisper confidence, completeness, clipping), saves the best de-clipped, and
   prints the scores to report to Sagar.
+
+## Variety in every video (Sagar's rule: never repeat the same look and sounds)
+- **Background**: a different theme each reel: park, temple, night, city, room, beach (`"scene": "..."` in
+  script.json, otherwise rotated by title). Pick the one that fits the story (temple for aashirwad, night for
+  late-night reels, room for phone/bed jokes, city for shaadi/office, beach for holiday). Do not use the same
+  theme as the previous reel. Add new themes in `scripts/scenes.py` when a topic needs one.
+- **Funny sound effects**, different per reel (`scripts/make_sfx.py`): scratch, boing, dundun, bonk, airhorn on
+  the punchline; bassdrop ("sigma moment" vibe, original), boom, slip, sad trombone on the shock. Picked from the
+  title, or choose by hand with `"sfx": [{"name": "bassdrop", "at": 0.1}]`. Never copy a real meme audio.
+- **Expressions**: Sagar eyes `heart`, `side` (suspicious), Krishna eyes `wink`, plus the existing ones. Use a
+  fresh expression whenever the joke allows. **Keep improving**: every new reel should add or improve something
+  (a new expression, effect, background, camera move) instead of repeating the last one.
 
 ## How to make a new reel
 1. Write `projects/<name>/script.json` (see `projects/demo-result/script.json`).
 2. Put Sagar's recordings in `Raw/` and set `"audio"` on each of Sagar's lines.
 3. `python3 scripts/make_reel.py projects/<name>/script.json`
 4. Check, snapshot, render to `Export/<name>-v1.mp4` (see CLAUDE.md).
+
+## YouTube titles (Sagar's rule, 21 Nov 2026)
+Short titles, chosen by comparing the most-viewed recent Shorts in the niche (see DAILY_RUNBOOK.md step 5 and
+`scripts/yt_title_research.py`): visible title <= 35 chars / <= 6 words, topic keyword first, 1 to 2 emojis, then
+3 to 4 hashtags starting with #shorts. Never long sentences.
+
+## Feedback of 22 Nov 2026 (applies to every future reel)
+1. Jokes must be genuinely funny and relatable (real everyday situations, see DAILY_RUNBOOK.md step 3).
+2. After Bhagwan's punchline, END with a funny laugh (Sagar's or Bhagwan's), not a flat voice line.
+3. Backgrounds from Krishna's world only (vrindavan, gokul, yamuna, govardhan, temple, park). No buildings.
+4. Study the 5 reference reels and the top niche Shorts before writing: skit-style, one clear relatable situation,
+   fast short lines, 10 to 22 s.

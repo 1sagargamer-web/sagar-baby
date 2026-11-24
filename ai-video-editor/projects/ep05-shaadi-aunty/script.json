@@ -1,0 +1,12 @@
+{
+  "title": "Ep 05 - Shaadi season aunty",
+  "allow_clone": true, "allow_ai_bhagwan": true,
+  "gap": 0.3,
+  "lines": [
+    {"who":"sagar","hi":"प्रभु, शादी का सीज़न है... हर आंटी एक ही सवाल पूछ रही है।","caption":"Prabhu, shaadi ka season hai... har aunty ek hi sawaal puchh rahi hai.","face":{"eyes":"open","brows":"sad","mouth":"closed","pose":"pray","sweat":true}},
+    {"who":"krishna","hi":"कौन सा सवाल वत्स?","caption":"Kaun sa sawaal Vatsa?","face":{"eyes":"open"},"sagar_face":{"eyes":"open","brows":"sad","mouth":"closed"},"pause_before":0.4},
+    {"who":"sagar","hi":"बेटा, शादी कब कर रहे हो? प्रभु, आप ही बता दो, मैं क्या बोलूँ?","caption":"'Beta, shaadi kab kar rahe ho?' Prabhu, aap hi bata do, main kya bolun?","face":{"eyes":"open","brows":"sad","mouth":"closed","pose":"thumb"}},
+    {"who":"krishna","hi":"बोल देना, आंटी, आपके घर का रिश्ता ही भेज दो... और खाना खा के भाग जाना।","caption":"Bol dena, 'Aunty, aapke ghar ka rishta hi bhej do'... aur khaana kha ke bhaag jaana.","face":{"eyes":"half"},"punch":true},
+    {"who":"sagar","hi":"प्रभु, मुझे बचाइए!","caption":"PRABHU, MUJHE BACHAIYE!","face":{"eyes":"shock","brows":"sad","mouth":"o","sweat":true},"shake":true}
+  ]
+}

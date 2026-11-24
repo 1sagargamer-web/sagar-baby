@@ -124,6 +124,11 @@
       <path d="M378 426 Q348 440 316 424" />
       <path d="M232 432 L228 440 M246 436 L244 444 M368 432 L372 440 M354 436 L356 444" stroke-width="2.5" />
     </g>
+    <g id="kr-eyes-wink" opacity="0">
+      <path d="M222 428 Q250 404 282 424 Q252 440 222 428 Z" fill="#fbf7f2" /><circle cx="252" cy="424" r="11" fill="#2a1a3a" /><circle cx="252" cy="424" r="5" fill="#0d0814" /><circle cx="256" cy="420" r="3.2" fill="#ffffff" />
+      <path d="M218 428 Q250 400 286 424" fill="none" stroke="#0f0b1c" stroke-width="5" />
+      <path d="M322 428 Q348 446 378 428" fill="none" stroke="#0f0b1c" stroke-width="6" stroke-linecap="round" />
+    </g>
     <!-- nose -->
     <path d="M290 426 C288 448 282 462 284 470" fill="none" stroke="#3a67b3" stroke-width="3" opacity="0.8" />
     <ellipse cx="304" cy="456" rx="5" ry="10" fill="#ffffff" opacity="0.2" />

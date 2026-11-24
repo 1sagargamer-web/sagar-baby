@@ -1,0 +1,78 @@
+{
+  "title": "Ep 12 - Paper ke baad yaad aaya",
+  "scene": "govardhan",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, पेपर का जवाब बाहर आते ही याद आ गया!",
+      "caption": "Prabhu, paper ka jawab bahar aate hi yaad aa gaya!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      },
+      "keep_audio": true
+    },
+    {
+      "who": "krishna",
+      "hi": "तो अंदर क्या याद था वत्स?",
+      "caption": "Toh andar kya yaad tha Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3,
+      "keep_audio": true
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, बस रोल नंबर याद रहा!",
+      "caption": "Prabhu... bas roll number!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      },
+      "exaggeration": 0.5,
+      "keep_audio": true
+    },
+    {
+      "who": "krishna",
+      "hi": "मैंने गीता का ज्ञान दिया... और तुम्हें रोल नंबर ही याद रहा!",
+      "caption": "Maine Geeta ka gyaan diya... aur tumhe roll number hi yaad raha!",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true,
+      "keep_audio": true
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false,
+      "laugh": true,
+      "sagar_face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      },
+      "keep_audio": true
+    }
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
+}
