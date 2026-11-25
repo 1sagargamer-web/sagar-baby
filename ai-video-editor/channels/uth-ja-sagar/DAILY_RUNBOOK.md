@@ -19,7 +19,7 @@ First channel runs at 07:30 and 11:30: keep at least 20 minutes between runs (th
    trend only as a twist. Test every script: "kya koi ise bhejke bolega: bhai ye meri baat hai?" If not, rewrite.
    Skip politics, real people, religion-bashing, medical or money-making promises.
 4. Write `projects/epNN-<slug>/script.json` for both, **following the script rules in `Reference/my-style.md`**:
-   question hook in the viewer's own thoughts -> story -> `seekh` line -> emotional comment + follow ending
+   question hook in the viewer's own thoughts with SUSPENSE (answer only at the end, one teaser in the middle) -> story -> `seekh` line -> emotional comment + follow ending
    (`"cta": true`). 35-45 s, 9-13 lines. Different pictures, music seed and scenes from yesterday.
 5. Run `python3 scripts/make_story.py channels/uth-ja-sagar/projects/<ep>/script.json` (makes the pictures, then stops
    with the list of lines to record).
@@ -36,7 +36,7 @@ First channel runs at 07:30 and 11:30: keep at least 20 minutes between runs (th
 3. Build, then in the project folder `check` and `snapshot` (LOOK at the frames), `render --quality looks --fps 30`,
    `python3 scripts/make_story.py --finish ...` (-14 LUFS), check duration (35-45 s) and loudness.
    Never `git add -A` while rendering (HyperFrames writes `work-*/`).
-4. Thumbnail: `python3 scripts/make_thumb_story.py <best picture from projects/<ep>/assets/images> thumb.jpg "WORD" "WORD"` (2 short words). LOOK at it. Phone verified on 2026-11-25 (thumbnail upload tested OK). If it ever says `forbidden`, skip `--thumb` and tell Sagar in one line.
+4. Thumbnail: `python3 scripts/make_thumb_story.py <best picture from projects/<ep>/assets/images> thumb.jpg "WORD" "WORD"` (question/cliffhanger, 2 lines, see "Thumbnail" in `Reference/my-style.md`; the most shocking picture). LOOK at it. Phone verified on 2026-11-25 (thumbnail upload tested OK). If it ever says `forbidden`, skip `--thumb` and tell Sagar in one line.
 5. YouTube metadata from DATA: `python3 scripts/yt_title_research.py --channel uth-ja-sagar "<topic> motivation hindi" "motivational shorts hindi"`.
    Rule: visible title <= 35 characters (<= 6 words), topic keyword first, 1-2 emoji, then 3-4 hashtags starting with
    `#shorts` (e.g. `#shorts #motivation #life`). Description: 2-3 Hinglish lines + "Made By Sagar Mishra" + 5-8

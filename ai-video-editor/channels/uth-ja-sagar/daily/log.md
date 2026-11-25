@@ -18,3 +18,5 @@ Already made (do not repeat these topics):
 
 ## 2026-11-25 (later)
 - Sagar changed the public times to 08:00 and 18:00 IST. Run 2 (12:10) uploads B for today 18:00 and A for tomorrow 08:00. First 08:00 video: 2026-11-27 (first Run 2 is 2026-11-26).
+
+- Channel settings set via API (2026-11-25): description, keywords, country IN, language hi, banner (assets/brand/banner.jpg). Profile picture cannot be set by API: Sagar sets assets/brand/avatar.jpg by hand. Rules added: suspense hook + question thumbnail (my-style.md).

@@ -59,6 +59,22 @@ exact lines.
      Use `"cta": true` on these last 1-2 lines.
 - Never copy a reference's exact story or lines.
 
+## What we make, and what keeps people watching (Sagar, 2026-11-25)
+- Type: **story-based motivation Shorts** (35-45 s): one real, relatable situation told as a small story with AI-drawn
+  pictures, Sagar's voice, Hindi captions, piano. Not lectures, not quotes.
+- **Suspense (open loop) from line 1 to the end:** the hook is a question and it promises an answer that comes only at the
+  END ("Is kahani ke aakhri 10 second mein ek baat hai jo tumhari soch badal degi..."). Never give the answer, the twist
+  or the lesson early. Drop one small teaser in the middle ("par asli baat abhi baaki hai...") so people stay.
+- Goal: viewers watch to the very end, then comment and follow (emotional ending, `"cta": true`).
+
+## Thumbnail (every video; made by `scripts/make_thumb_story.py`)
+- It must make people click: **a question or a cliffhanger, 2 lines, 2-3 words each, in big yellow + white outlined
+  letters** ("5 SAAL BAAD" / "KYA HUA?", "SABSE BADI GALTI" / "KAUN SI?"). Never a label like "Motivation".
+- Use the picture with the strongest emotion or surprise (the shocking/biggest moment), clear subject, high contrast,
+  no real face. Never reveal the answer in the thumbnail.
+- Note: in the Shorts feed the video just plays, so the FIRST 2 SECONDS of the video are the real hook; the thumbnail
+  is shown on the channel page, in search and in suggestions. Do both well.
+
 ## Voice (narrator = Sagar, always Sagar's voice)
 - With every script, send Sagar the list of lines to record, with how to say each one (calm, emotional, pause at "...").
   Ask Sagar to say each line 2 times. Pick the best take with `scripts/pick_takes.py` and report the scores.
