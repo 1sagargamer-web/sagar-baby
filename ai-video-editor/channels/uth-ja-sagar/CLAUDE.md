@@ -56,7 +56,7 @@ Read `DAILY_RUNBOOK.md` in this folder. Roz 2 videos, public at 19:00 and 21:30 
 build + upload 12:10 (recording cutoff). Upload with `--channel uth-ja-sagar` on every `yt_*.py` command: the login lives
 only in `sagar-private/secrets/youtube-uth-ja-sagar.json` (the first channel's `youtube.json` is never touched; no flag =
 first channel). Same Google project as the first channel: max 6 uploads/day in total. Instagram: package sent in chat.
-Status: YouTube channel + login + scheduled tasks are set up only after Sagar creates the channel (see `daily/log.md`).
+Status (2026-11-25): channel @uthjasagar created, login done, private test upload worked, scheduled tasks running (08:30 and 12:10 IST). Custom thumbnails need phone verification (youtube.com/verify). Thumbnail script: `scripts/make_thumb_story.py`.
 
 ## Setup in a fresh container (models and venvs are not in git)
 - Environment **"sagar-baby"** (Hugging Face allowed). Whisper: see the first channel's `CLAUDE.md`.
