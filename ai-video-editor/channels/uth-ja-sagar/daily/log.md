@@ -14,3 +14,4 @@ Already made (do not repeat these topics):
 - Custom thumbnail: 403 forbidden (channel not phone-verified yet). Sagar must verify at youtube.com/verify. scripts/make_thumb_story.py ready.
 - API did not echo containsSyntheticMedia (same as the first channel): check the label once in YouTube Studio.
 - Scheduled tasks created: Run 1 daily 08:30 IST (trig_01UUPAtWhoKXKv9oHu51ZtC5), Run 2 daily 12:10 IST (trig_01VDwNc8tpmaTnbVD1ddD7Kq). First channel runs at 07:27 and 11:33 (gap >= 37 min).
+- Phone verified by Sagar; custom thumbnail upload tested OK on ffV5lAgZKME (50 units).
