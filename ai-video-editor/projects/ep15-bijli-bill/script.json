@@ -1,0 +1,65 @@
+{
+  "title": "Ep 15 - Bijli ka bill",
+  "scene": "gokul",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, बिजली का बिल देखा... चक्कर आ गया!",
+      "caption": "Prabhu, bijli ka bill dekha... chakkar aa gaya!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "pose": "none",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "कितना आया वत्स?",
+      "caption": "Kitna aaya Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु... मेरा तो बस एक पंखा चलता है!",
+      "caption": "Prabhu... mera toh bas ek pankha chalta hai!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, मैंने गोकुल में माखन के लिए दीपक जलाया... बिल तुम्हारा बड़ा, मेरा नहीं आया!",
+      "caption": "Vatsa, maine Gokul mein diya jalaya... bill tumhara bada, mera nahi aaya!",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "हा हा हा!",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "audio": "voices/sagar-laugh.wav",
+      "laugh": true
+    }
+  ]
+}

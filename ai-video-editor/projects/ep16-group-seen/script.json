@@ -1,0 +1,70 @@
+{
+  "title": "Ep 16 - Group mein sab",
+  "scene": "vrindavan",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, ग्रुप में सबने मेरा मैसेज देखा... पर कोई रिप्लाई नहीं!",
+      "caption": "Prabhu, group mein sabne mera message dekha... par koi reply nahi!",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "pose": "pray",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "क्या लिखा था वत्स?",
+      "caption": "Kya likha tha Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "बस इतना कि... कोई पार्टी कर रहा है क्या?",
+      "caption": "Bas itna ki... koi party kar raha hai kya?",
+      "face": {
+        "eyes": "side",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, मैंने तो सुदामा से सब बाँटा था... तुम मुफ़्त की पार्टी ढूँढ रहे हो!",
+      "caption": "Vatsa, maine toh Sudama se sab baanta tha... tum muft ki party dhoondh rahe ho!",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false,
+      "laugh": true,
+      "sagar_face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      }
+    }
+  ]
+}

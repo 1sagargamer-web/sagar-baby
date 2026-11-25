@@ -50,3 +50,9 @@ Already made (do not repeat these topics):
 - Ep14 Fridge baar baar: YouTube id 3ZshxLTi_rg, "Fridge Baar Baar Kholna 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene vrindavan, 17.6 s.
 - Title research numbers: winter/razai niche top-20 visible title median 53 chars (weak data, mostly tiny videos); fridge niche median 58 chars but nearly all under 1M views. Kept our titles at about 40 chars, 1 to 2 emoji, 3 hashtags (shorter titles did better in the 21 Nov analysis).
 - Note for the next run: thumbnails with a tree at the top-left can show a brown block behind the text; check the frame at 0.5/0.8 and look at it before uploading.
+
+## 2026-11-25 (Wed)
+- Performance morning of 25 Nov (views/likes): Ep10 Sunday night 1514/28, Ep08 Maggi 1145/10, Ep12 Roll number 1117/12, Ep11 Mummy chappal 974/7, Ep09 Save the Date 581/3, Ep07 GTA 587/2, Ep14 Fridge 369/6 (12 h old), Ep13 Razai 340/1. All eight public by themselves. Exam/Mummy (shared school-home situations) beat seasonal/trend ones.
+- Run 1 done (7:28 IST). Trends: Avengers Doomsday trailer, Panchayat S5 trailer, GTA 6, Tulsi Vivah, chess world championship.
+- Video A: Ep15 "Bijli ka bill" (relatable, scene gokul, Sagar laughs)
+- Video B: Ep16 "Group mein sabne seen kiya" (relatable, scene vrindavan, Sudama twist, Bhagwan laughs)
