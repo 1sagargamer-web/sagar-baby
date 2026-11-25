@@ -56,3 +56,8 @@ Already made (do not repeat these topics):
 - Run 1 done (7:28 IST). Trends: Avengers Doomsday trailer, Panchayat S5 trailer, GTA 6, Tulsi Vivah, chess world championship.
 - Video A: Ep15 "Bijli ka bill" (relatable, scene gokul, Sagar laughs)
 - Video B: Ep16 "Group mein sabne seen kiya" (relatable, scene vrindavan, Sudama twist, Bhagwan laughs)
+- Run 2 done (11:33 IST, 25 Nov). No recordings arrived: clone + AI Bhagwan (synthetic label), fixed laughs (Sagar's in Ep15, Bhagwan's in Ep16). Fixed stray words in Ep15 line 1 ("काय थी") and Ep16 line 3 ("चाहिए", 6 s) by regenerating at exaggeration 0.5; both videos shrank to about 16 s.
+- Ep15 Bijli ka bill: YouTube id ie-6Cw2J_zs, "Bijli ka Bill 😱 #shorts #funny #comedy #krishna", slot 13:30 IST (08:00Z), scene gokul, 16.2 s
+- Ep16 Group mein seen no reply: YouTube id KTMfnD1q-Qw, "Group mein Seen, No Reply 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene vrindavan, 16.1 s
+- Title research numbers: bijli-bill niche top titles are very short (e.g. "Ac ka bill" 10 chars 0.5M, "Tension nhi leni" 19 chars 0.3M), top-20 median 46 chars; group-chat niche has little data (8 videos). Kept ours at 30 to 40 chars.
+- Thumbnail lessons added to DAILY_RUNBOOK.md (no emoji in thumbnail text, choose frame with both characters and no brown block).

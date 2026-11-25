@@ -13,7 +13,8 @@
         "mouth": "closed",
         "pose": "pray",
         "sweat": true
-      }
+      },
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -27,7 +28,8 @@
         "brows": "sad",
         "mouth": "closed"
       },
-      "pause_before": 0.3
+      "pause_before": 0.3,
+      "keep_audio": true
     },
     {
       "who": "sagar",
@@ -38,7 +40,9 @@
         "brows": "normal",
         "mouth": "smirk",
         "pose": "thumb"
-      }
+      },
+      "exaggeration": 0.5,
+      "keep_audio": false
     },
     {
       "who": "krishna",
@@ -47,7 +51,8 @@
       "face": {
         "eyes": "half"
       },
-      "punch": true
+      "punch": true,
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -64,7 +69,8 @@
         "brows": "sad",
         "mouth": "sad",
         "tears": true
-      }
+      },
+      "keep_audio": true
     }
   ],
   "allow_clone": true,

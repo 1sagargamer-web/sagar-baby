@@ -13,7 +13,9 @@
         "mouth": "o",
         "pose": "none",
         "sweat": true
-      }
+      },
+      "exaggeration": 0.5,
+      "keep_audio": false
     },
     {
       "who": "krishna",
@@ -27,7 +29,8 @@
         "brows": "sad",
         "mouth": "closed"
       },
-      "pause_before": 0.3
+      "pause_before": 0.3,
+      "keep_audio": true
     },
     {
       "who": "sagar",
@@ -38,7 +41,8 @@
         "brows": "sad",
         "mouth": "sad",
         "tears": true
-      }
+      },
+      "keep_audio": true
     },
     {
       "who": "krishna",
@@ -47,7 +51,8 @@
       "face": {
         "eyes": "wink"
       },
-      "punch": true
+      "punch": true,
+      "keep_audio": true
     },
     {
       "who": "sagar",
@@ -59,7 +64,8 @@
         "mouth": "closed"
       },
       "audio": "voices/sagar-laugh.wav",
-      "laugh": true
+      "laugh": true,
+      "keep_audio": true
     }
   ],
   "allow_clone": true,

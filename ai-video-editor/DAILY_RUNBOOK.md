@@ -91,3 +91,8 @@ Prefer Sagar's own recorded laugh if it exists. Say in the chat which laugh was 
   Line: `{"who":"krishna","hi":"हे हे हा हा","caption":"😂","audio":"sfx/laugh-bhagwan.wav","vc":false,"face":{"eyes":"closed"}}`
 Choose per story: after Bhagwan's punchline either Sagar laughs (or ends sad with tears: use `"face"` tears and no laugh)
 or Bhagwan laughs at Sagar's last line. A laugh line replaces the long final reaction line.
+
+## Thumbnail lessons (learned 24 and 25 Nov 2026)
+- Do NOT put emoji in the thumbnail text (the font draws them as odd boxes). Words only.
+- Make 2 to 3 options with different `--at` (0.3, 0.5, 0.8), LOOK at them, and pick one where both characters are visible
+  and no tree trunk / hut roof / brown block sits behind the text. A frame before Bhagwan appears (about 0.06) is bad.
