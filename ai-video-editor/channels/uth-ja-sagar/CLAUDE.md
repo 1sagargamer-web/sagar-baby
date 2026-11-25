@@ -52,7 +52,7 @@ change, add a new option or a new file instead.
 8. Say plainly what was only measured, not heard or seen (music quality, voice naturalness).
 
 ## Daily automation (set up 2026-11-24)
-Read `DAILY_RUNBOOK.md` in this folder. Roz 2 videos, public at 19:00 and 21:30 IST (13:30Z, 16:00Z); research 08:30,
+Read `DAILY_RUNBOOK.md` in this folder. Roz 2 videos, public at 08:00 and 18:00 IST (02:30Z, 12:30Z; Run 2 uploads tomorrow's 08:00 video together with today's 18:00 one); research 08:30,
 build + upload 12:10 (recording cutoff). Upload with `--channel uth-ja-sagar` on every `yt_*.py` command: the login lives
 only in `sagar-private/secrets/youtube-uth-ja-sagar.json` (the first channel's `youtube.json` is never touched; no flag =
 first channel). Same Google project as the first channel: max 6 uploads/day in total. Instagram: package sent in chat.

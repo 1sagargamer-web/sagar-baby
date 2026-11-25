@@ -15,3 +15,6 @@ Already made (do not repeat these topics):
 - API did not echo containsSyntheticMedia (same as the first channel): check the label once in YouTube Studio.
 - Scheduled tasks created: Run 1 daily 08:30 IST (trig_01UUPAtWhoKXKv9oHu51ZtC5), Run 2 daily 12:10 IST (trig_01VDwNc8tpmaTnbVD1ddD7Kq). First channel runs at 07:27 and 11:33 (gap >= 37 min).
 - Phone verified by Sagar; custom thumbnail upload tested OK on ffV5lAgZKME (50 units).
+
+## 2026-11-25 (later)
+- Sagar changed the public times to 08:00 and 18:00 IST. Run 2 (12:10) uploads B for today 18:00 and A for tomorrow 08:00. First 08:00 video: 2026-11-27 (first Run 2 is 2026-11-26).

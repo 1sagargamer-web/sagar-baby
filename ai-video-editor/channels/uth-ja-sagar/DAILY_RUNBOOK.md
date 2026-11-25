@@ -4,8 +4,10 @@ Talk to Sagar in simple Hinglish. Read `CLAUDE.md` and `Reference/my-style.md` o
 separate from @Sagarkekrishna (`ai-video-editor/DAILY_RUNBOOK.md`): never touch that channel's files, schedule or login.
 Run from `ai-video-editor/`. Do not ask Sagar questions unless something is blocked.
 
-**Times (IST), chosen by Sagar:** Run 1 research + scripts **08:30**; Run 2 build + upload **12:10** (recording cutoff =
-12:10); videos go public at **19:00** (video A) and **21:30** (video B). 19:00 IST = 13:30Z, 21:30 IST = 16:00Z.
+**Times (IST), chosen by Sagar (changed 2026-11-25):** Run 1 research + scripts **08:30**; Run 2 build + upload **12:10**
+(recording cutoff = 12:10). Videos go public at **18:00** and at **08:00**. 18:00 IST = 12:30Z, 08:00 IST = 02:30Z.
+The 08:00 slot is always before Run 2, so Run 2 uploads **video B for today 18:00 (12:30Z)** and **video A for TOMORROW
+08:00 (02:30Z of the next day)**. Both are uploaded at 12:10.
 First channel runs at 07:30 and 11:30: keep at least 20 minutes between runs (they share one chat/container).
 
 ## Run 1: 08:30 research + scripts
@@ -40,10 +42,10 @@ First channel runs at 07:30 and 11:30: keep at least 20 minutes between runs (th
    `#shorts` (e.g. `#shorts #motivation #life`). Description: 2-3 Hinglish lines + "Made By Sagar Mishra" + 5-8
    hashtags. Tags 8-12. State the numbers you found.
 6. Upload: `python3 scripts/yt_upload.py --channel uth-ja-sagar --video channels/uth-ja-sagar/Export/<ep>-v1.mp4 --meta meta.json --thumb thumb.jpg --publish-at <UTC> [--synthetic]`
-   (A: 13:30Z, B: 16:00Z same day; if late, next slot at least 30 min ahead, never past 23:00 IST).
+   (B: today 12:30Z; A: tomorrow 02:30Z. If Run 2 is late and 18:00 is less than 30 min ahead, move B to 08:00 tomorrow and A to 18:00 tomorrow; never schedule in the past).
 7. Verify: privacyStatus + publishAt in the print-out; next morning check `videos.list?part=status` that it became public.
 8. Instagram package (not automatic): both videos via `SendUserFile`, each with a Hinglish caption (hook first line,
-   1-2 emoji, 8-12 hashtags), best time (about 18:30 and 21:00 IST) and "Instagram app > + > Reel > Schedule".
+   1-2 emoji, 8-12 hashtags), best time (about 08:30 and 18:30 IST) and "Instagram app > + > Reel > Schedule".
 9. Append to `channels/uth-ja-sagar/daily/log.md`; commit and push (never recordings, photos, voices, tokens).
 10. Final chat message (short Hinglish): what was made, when it goes live, what Sagar must do (only if needed).
 
