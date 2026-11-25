@@ -61,5 +61,7 @@
       "audio": "voices/sagar-laugh.wav",
       "laugh": true
     }
-  ]
+  ],
+  "allow_clone": true,
+  "allow_ai_bhagwan": true
 }
