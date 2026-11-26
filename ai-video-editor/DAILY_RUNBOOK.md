@@ -113,3 +113,14 @@ or Bhagwan laughs at Sagar's last line. A laugh line replaces the long final rea
   clips belong to other people and may cause a Content ID claim; if a claim ever appears, switch to the original ending
   (zoom + airhorn + big laugh text).
 - Builder features still TO ADD in scripts/make_reel.py: fixed top caption, tick-list overlay, situation scenes, sleep pose, meme-clip ending.
+
+
+## QUEUE RULE (Sagar, 26 Nov 2026, overrides the "4 to 5 videos" line above)
+- **Exactly 2 videos per day**, no matter how many reference reels Sagar sends. Extra reels wait in a QUEUE for the next days.
+- Keep the queue in `daily/queue.md` (one line per reference reel: file name, format F1..Fn, status `waiting` / `done <date>`; the reel file
+  itself is kept in `Reference/` locally and its name/time in the log). Oldest first.
+- Run 1 each morning: add newly arrived reels to the queue, take the **2 oldest waiting reels**, recreate them as today's 2 videos.
+- In the Run 1 chat message and the final Run 2 message, always say: "**Queue mein X reels bachi hain** (kitne din chalengi: X/2)".
+- If the queue is empty (fewer than 2 reels), make the missing video(s) yourself as original relatable videos and say clearly in Hinglish:
+  "Aaj aapki reel nahi thi, isliye maine khud banayi." Also tell Sagar when the queue is running low (2 days left or fewer).
+- A reel Sagar sent is never skipped or dropped; it stays queued until used.
