@@ -91,3 +91,12 @@ Short titles, chosen by comparing the most-viewed recent Shorts in the niche (se
 3. Backgrounds from Krishna's world only (vrindavan, gokul, yamuna, govardhan, temple, park). No buildings.
 4. Study the 5 reference reels and the top niche Shorts before writing: skit-style, one clear relatable situation,
    fast short lines, 10 to 22 s.
+
+## New style from reference reel 6 (`Reference/ref-6.mp4`, 15 s, real people, 24 Nov+): "philosophy skit + sleep + meme ending"
+Structure seen (from transcript + frames): fixed TOP CAPTION all video ("Ye soch kahan se aati hai? 🤣"); person A asks a
+lazy-philosophy question ("bhai hum itna kaam kyun kar rahe hain?"); person B answers with a "wise" lazy reason ("taaki
+budhape mein baith ke kha sakein"); A hits back with the twist ("aur jawani mein mar gaye toh?"); both agree and give up
+("haan!") and go to sleep / lie down; a funny last line ("itna khat rahe the, kis liye?"); END = a reaction-meme clip.
+Sagar's mapping: Sagar asks the question, Krishna ji always gives the answer; Sagar asks the twist; both give up and
+sleep (eyes closed, "Zzz"); funny last line; original funny ending (zoom + boom/airhorn + big laugh text), NOT a
+copied third-party meme clip (copyright). Sagar will send 2 to 3 more examples; build this format after seeing them.
