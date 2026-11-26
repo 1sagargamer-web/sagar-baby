@@ -6,7 +6,7 @@
   "emoji": "🤔"
  },
  "watermark": "Made By Sagar Mishra",
- "allow_clone": false,
+ "allow_clone": true,
  "lines": [
   {
    "hi": "सोचो... जिसे सब बेकार कहते थे, वो आज किस हाल में है?",

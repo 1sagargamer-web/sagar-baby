@@ -24,3 +24,9 @@ Already made (do not repeat these topics):
 ## 2026-11-26
 - Run 1 done (08:30 IST). Trends (YouTube India): shaadi season vlogs, purana ghar, Panchayat S5, GTA 6, Avengers. Category 27 (education) has no trending chart in India (404).
 - Video B (today 18:00): Ep03 "Last Bench Wala" (evergreen, late bloomer). Video A (tomorrow 08:00): Ep02 "Aunty Ka Sawal" (shaadi season). Pictures generated; waiting for recordings until 12:10 IST.
+- Run 2 done (12:10 IST). No recordings arrived, so both videos used the clone (option A) and are marked synthetic (`--synthetic`).
+- Ep03 "Last Bench Wala" (video B): YouTube id T_etu-tH-3w, scheduled today 18:00 IST (12:30Z), 46.0 s, -14.0 LUFS. Title "Last Bench Wala 🥹 Emotional Story" (33 chars).
+- Ep02 "Aunty Ka Sawal" (video A): YouTube id AQ7IxqJPdBw, scheduled tomorrow 27 Nov 08:00 IST (02:30Z), 45.1 s, -14.1 LUFS.
+- Thumbnails (question style) uploaded OK on both. Title research (49 Shorts, niche motivation/story): top-20 visible title median 58 chars/12 words, 3 hashtags, 2 emoji; we kept titles at 33 chars (Sagar's short-title rule).
+- Quota estimate today: this channel 2 x 1,650 = 3,300 + title research 200; first channel 3,300 => about 6,800 / 10,000. Uploads today: 2 here + 2 first channel = 4 (limit 6).
+- Check tomorrow morning: did Ep03 become public at 18:00 and Ep02 at 08:00 by themselves? Also check the synthetic label in Studio (API does not echo it).
