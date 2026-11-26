@@ -1,0 +1,69 @@
+{
+  "title": "Ep 17 - Charger ek percent",
+  "scene": "temple",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, मोबाइल एक परसेंट पर है, और चार्जर ऑफिस में रह गया!",
+      "caption": "Prabhu, mobile ek percent par hai, aur charger office mein reh gaya!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "अब क्या करोगे वत्स?",
+      "caption": "Ab kya karoge Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, बस फ़ोन को घूरूँगा... शायद चार्ज हो जाए!",
+      "caption": "Prabhu, bas phone ko ghooroonga... shayad charge ho jaaye!",
+      "face": {
+        "eyes": "side",
+        "brows": "sad",
+        "mouth": "smirk",
+        "pose": "pray"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, मेरा सुदर्शन चक्र कभी चार्ज नहीं हुआ... फिर भी हमेशा सौ परसेंट!",
+      "caption": "Vatsa, mera Sudarshan Chakra kabhi charge nahi hua... phir bhi hamesha sau percent!",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false,
+      "laugh": true,
+      "sagar_face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      }
+    }
+  ]
+}

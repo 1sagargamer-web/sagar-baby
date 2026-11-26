@@ -1,0 +1,65 @@
+{
+  "title": "Ep 18 - Almari bhari kuch pehenne ko nahi",
+  "scene": "yamuna",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, अलमारी कपड़ों से भरी है... पर पहनने को कुछ नहीं!",
+      "caption": "Prabhu, almari kapdon se bhari hai... par pehenne ko kuch nahi!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "pose": "pray",
+        "tears": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "कितने कपड़े हैं वत्स?",
+      "caption": "Kitne kapde hain Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "pause_before": 0.3
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु, बस दो सौ... पर सब पुराने लगते हैं!",
+      "caption": "Prabhu, bas do sau... par sab purane lagte hain!",
+      "face": {
+        "eyes": "side",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "वत्स, द्रौपदी की साड़ी कभी ख़त्म नहीं हुई... और तुम्हारी शिकायत भी नहीं!",
+      "caption": "Vatsa, Draupadi ki saree kabhi khatam nahi hui... aur tumhari shikayat bhi nahi!",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true
+    },
+    {
+      "who": "sagar",
+      "hi": "हा हा हा!",
+      "caption": "😂😂😂",
+      "face": {
+        "eyes": "closed",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "audio": "voices/sagar-laugh.wav",
+      "laugh": true
+    }
+  ]
+}

@@ -61,3 +61,9 @@ Already made (do not repeat these topics):
 - Ep16 Group mein seen no reply: YouTube id KTMfnD1q-Qw, "Group mein Seen, No Reply 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene vrindavan, 16.1 s
 - Title research numbers: bijli-bill niche top titles are very short (e.g. "Ac ka bill" 10 chars 0.5M, "Tension nhi leni" 19 chars 0.3M), top-20 median 46 chars; group-chat niche has little data (8 videos). Kept ours at 30 to 40 chars.
 - Thumbnail lessons added to DAILY_RUNBOOK.md (no emoji in thumbnail text, choose frame with both characters and no brown block).
+
+## 2026-11-26 (Thu)
+- Performance morning of 26 Nov (views/likes): Ep10 Sunday night 1537/29, Ep12 Roll number 1160/12, Ep08 Maggi 1145/10, Ep11 Mummy chappal 1032/8, Ep14 Fridge 873/9, Ep13 Razai 749/5, Ep07 587/2, Ep09 582/3, Ep15 Bijli bill 507/2, Ep16 Group seen only 1 view (published 20:00 IST, ~11 h): watch it, maybe the topic/title/thumbnail was weak. All public by themselves.
+- Run 1 done (7:28 IST). Trends: Avengers Doomsday, Panchayat S5, GTA 6, Shinchan, Mummy ki galti comedy.
+- Video A: Ep17 "Charger ek percent" (relatable, scene temple, Sudarshan Chakra 100% twist, Bhagwan laughs)
+- Video B: Ep18 "Almari bhari, pehenne ko kuch nahi" (relatable, scene yamuna, Draupadi saree twist, Sagar laughs)
