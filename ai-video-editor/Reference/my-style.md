@@ -107,3 +107,27 @@ Text on screen all video: "Sone ja raha tha, dost ki sacchi mohabbat yaad aa gay
 Sagar's mapping: Krishna ji asks in a playful voice "kya hua, teri girlfriend kha gayi? bahut bhabhi bhabhi bulwata tha"
 (roast, not mean); Sagar goes sad (sad face, tears, hides under blanket); then a funny meme ending (original, not copied).
 Pattern shared with ref 6: ONE relatable heartbreak/lazy situation, Krishna teases, Sagar's reaction, meme ending.
+
+## Reference reel 8 (`Reference/ref-8.mp4`, 19.6 s, two real students in an exam hall): "checklist skit with a forgotten thing"
+Top caption all video: "In Exam Hall ☠️ My situation 🤔". Person A lists what he brought, and each item appears on screen as a
+green-tick checklist ("Admit card ✅ / Extra pen ✅ / Mummy ka ashirvad ✅ / I'd card ✅"). Then: "oh yaar, ek cheez bhool gaya".
+B: "kya?" A: "padhna hi bhool gaya" (sad close-up). END = reaction-meme clip.
+Sagar's mapping: scene = exam hall (classroom); Sagar lists items (tick appears per item), Krishna ji sits next to him and asks
+"kya?" Sagar: "padhna hi bhool gaya". Original funny ending.
+
+## FORMAT RULES (Sagar, 26 Nov 2026) - apply to every video made "in the style of a reference reel"
+1. Sagar sends a reference video; recreate its SITUATION and JOKE STRUCTURE with Sagar + Krishna ji. **Krishna ji is always
+   with Sagar in every video** (he is Sagar's partner/friend, not only a god who appears).
+2. **Background = the situation of the video** (exam hall, bedroom, office, road, etc.), not only Krishna's world. Add a new
+   theme to `scripts/scenes.py` for each new situation. (This replaces the "Krishna-world only" rule when the story needs another place.)
+3. **Top caption** that stays all video (e.g. "In Exam Hall ☠️ My situation 🤔") and **on-screen text per beat** (green-tick checklist
+   items, labels), matching the reference.
+4. **Background music and sound** must fit the situation (funny/tense/sad) and match the reference's feel; add the right sfx per beat.
+5. End with a funny meme-style ending (original, never a copied clip).
+6. Sagar will keep sending example reels; each one teaches a new FORMAT. Keep a format list in this file.
+
+## Format list so far
+- F1 "Sagar asks, Krishna answers wisely, twist, laugh" (the current daily format).
+- F2 philosophy skit + give up + sleep (ref 6).
+- F3 Krishna teases Sagar's heartbreak, Sagar hides under blanket (ref 7).
+- F4 exam-hall checklist, "forgot the main thing" (ref 8).
