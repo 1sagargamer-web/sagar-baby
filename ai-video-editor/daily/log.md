@@ -67,3 +67,9 @@ Already made (do not repeat these topics):
 - Run 1 done (7:28 IST). Trends: Avengers Doomsday, Panchayat S5, GTA 6, Shinchan, Mummy ki galti comedy.
 - Video A: Ep17 "Charger ek percent" (relatable, scene temple, Sudarshan Chakra 100% twist, Bhagwan laughs)
 - Video B: Ep18 "Almari bhari, pehenne ko kuch nahi" (relatable, scene yamuna, Draupadi saree twist, Sagar laughs)
+- Run 2 done (26 Nov, finished ~12:46 IST, later than usual). No recordings arrived: clone + AI Bhagwan (synthetic label); fixed laughs (Bhagwan's in Ep17, Sagar's in Ep18).
+- BUG FIXED: one-pass ffmpeg chain (rubberband + areverse + loudnorm) hung forever on Ep18 line 3 (killed two background builds). scripts/make_reel.py clean() now runs 2 passes with a 180 s timeout each. If a build ever seems stuck, check `ps` for a hung ffmpeg.
+- Ep17 Charger 1 percent: YouTube id JYyrbdP_l8E, "Charger 1 Percent 😭 #shorts #funny #relatable #krishna", slot 13:30 IST (08:00Z), scene temple, 17.6 s
+- Ep18 Almari full pehenne ko kuch nahi: YouTube id FAoISpo7O3Q, "Almari Full, Pehenne Ko Kuch Nahi 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene yamuna, 18.2 s
+- Title research: almari niche top title "Kiya phnu... Pehenne Ko Kuch Nahi?!" 36 chars 1.4M; charger niche top titles 11 to 48 chars, mostly under 0.7M.
+- NEW (Sagar, 26 Nov): reference reels ref-6/7/8 saved in sagar-private/reels, queue in daily/queue.md (F2, F3, F4 formats). From tomorrow: 2 videos a day made from the oldest reels in the queue, tell Sagar how many are left. Builder features still to add: top caption, tick-list overlay, situation scenes (exam hall, bedroom), sleep pose, meme-clip ending.

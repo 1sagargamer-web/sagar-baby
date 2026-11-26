@@ -55,11 +55,16 @@ CLEAN = (
 
 
 def clean(src: Path, out: Path, tempo: float = 1.0) -> None:
-    af = CLEAN if tempo == 1.0 else f"rubberband=tempo={tempo}:formant=preserved:pitchq=quality," + CLEAN
-    subprocess.run(
-        ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af", af, "-ac", "1", "-ar", "48000", str(out)],
-        check=True,
-    )
+    """Trim + level in TWO ffmpeg passes with a timeout each: the one-pass chain
+    (rubberband + areverse + loudnorm) can hang ffmpeg forever on some clips (seen 26 Nov 2026)."""
+    trim = CLEAN.rsplit(",loudnorm", 1)[0]
+    af1 = trim if tempo == 1.0 else f"rubberband=tempo={tempo}:formant=preserved:pitchq=quality," + trim
+    mid = out.with_suffix(".mid.wav")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af", af1, "-ac", "1", "-ar", "48000", str(mid)],
+                   check=True, timeout=180)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mid), "-af", "loudnorm=I=-16:TP=-1.5", "-ac", "1",
+                    "-ar", "48000", str(out)], check=True, timeout=180)
+    mid.unlink(missing_ok=True)
 
 
 def drop_stray_tail(wav: Path, gap: float = 0.45, max_blip: float = 0.6) -> None:
