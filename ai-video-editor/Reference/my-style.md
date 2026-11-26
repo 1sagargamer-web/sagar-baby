@@ -100,3 +100,10 @@ budhape mein baith ke kha sakein"); A hits back with the twist ("aur jawani mein
 Sagar's mapping: Sagar asks the question, Krishna ji always gives the answer; Sagar asks the twist; both give up and
 sleep (eyes closed, "Zzz"); funny last line; original funny ending (zoom + boom/airhorn + big laugh text), NOT a
 copied third-party meme clip (copyright). Sagar will send 2 to 3 more examples; build this format after seeing them.
+
+## Reference reel 7 (`Reference/ref-7.mp4`, 8 s, one real person, music only, no speech): "late-night heartbreak confession"
+Text on screen all video: "Sone ja raha tha, dost ki sacchi mohabbat yaad aa gayi, bahut bura kaat ke gayi hai
+(mere se bhabhi bulwata tha)". Visual: person in bed smiles, then pulls the blanket over his head (cries / hides).
+Sagar's mapping: Krishna ji asks in a playful voice "kya hua, teri girlfriend kha gayi? bahut bhabhi bhabhi bulwata tha"
+(roast, not mean); Sagar goes sad (sad face, tears, hides under blanket); then a funny meme ending (original, not copied).
+Pattern shared with ref 6: ONE relatable heartbreak/lazy situation, Krishna teases, Sagar's reaction, meme ending.
