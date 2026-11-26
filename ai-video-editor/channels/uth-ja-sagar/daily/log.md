@@ -20,3 +20,7 @@ Already made (do not repeat these topics):
 - Sagar changed the public times to 08:00 and 18:00 IST. Run 2 (12:10) uploads B for today 18:00 and A for tomorrow 08:00. First 08:00 video: 2026-11-27 (first Run 2 is 2026-11-26).
 
 - Channel settings set via API (2026-11-25): description, keywords, country IN, language hi, banner (assets/brand/banner.jpg). Profile picture cannot be set by API: Sagar sets assets/brand/avatar.jpg by hand. Rules added: suspense hook + question thumbnail (my-style.md).
+
+## 2026-11-26
+- Run 1 done (08:30 IST). Trends (YouTube India): shaadi season vlogs, purana ghar, Panchayat S5, GTA 6, Avengers. Category 27 (education) has no trending chart in India (404).
+- Video B (today 18:00): Ep03 "Last Bench Wala" (evergreen, late bloomer). Video A (tomorrow 08:00): Ep02 "Aunty Ka Sawal" (shaadi season). Pictures generated; waiting for recordings until 12:10 IST.

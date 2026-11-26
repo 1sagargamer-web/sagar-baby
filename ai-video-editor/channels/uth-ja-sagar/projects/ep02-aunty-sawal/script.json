@@ -1,0 +1,77 @@
+{
+ "title": "ep02-aunty-sawal",
+ "heading": {
+  "yellow": "Aunty",
+  "white": "Ka Sawal",
+  "emoji": "😳"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "क्या तुम्हें भी शादी में ये सुनना पड़ा है... बेटा, कुछ करते भी हो?",
+   "how": "hook sawaal, dheema, seedha viewer se",
+   "prompt": "a young Indian man in a crowded wedding hall looking uncomfortable while relatives stare, colourful decorations",
+   "seed": 201
+  },
+  {
+   "hi": "मैं भी गया था... कज़िन की शादी में, नए कपड़े पहनकर।",
+   "how": "kahani, shaant",
+   "prompt": "an Indian young man in a new kurta entering a decorated wedding venue with marigold flowers, evening",
+   "seed": 202
+  },
+  {
+   "hi": "और एक आंटी ने पूछ लिया... बेटा, सैलरी कितनी है?",
+   "how": "aunty wali line thodi chubhti hui",
+   "prompt": "an Indian aunty in a bright saree leaning towards a young man asking a question at a wedding, curious face",
+   "seed": 203
+  },
+  {
+   "hi": "मैं हँस दिया... पर अंदर कुछ टूट गया। मेरे पास जवाब ही नहीं था।",
+   "how": "dheema, dard ke saath",
+   "prompt": "a young Indian man smiling awkwardly while his eyes look sad, wedding guests blurred behind him",
+   "seed": 204
+  },
+  {
+   "hi": "उस रात मैंने खुद से एक वादा किया... किसी को बताया नहीं।",
+   "how": "raaz wali awaaz, dheere",
+   "prompt": "a young Indian man sitting alone on a rooftop at night under stars, determined face, city lights far away",
+   "seed": 205
+  },
+  {
+   "hi": "रोज़ सिर्फ़ दो घंटे, चुपचाप अपनी स्किल पर। पर असली बात अभी बाकी है।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "a desk lamp glowing at night over a laptop and notebooks, a young man working quietly, warm light",
+   "seed": 206,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "एक साल बाद... उसी परिवार की अगली शादी आई।",
+   "how": "umeed",
+   "prompt": "the same wedding hall decorated again with lights and flowers, golden evening, wide shot",
+   "seed": 208,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "और वही आंटी बोलीं... बेटा, मेरे बेटे को भी सिखा दो।",
+   "how": "hairani aur muskaan",
+   "prompt": "the aunty in a saree smiling warmly and folding hands towards a young confident man, guests watching",
+   "seed": 209,
+   "pause_before": 0.3
+  },
+  {
+   "hi": "जवाब ज़बान से मत दो... नतीजे से दो। आज जो छोटा समझ रहे हैं, कल वही रास्ता पूछेंगे।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "a young Indian man standing tall on a hill at sunrise, seen from behind, golden light over a village",
+   "seed": 210,
+   "seekh": true
+  },
+  {
+   "hi": "किसी ने छोटा महसूस कराया? कमेंट में लिखो, मैं दिखाऊँगा... और फॉलो कर लो, अगली कहानी तुम्हारी है।",
+   "how": "emotional, dheere, dil se",
+   "prompt": "a glowing phone on a table with a small flame beside it, warm dark background, hopeful mood",
+   "seed": 211,
+   "cta": true
+  }
+ ]
+}

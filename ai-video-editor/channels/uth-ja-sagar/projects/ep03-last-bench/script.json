@@ -1,0 +1,77 @@
+{
+ "title": "ep03-last-bench",
+ "heading": {
+  "yellow": "Last Bench",
+  "white": "Wala",
+  "emoji": "🤔"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "सोचो... जिसे सब बेकार कहते थे, वो आज किस हाल में है?",
+   "how": "hook sawaal, rahasya jaisa",
+   "prompt": "an empty last bench in an Indian school classroom with a school bag on it, dusty sunbeam, mysterious mood",
+   "seed": 301
+  },
+  {
+   "hi": "स्कूल की आखिरी बेंच पर... बैठता था गुड्डू।",
+   "how": "kahani, shaant",
+   "prompt": "a shy Indian school boy sitting alone on the last bench of a classroom, looking down",
+   "seed": 302
+  },
+  {
+   "hi": "नंबर कम आते थे... टीचर कहते, तू कुछ नहीं कर पाएगा।",
+   "how": "chubhti hui",
+   "prompt": "an Indian teacher pointing at a sad school boy in a classroom, other students laughing",
+   "seed": 303
+  },
+  {
+   "hi": "दोस्त आगे निकलते गए... किसी की नौकरी, किसी की गाड़ी।",
+   "how": "dheema, thoda udaas",
+   "prompt": "a row of Indian friends in office clothes and a car, one boy standing far behind, evening road",
+   "seed": 304
+  },
+  {
+   "hi": "और गुड्डू? वो पापा की छोटी सी दुकान पर बैठ गया।",
+   "how": "sawaal phir jawab",
+   "prompt": "a small Indian village shop with a young man sitting at the counter, jars and boxes, morning light",
+   "seed": 305
+  },
+  {
+   "hi": "लोग हँसे... पर वो रोज़ सुबह पाँच बजे कुछ नया सीखता रहा। पर असली मोड़ अभी बाकी है।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "a young Indian man studying by lamp at five in the morning, a cup of chai, dark window with first light",
+   "seed": 306,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "एक दिन दुकान पर एक बूढ़े टीचर आए... और उसे पहचान नहीं पाए।",
+   "how": "hairani",
+   "prompt": "an old Indian teacher with white hair walking into a big shop and looking around surprised",
+   "seed": 308,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "गुड्डू ने पैर छुए... टीचर की आँखें भर आईं। बोले, मैंने तुम्हें गलत समझा था।",
+   "how": "emotional",
+   "prompt": "a young man touching the feet of an old teacher respectfully, the teacher's eyes teary, golden light",
+   "seed": 309,
+   "pause_before": 0.3
+  },
+  {
+   "hi": "आखिरी बेंच जगह तय नहीं करती... मेहनत तय करती है।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "a boy walking out of a classroom door into bright sunlight, silhouette, hopeful sky",
+   "seed": 310,
+   "seekh": true
+  },
+  {
+   "hi": "आखिरी बेंच पर थे? कमेंट में लिखो, मैं रुकूँगा नहीं... और फॉलो कर लो, तुम्हारी कहानी बाकी है।",
+   "how": "emotional, dheere, dil se",
+   "prompt": "a single sprout growing on a school bench in the sunlight, hopeful mood, warm light",
+   "seed": 311,
+   "cta": true
+  }
+ ]
+}
