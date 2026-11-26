@@ -96,3 +96,20 @@ or Bhagwan laughs at Sagar's last line. A laugh line replaces the long final rea
 - Do NOT put emoji in the thumbnail text (the font draws them as odd boxes). Words only.
 - Make 2 to 3 options with different `--at` (0.3, 0.5, 0.8), LOOK at them, and pick one where both characters are visible
   and no tree trunk / hut roof / brown block sits behind the text. A frame before Bhagwan appears (about 0.06) is bad.
+
+
+## NEW INPUT MODE (Sagar, 26 Nov 2026): reference videos
+- Sagar sends 2 (sometimes 4 or 5) reference reels per day, as mp4 files in this chat. **Recreate each one** with Sagar + Krishna ji
+  (Krishna ji always with Sagar), in the matching FORMAT (see Reference/my-style.md "Format list"), with the situation's own
+  background (add a theme to scripts/scenes.py), the same top caption and on-screen text beats, matching music and sfx.
+- Run 1 (morning): look in `/root/.claude/uploads/<session>/` for **mp4 files that arrived after the last Run 2** and are not yet
+  listed in `daily/log.md` as "recreated". Study each (transcribe with scripts/transcribe.py, contact-sheet frames, scene cuts with
+  ffmpeg `select='gt(scene,0.35)'`), write the script(s) as new episodes, and list them in the log. If Sagar sent 4 to 5 reels, make 4 to 5
+  videos that day (watch the YouTube quota: 1,600 units per upload, 10,000 per day => max 6). If no new reels arrived, make the usual
+  2 original relatable videos.
+- **Ending meme:** Sagar said reusing the meme clip that ends each reference reel is fine ("free"). Cut it from the reference
+  (the last scene change, e.g. ref 6 from 11.73 s, ref 8 from 17.2 s; ref 7 has none) and append it as the video's final clip with its
+  own sound. Keep the clip in the PRIVATE repo (`sagar-private/memes/`), never in the public repo. Honest note given to Sagar: these
+  clips belong to other people and may cause a Content ID claim; if a claim ever appears, switch to the original ending
+  (zoom + airhorn + big laugh text).
+- Builder features still TO ADD in scripts/make_reel.py: fixed top caption, tick-list overlay, situation scenes, sleep pose, meme-clip ending.
