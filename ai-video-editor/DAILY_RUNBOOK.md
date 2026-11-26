@@ -124,3 +124,7 @@ or Bhagwan laughs at Sagar's last line. A laugh line replaces the long final rea
 - If the queue is empty (fewer than 2 reels), make the missing video(s) yourself as original relatable videos and say clearly in Hinglish:
   "Aaj aapki reel nahi thi, isliye maine khud banayi." Also tell Sagar when the queue is running low (2 days left or fewer).
 - A reel Sagar sent is never skipped or dropped; it stays queued until used.
+
+- **Saving reels (Sagar, 26 Nov 2026):** Sagar sends reels at any time. As soon as a reel arrives in the chat (or at the latest in Run 1), copy it to
+  `/home/user/sagar-private/reels/<name>.mp4` (PRIVATE repo; commit + push there), add a row to `daily/queue.md`, and use that private copy
+  later (the uploads folder and `Reference/` do not survive a container reset). Voice: if Sagar sends recordings in time use them, otherwise clone.
