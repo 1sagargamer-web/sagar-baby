@@ -29,6 +29,7 @@ def main() -> None:
     ap.add_argument("--thumb")
     ap.add_argument("--publish-at")
     ap.add_argument("--synthetic", action="store_true", help="mark as altered/synthetic content")
+    ap.add_argument("--require-thumb", action="store_true", help="exit with an error if the thumbnail was not set (Uth Ja Sagar rule)")
     a = ap.parse_args()
     tok = access_token()
     m = json.loads(Path(a.meta).read_text())
@@ -59,6 +60,10 @@ def main() -> None:
         t = json.loads(curl("-X", "POST", f"https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId={vid}",
                             "-H", f"Authorization: Bearer {tok}", "-H", "Content-Type: image/jpeg", "--data-binary", f"@{a.thumb}").stdout)
         print("thumbnail:", "ok" if "items" in t else json.dumps(t.get("error", t))[:300])
+        if a.require_thumb and "items" not in t:
+            raise SystemExit(f"THUMBNAIL NOT SET for {vid}: the video is uploaded but must not be left without a thumbnail. Fix and set it.")
+    elif a.require_thumb:
+        raise SystemExit("--require-thumb needs --thumb (checked before upload would be better: do not upload without a thumbnail)")
     print("link: https://www.youtube.com/shorts/" + vid)
 
 

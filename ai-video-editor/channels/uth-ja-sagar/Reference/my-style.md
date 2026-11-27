@@ -68,8 +68,8 @@ exact lines.
 - Goal: viewers watch to the very end, then comment and follow (emotional ending, `"cta": true`).
 
 ## Thumbnail (every video; made by `scripts/make_thumb_story.py`)
-- It must make people click: **a question or a cliffhanger, 2 lines, 2-3 words each, in big yellow + white outlined
-  letters** ("5 SAAL BAAD" / "KYA HUA?", "SABSE BADI GALTI" / "KAUN SI?"). Never a label like "Motivation".
+- **MANDATORY on every video, never upload without it (Sagar, 2026-11-27).** It must make people click: **a question or a
+  cliffhanger, 3 short lines (<= 9 characters), big yellow/white outlined letters, last line on a red bar, red "?" badge** ("5 SAAL BAAD" / "KYA HUA?", "SABSE BADI GALTI" / "KAUN SI?"). Never a label like "Motivation".
 - Use the picture with the strongest emotion or surprise (the shocking/biggest moment), clear subject, high contrast,
   no real face. Never reveal the answer in the thumbnail.
 - Note: in the Shorts feed the video just plays, so the FIRST 2 SECONDS of the video are the real hook; the thumbnail

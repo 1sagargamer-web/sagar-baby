@@ -41,3 +41,4 @@ Already made (do not repeat these topics):
 - Question thumbnails uploaded OK on both. Title research (50 Shorts): top-20 median 55 chars/10 words, 2 hashtags, 2 emoji; our titles stay at ~33 chars.
 - Quota estimate today: 2 x 1,650 = 3,300 + research 200 here; first channel 3,300 => about 6,800 / 10,000. Uploads today: 4 (limit 6).
 - Check tomorrow: did Ep04 become public at 18:00 and Ep05 at 08:00? Look at views/likes/comments of all Uth Ja Sagar videos.
+- Thumbnail fix (27 Nov, Sagar: thumbnails must be clickbait and on every video): the tall 1080x1920 thumbnails were cropped by YouTube (it also makes a 9:16 shortsAspectRatio 405x720 from the centre). New centre layout 1280x720 (make_thumb_story.py), set on Ep02/03/04/05 (API returned maxres 1280x720 + shortsAspectRatio 405x720). Could not download them back from ytimg (blocked), so not seen on YouTube itself. yt_upload.py got --require-thumb; runbook says never upload without thumbnail.

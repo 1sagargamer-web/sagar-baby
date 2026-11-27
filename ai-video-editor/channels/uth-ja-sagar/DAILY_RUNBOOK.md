@@ -36,12 +36,18 @@ First channel runs at 07:30 and 11:30: keep at least 20 minutes between runs (th
 3. Build, then in the project folder `check` and `snapshot` (LOOK at the frames), `render --quality looks --fps 30`,
    `python3 scripts/make_story.py --finish ...` (-14 LUFS), check duration (35-45 s) and loudness.
    Never `git add -A` while rendering (HyperFrames writes `work-*/`).
-4. Thumbnail: `python3 scripts/make_thumb_story.py <best picture from projects/<ep>/assets/images> thumb.jpg "WORD" "WORD"` (question/cliffhanger, 2 lines, see "Thumbnail" in `Reference/my-style.md`; the most shocking picture). LOOK at it. Phone verified on 2026-11-25 (thumbnail upload tested OK). If it ever says `forbidden`, skip `--thumb` and tell Sagar in one line.
+4. Thumbnail (MANDATORY: never upload a video without its thumbnail, Sagar's rule 2026-11-27). Make it CLICKBAIT but honest:
+   `python3 scripts/make_thumb_story.py <best picture from projects/<ep>/assets/images> thumb.jpg "LINE1" "LINE2" "LINE3"`
+   3 short lines (<= 9 characters each), a question/cliffhanger the video answers at the END (e.g. "AUNTY NE" / "POOCHHA" /
+   "SALARY?"), strongest emotional picture, no real face. The tool makes a 1280x720 image with everything in the CENTRE,
+   because YouTube also builds a 9:16 `shortsAspectRatio` version (405x720) by cropping the centre. LOOK at it and also at
+   `ffmpeg -i thumb.jpg -vf crop=405:720:437:0 crop.jpg` (text must be fully visible in both). Upload with `--thumb thumb.jpg
+   --require-thumb`; the print-out must say `thumbnail: ok`. If it fails, retry/fix; do not finish the run without it.
 5. YouTube metadata from DATA: `python3 scripts/yt_title_research.py --channel uth-ja-sagar "<topic> motivation hindi" "motivational shorts hindi"`.
    Rule: visible title <= 35 characters (<= 6 words), topic keyword first, 1-2 emoji, then 3-4 hashtags starting with
    `#shorts` (e.g. `#shorts #motivation #life`). Description: 2-3 Hinglish lines + "Made By Sagar Mishra" + 5-8
    hashtags. Tags 8-12. State the numbers you found.
-6. Upload: `python3 scripts/yt_upload.py --channel uth-ja-sagar --video channels/uth-ja-sagar/Export/<ep>-v1.mp4 --meta meta.json --thumb thumb.jpg --publish-at <UTC> [--synthetic]`
+6. Upload: `python3 scripts/yt_upload.py --channel uth-ja-sagar --video channels/uth-ja-sagar/Export/<ep>-v1.mp4 --meta meta.json --thumb thumb.jpg --require-thumb --publish-at <UTC> [--synthetic]`
    (B: today 12:30Z; A: tomorrow 02:30Z. If Run 2 is late and 18:00 is less than 30 min ahead, move B to 08:00 tomorrow and A to 18:00 tomorrow; never schedule in the past).
 7. Verify: privacyStatus + publishAt in the print-out; next morning check `videos.list?part=status` that it became public.
 8. Instagram package (not automatic): both videos via `SendUserFile`, each with a Hinglish caption (hook first line,
