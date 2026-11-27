@@ -35,3 +35,9 @@ Already made (do not repeat these topics):
 - Yesterday check: Ep03 (T_etu-tH-3w) and Ep02 (AQ7IxqJPdBw) both became public by themselves at their slots. Views so far 1 and 0 (new channel).
 - Run 1 done (08:30 IST). Trends: shaadi season vlogs, ghar ko alvida, Panchayat S5, GTA 6, Avengers, comedy shorts.
 - Video B (today 18:00): Ep04 "Maa Ki Parchi" (ghar chhodna, trend). Video A (tomorrow 08:00): Ep05 "Tulna Ka Rule" (comparison). Pictures being generated; waiting for recordings until 12:10 IST.
+- Run 2 done (12:10 IST). No recordings arrived, so both videos used the clone (option A), marked synthetic.
+- Ep04 "Maa Ki Parchi" (video B): YouTube id sVh7yCpM-Ts, scheduled today 18:00 IST (12:30Z), 43.2 s, -14.0 LUFS.
+- Ep05 "Tulna Ka Rule" (video A): YouTube id zLrrCH9ZgrA, scheduled tomorrow 28 Nov 08:00 IST (02:30Z), 45.4 s, -14.1 LUFS.
+- Question thumbnails uploaded OK on both. Title research (50 Shorts): top-20 median 55 chars/10 words, 2 hashtags, 2 emoji; our titles stay at ~33 chars.
+- Quota estimate today: 2 x 1,650 = 3,300 + research 200 here; first channel 3,300 => about 6,800 / 10,000. Uploads today: 4 (limit 6).
+- Check tomorrow: did Ep04 become public at 18:00 and Ep05 at 08:00? Look at views/likes/comments of all Uth Ja Sagar videos.
