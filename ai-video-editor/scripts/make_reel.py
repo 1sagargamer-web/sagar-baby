@@ -184,10 +184,33 @@ def build(script_path: Path) -> None:
         lines.append({**line, "wav": wav, "start": round(t, 3), "dur": round(dur, 3), "env": mouth_envelope(wav)})
         t += dur + gap
     total = round(t + 1.0, 2)
+    # optional meme clip as the final shot (spec "meme": "memes/meme-ref6.mp4", looked up in the private repo)
+    meme_start = None
+    meme_dur = 0.0
+    meme_rel = None
+    if spec.get("meme"):
+        m = Path(spec["meme"])
+        cands = [m, HERE / m, Path("/home/user/sagar-private") / m]
+        msrc = next((c for c in cands if c.exists()), None)
+        if msrc is None:
+            sys.exit(f"meme clip not found: {spec['meme']} (is sagar-private attached?)")
+        mdir = proj / "assets" / "meme"
+        mdir.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(msrc, mdir / "meme.mp4")
+        meme_rel = "assets/meme/meme.mp4"
+        meme_dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+                                         str(mdir / "meme.mp4")], capture_output=True, text=True, check=True).stdout)
+        meme_start = round(total - 0.6, 2)
+    content_end = meme_start if meme_start is not None else total
+    if meme_start is not None:
+        total = round(meme_start + meme_dur, 2)
 
     # Krishna appears 0.5 s before his first line
     kr_first = next((l["start"] for l in lines if l["who"] == "krishna"), 0.0)
     kr_enter = max(0.0, round(kr_first - 0.5, 3))
+    kr_present = bool(spec.get("krishna_present"))  # Krishna ji is with Sagar from frame 0 (no flash entrance)
+    if kr_present:
+        kr_enter = 0.0
 
     # ---- per-frame face states -> keyframes -------------------------------------------------
     defaults = {
@@ -234,7 +257,45 @@ def build(script_path: Path) -> None:
         if l.get("shake"):
             cams.append({"type": "shake", "start": l["start"]})
 
-    data = {"total": total, "krEnter": kr_enter, "keys": keys, "nods": nods, "cams": cams}
+    # on-screen tick list (green checklist) per line: {"ticks": ["Admit card", ...]} spread across the line
+    tick_html, tick_data = [], []
+    n_tick = 0
+    for l in lines:
+        its = l.get("ticks") or []
+        for j, txt in enumerate(its):
+            n_tick += 1
+            at = round(l["start"] + l["dur"] * (0.18 + 0.72 * (j / max(1, len(its)))), 2)
+            tick_html.append(f'          <div class="tk" id="tk-{n_tick}"><b>✅</b> {txt}</div>')
+            tick_data.append({"sel": f"#tk-{n_tick}", "at": at})
+    ticks_block = ""
+    if tick_html:
+        t0 = min(x["at"] for x in tick_data)
+        ticks_block = (f'      <div id="ticks" class="clip" data-start="{round(max(0, t0 - 0.2), 2)}" '
+                       f'data-duration="{round(content_end - max(0, t0 - 0.2), 2)}" data-track-index="11" data-layout-allow-overlap>\n'
+                       + "\n".join(tick_html) + "\n      </div>")
+    # sleeping: {"sleep": true} on a line shows floating Zzz above both characters until the next line
+    sleeps = []
+    for i2, l in enumerate(lines):
+        if l.get("sleep"):
+            end = lines[i2 + 1]["start"] if i2 + 1 < len(lines) else content_end
+            sleeps.append({"start": l["start"], "end": round(end, 2)})
+    zzz_block = ""
+    if sleeps:
+        z0 = sleeps[0]["start"]
+        zzz_block = (f'      <div id="zzz" class="clip" data-start="{z0}" data-duration="{round(content_end - z0, 2)}" '
+                     f'data-track-index="12" data-layout-allow-overlap><span id="zz1">Z z z</span><span id="zz2">Z z z</span></div>')
+    topcap = spec.get("top_caption")
+    topcap_block = ""
+    if topcap:
+        topcap_block = (f'      <div id="topcap" class="clip" data-start="0" data-duration="{content_end}" data-track-index="9">'
+                        f'<span>{topcap}</span></div>')
+    meme_block = ""
+    if meme_rel:
+        meme_block = (f'      <video id="meme" class="clip" src="{meme_rel}" data-start="{meme_start}" data-duration="{meme_dur}" '
+                      f'data-track-index="10" data-has-audio="true" data-volume="0.9" playsinline></video>')
+
+    data = {"total": total, "krEnter": kr_enter, "keys": keys, "nods": nods, "cams": cams,
+            "ticks": tick_data, "sleeps": sleeps, "contentEnd": content_end, "krPresent": kr_present}
 
     # ---- HTML -----------------------------------------------------------------------------
     sagar_svg = (HERE / "characters" / "sagar.svg").read_text()
@@ -246,7 +307,7 @@ def build(script_path: Path) -> None:
             f'      <audio id="vo-{i + 1}" class="clip" src="{rel}" data-start="{l["start"]}" '
             f'data-duration="{l["dur"]}" data-track-index="{3 if l["who"] == "sagar" else 4}" data-volume="1"></audio>'
         )
-        cap_end = lines[i + 1]["start"] if i + 1 < len(lines) else total
+        cap_end = lines[i + 1]["start"] if i + 1 < len(lines) else content_end
         cs = max(0.1, round(l["start"] - 0.05, 3))
         caption_tags.append(
             f'        <div id="cap-{i + 1}" class="clip cap cap-{l["who"]}" data-start="{cs}" '
@@ -259,10 +320,10 @@ def build(script_path: Path) -> None:
         seed = music.get("seed", sum(map(ord, spec.get("title", proj.name))) % 1000)
         mwav = audio_dir / "music.wav"
         subprocess.run([sys.executable, str(HERE / "scripts" / "make_music.py"), str(mwav),
-                        "--seconds", str(total), "--seed", str(seed), "--bpm", str(music.get("bpm", 96))], check=True)
+                        "--seconds", str(content_end), "--seed", str(seed), "--bpm", str(music.get("bpm", 96))], check=True)
         audio_tags.append(
             f'      <audio id="music" class="clip" src="{mwav.relative_to(proj).as_posix()}" data-start="0" '
-            f'data-duration="{total}" data-track-index="6" data-volume="{music.get("volume", 0.25)}"></audio>'
+            f'data-duration="{content_end}" data-track-index="6" data-volume="{music.get("volume", 0.25)}"></audio>'
         )
 
     # sound effects on the visible actions (files made by scripts/make_sfx.py into sfx/)
@@ -270,7 +331,7 @@ def build(script_path: Path) -> None:
     if not (sfx_lib / "bassdrop.wav").exists():
         subprocess.run([sys.executable, str(HERE / "scripts" / "make_sfx.py"), str(sfx_lib)], check=True)
     events = []
-    if any(l["who"] == "krishna" for l in lines):
+    if any(l["who"] == "krishna" for l in lines) and not kr_present:
         events += [("whoosh", kr_enter - 0.2), ("shimmer", kr_enter + 0.03)]
     for l in lines:
         if l.get("face", {}).get("pose") == "thumb":
@@ -310,6 +371,7 @@ def build(script_path: Path) -> None:
         krishna=krishna_svg,
         audio="\n".join(audio_tags),
         captions="\n".join(caption_tags),
+        extra_blocks="\n".join(b for b in [topcap_block, ticks_block, zzz_block, meme_block] if b),
         data=json.dumps(data, ensure_ascii=False),
     )
     (proj / "index.html").write_text(html)
@@ -341,7 +403,17 @@ TEMPLATE = """<!doctype html>
       }}
       .cap-krishna span {{ background: #fff4c7; border-color: #a3601a; }}
       #flash {{ position: absolute; inset: 0; background: #fff6cf; opacity: 0; }}
-      #watermark {{ position: absolute; left: 0; top: 196px; width: 1080px; text-align: center; }}
+      #topcap {{ position: absolute; left: 0; top: 252px; width: 1080px; text-align: center; z-index: 30; }}
+      #topcap span {{ display: inline-block; font-weight: 800; font-size: 40px; color: #ffffff; background: rgba(15, 15, 25, 0.62);
+        padding: 8px 26px; border-radius: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }}
+      #ticks {{ position: absolute; left: 50px; top: 610px; width: 560px; z-index: 30; }}
+      #ticks .tk {{ opacity: 0; font-weight: 800; font-size: 44px; color: #ffffff; line-height: 1.3; margin-bottom: 8px; background: rgba(20,20,20,0.78); border-radius: 14px; padding: 2px 18px; width: fit-content;
+        text-shadow: 0 3px 6px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.6); }}
+      #zzz span {{ position: absolute; font-weight: 900; font-size: 64px; color: #ffffff; opacity: 0; letter-spacing: 6px;
+        text-shadow: 0 3px 6px rgba(0,0,0,0.6); }}
+      #zz1 {{ left: 200px; top: 700px; }} #zz2 {{ left: 780px; top: 700px; }}
+      #meme {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; z-index: 40; }}
+      #watermark {{ position: absolute; left: 0; top: 196px; width: 1080px; text-align: center; z-index: 60; }}
       #watermark span {{
         display: inline-block; font-weight: 700; font-size: 32px; letter-spacing: 0.04em; color: #ffffff;
         background: rgba(20, 20, 30, 0.38); padding: 8px 24px; border-radius: 40px;
@@ -366,6 +438,7 @@ TEMPLATE = """<!doctype html>
 {captions}
       </div>
       <div id="watermark" class="clip" data-start="0" data-duration="{total}" data-track-index="8"><span>{watermark}</span></div>
+{extra_blocks}
 {audio}
     </div>
     <script>
@@ -410,11 +483,13 @@ TEMPLATE = """<!doctype html>
         }}
       }}
       // Krishna appears with a divine flash
-      tl.fromTo("#char-krishna", {{ opacity: 0, scale: 0.7, y: 60 }}, {{ opacity: 1, scale: 1, y: 0, duration: 0.45,
-        ease: "back.out(1.8)", transformOrigin: "50% 100%" }}, D.krEnter);
-      tl.fromTo("#flash", {{ opacity: 0 }}, {{ opacity: 0.85, duration: 0.08 }}, D.krEnter);
-      tl.to("#flash", {{ opacity: 0, duration: 0.4, ease: "power2.out" }}, D.krEnter + 0.08);
-      tl.fromTo("#kr-halo", {{ opacity: 0.3 }}, {{ opacity: 1, duration: 0.6, ease: "power2.out" }}, D.krEnter);
+      if (!D.krPresent) {{
+        tl.fromTo("#char-krishna", {{ opacity: 0, scale: 0.7, y: 60 }}, {{ opacity: 1, scale: 1, y: 0, duration: 0.45,
+          ease: "back.out(1.8)", transformOrigin: "50% 100%" }}, D.krEnter);
+        tl.fromTo("#flash", {{ opacity: 0 }}, {{ opacity: 0.85, duration: 0.08 }}, D.krEnter);
+        tl.to("#flash", {{ opacity: 0, duration: 0.4, ease: "power2.out" }}, D.krEnter + 0.08);
+        tl.fromTo("#kr-halo", {{ opacity: 0.3 }}, {{ opacity: 1, duration: 0.6, ease: "power2.out" }}, D.krEnter);
+      }}
       tl.to("#kr-halo", {{ opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true,
         repeat: Math.max(1, Math.floor((D.total - D.krEnter) / 1.8)) }}, D.krEnter + 0.6);
       // clouds drift
@@ -430,6 +505,14 @@ TEMPLATE = """<!doctype html>
           xs.forEach((x, i) => tl.to("#world", {{ x, y: i % 2 ? 6 : -6, duration: 0.045, ease: "none" }}, c.start + i * 0.045));
           tl.to("#world", {{ y: 0, duration: 0.05 }}, c.start + xs.length * 0.045);
         }}
+      }}
+      // tick list items pop in one by one
+      for (const k of D.ticks) tl.fromTo(k.sel, {{ opacity: 0, x: -30, scale: 0.8 }}, {{ opacity: 1, x: 0, scale: 1, duration: 0.22,
+        ease: "back.out(2.4)" }}, k.at);
+      // sleeping Zzz floats up above both heads
+      for (const sl of D.sleeps) for (const id of ["#zz1", "#zz2"]) {{
+        tl.fromTo(id, {{ opacity: 0, y: 40 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }}, sl.start);
+        tl.to(id, {{ y: -60, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 3 }}, sl.start + 0.5);
       }}
       // captions pop in
       document.querySelectorAll(".cap").forEach((el) => {{

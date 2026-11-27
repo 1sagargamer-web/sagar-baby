@@ -1,0 +1,79 @@
+{
+  "title": "Ep 19 - Itna kaam kyun",
+  "scene": "room",
+  "krishna_present": true,
+  "allow_clone": true,
+  "allow_ai_bhagwan": true,
+  "top_caption": "Zindagi ka sabse bada sawal 🤔",
+  "meme": "memes/meme-ref6.mp4",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, हम इतना काम क्यों कर रहे हैं?",
+      "caption": "Prabhu, hum itna kaam kyun kar rahe hain?",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "krishna_face": {
+        "eyes": "open"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "ताकि बुढ़ापे में बैठकर खा सको, वत्स।",
+      "caption": "Taaki budhape mein baith ke kha sako, Vatsa.",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "pause_before": 0.25
+    },
+    {
+      "who": "sagar",
+      "hi": "और अगर जवानी में ही मर गए तो?",
+      "caption": "Aur agar jawani mein hi mar gaye toh?",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "हम्म... ये तो मैंने सोचा ही नहीं।",
+      "caption": "Hmm... ye toh maine socha hi nahi.",
+      "face": {
+        "eyes": "half"
+      },
+      "punch": true,
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "sweat": true
+      }
+    },
+    {
+      "who": "sagar",
+      "hi": "चलो फिर... सो जाते हैं।",
+      "caption": "Chalo phir... so jaate hain.",
+      "face": {
+        "eyes": "closed",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "sleep": true,
+      "krishna_face": {
+        "eyes": "closed"
+      }
+    }
+  ]
+}

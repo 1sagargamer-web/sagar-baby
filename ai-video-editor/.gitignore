@@ -25,3 +25,6 @@ __pycache__/
 
 # Private voice recordings, never commit
 voices/sagar*
+
+# meme clips belong to other people: never in the public repo
+projects/*/assets/meme/

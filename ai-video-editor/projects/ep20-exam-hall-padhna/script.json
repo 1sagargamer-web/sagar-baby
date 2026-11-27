@@ -1,0 +1,70 @@
+{
+  "title": "Ep 20 - Exam hall padhna bhool gaya",
+  "scene": "exam_hall",
+  "krishna_present": true,
+  "allow_clone": true,
+  "allow_ai_bhagwan": true,
+  "top_caption": "Exam hall mein meri halat 😭",
+  "meme": "memes/meme-ref8.mp4",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, सब लाया हूँ... एडमिट कार्ड, एक्स्ट्रा पेन, मम्मी का आशीर्वाद, आईडी कार्ड!",
+      "caption": "Prabhu, sab laya hoon... admit card, extra pen, Mummy ka ashirvad, ID card!",
+      "face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "smirk",
+        "pose": "thumb"
+      },
+      "ticks": [
+        "Admit card",
+        "Extra pen",
+        "Mummy ka ashirvad",
+        "ID card"
+      ],
+      "krishna_face": {
+        "eyes": "open"
+      }
+    },
+    {
+      "who": "sagar",
+      "hi": "अरे यार... एक चीज़ भूल गया!",
+      "caption": "Arre yaar... ek cheez bhool gaya!",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "क्या वत्स?",
+      "caption": "Kya Vatsa?",
+      "face": {
+        "eyes": "open"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed",
+        "sweat": true
+      },
+      "pause_before": 0.2
+    },
+    {
+      "who": "sagar",
+      "hi": "पढ़ना ही भूल गया!",
+      "caption": "PADHNA HI BHOOL GAYA!",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      },
+      "shake": true
+    }
+  ]
+}

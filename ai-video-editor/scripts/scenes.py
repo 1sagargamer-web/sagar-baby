@@ -153,6 +153,27 @@ THEMES["govardhan"] = dict(
     front=bushes("#3fa34a", "#2a7a35"),
 )
 
+THEMES["exam_hall"] = dict(
+    sky="linear-gradient(#a8c443 0%, #93b236 60%, #86a52f 100%)",
+    back="""<svg class="bg-svg" id="clouds" style="top:120px;height:800px" viewBox="0 0 1080 800">
+<rect x="60" y="40" width="360" height="250" rx="6" fill="#e9f6ff" stroke="#5a7a2a" stroke-width="10"/>
+<path d="M240 40 V290 M60 165 H420" stroke="#5a7a2a" stroke-width="8"/>
+<circle cx="860" cy="130" r="86" fill="#ffffff" stroke="#3a3a3a" stroke-width="10"/>
+<path d="M860 130 V80 M860 130 L900 150" stroke="#3a3a3a" stroke-width="8" stroke-linecap="round"/>
+<rect x="640" y="300" width="360" height="200" fill="#c99a5b" stroke="#6b4423" stroke-width="8"/>
+<rect x="670" y="326" width="140" height="64" fill="#fff"/><rect x="830" y="326" width="140" height="64" fill="#ffe27a"/>
+<rect x="670" y="410" width="140" height="64" fill="#ffd0d0"/><rect x="830" y="410" width="140" height="64" fill="#fff"/>
+</svg>""",
+    mid="""<svg class="bg-svg" style="top:1180px;height:740px" viewBox="0 0 1080 740"><rect width="1080" height="740" fill="#d8c6a0"/>
+<rect width="1080" height="46" fill="#6f8a2a"/><g stroke="#bda97e" stroke-width="4"><path d="M0 170 H1080 M0 320 H1080 M0 500 H1080"/></g></svg>""",
+    front="""<svg class="bg-svg" style="top:1440px;height:480px" viewBox="0 0 1080 480">
+<rect x="0" y="60" width="1080" height="110" fill="#2f5fd0" stroke="#173a8c" stroke-width="8"/>
+<rect x="0" y="170" width="1080" height="310" fill="#b78a55" stroke="#6b4423" stroke-width="8"/>
+<g transform="rotate(-6 300 110)"><rect x="150" y="62" width="300" height="86" fill="#ffffff" stroke="#9aa3b8" stroke-width="4"/>
+<g stroke="#9aa3b8" stroke-width="4"><path d="M170 86 H430 M170 108 H400 M170 130 H420"/></g></g>
+<rect x="760" y="70" width="14" height="76" rx="7" fill="#e2453c"/><rect x="790" y="70" width="14" height="76" rx="7" fill="#1f5fbf"/></svg>""",
+)
+
 KRISHNA_ORDER = ["vrindavan", "gokul", "yamuna", "govardhan", "temple", "park"]
 
 ORDER = KRISHNA_ORDER
