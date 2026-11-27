@@ -30,3 +30,8 @@ Already made (do not repeat these topics):
 - Thumbnails (question style) uploaded OK on both. Title research (49 Shorts, niche motivation/story): top-20 visible title median 58 chars/12 words, 3 hashtags, 2 emoji; we kept titles at 33 chars (Sagar's short-title rule).
 - Quota estimate today: this channel 2 x 1,650 = 3,300 + title research 200; first channel 3,300 => about 6,800 / 10,000. Uploads today: 2 here + 2 first channel = 4 (limit 6).
 - Check tomorrow morning: did Ep03 become public at 18:00 and Ep02 at 08:00 by themselves? Also check the synthetic label in Studio (API does not echo it).
+
+## 2026-11-27
+- Yesterday check: Ep03 (T_etu-tH-3w) and Ep02 (AQ7IxqJPdBw) both became public by themselves at their slots. Views so far 1 and 0 (new channel).
+- Run 1 done (08:30 IST). Trends: shaadi season vlogs, ghar ko alvida, Panchayat S5, GTA 6, Avengers, comedy shorts.
+- Video B (today 18:00): Ep04 "Maa Ki Parchi" (ghar chhodna, trend). Video A (tomorrow 08:00): Ep05 "Tulna Ka Rule" (comparison). Pictures being generated; waiting for recordings until 12:10 IST.

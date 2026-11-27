@@ -1,0 +1,71 @@
+{
+ "title": "ep04-maa-ki-parchi",
+ "heading": {
+  "yellow": "Maa Ki",
+  "white": "Parchi",
+  "emoji": "🥹"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "सोचो... माँ ने जाते वक़्त टिफ़िन में एक पर्ची रखी थी। उसमें क्या लिखा था?",
+   "how": "hook sawaal, rahasya jaisa",
+   "prompt": "a steel tiffin box with a small folded paper peeking out from under the lid, warm light, no people",
+   "seed": 401
+  },
+  {
+   "hi": "मैं पहली बार घर छोड़कर शहर जा रहा था... पढ़ाई के लिए।",
+   "how": "kahani, shaant",
+   "prompt": "a young Indian man with a bag on a railway platform, a train arriving, evening light",
+   "seed": 402
+  },
+  {
+   "hi": "स्टेशन पर माँ रो नहीं रही थी... बस मेरा बैग बार-बार ठीक कर रही थी।",
+   "how": "bhaavuk, dheere",
+   "prompt": "an Indian mother in a simple saree adjusting her son's bag on a railway platform, tender mood",
+   "seed": 403
+  },
+  {
+   "hi": "शहर में पहला महीना बहुत भारी था... अकेला कमरा, कच्ची रोटी, और रोज़ घर की याद।",
+   "how": "udaas, dheema",
+   "prompt": "a small lonely rented room at night, a young man sitting on the bed, city lights in the window",
+   "seed": 404
+  },
+  {
+   "hi": "एक रात मैंने सब छोड़कर वापस जाने का मन बना लिया।",
+   "how": "thaka hua",
+   "prompt": "a young man packing a bag at night in a small room, sad but decided face",
+   "seed": 405
+  },
+  {
+   "hi": "तभी बैग में वो टिफ़िन दिखा, जिसे मैंने खोला ही नहीं था। पर असली बात अभी बाकी है।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "an unopened steel tiffin box inside an open travel bag, lamp light, mysterious mood",
+   "seed": 406,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "टिफ़िन के नीचे माँ की पर्ची थी... लिखा था, बेटा, खाना ठंडा हो जाए तो चलेगा, पर तू हार मत मानना।",
+   "how": "emotional, dil se, dheere",
+   "prompt": "two hands opening a steel tiffin box with a handwritten note underneath, warm light",
+   "seed": 407,
+   "pause_before": 0.3,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "घर की याद कमज़ोरी नहीं है... वही तुम्हारी सबसे बड़ी ताकत है।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "a young man studying at a desk in morning sunlight, determined face, sunrise through the window",
+   "seed": 408,
+   "seekh": true
+  },
+  {
+   "hi": "तुमने भी घर छोड़ा है? कमेंट में माँ लिखो... और फॉलो कर लो, तुम्हारी मेहनत उन्हीं के नाम है।",
+   "how": "emotional, dheere, dil se",
+   "prompt": "a mother's hands holding a steaming glass of chai at a home window in evening light, hopeful mood",
+   "seed": 409,
+   "cta": true
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "title": "ep05-tulna-ka-rule",
+ "heading": {
+  "yellow": "Tulna Ka",
+  "white": "Rule",
+  "emoji": "📵"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "क्या तुम भी रात को दूसरों की कामयाबी देखकर... खुद को छोटा समझने लगते हो?",
+   "how": "hook sawaal, seedha viewer se",
+   "prompt": "a young Indian man lying in bed at night, his face lit by the glow of a phone, dark room",
+   "seed": 501
+  },
+  {
+   "hi": "मैं भी रोज़ रात यही करता था... स्क्रॉल, स्क्रॉल, और स्क्रॉल।",
+   "how": "kahani, thaka hua",
+   "prompt": "close-up of a thumb scrolling on a glowing phone screen at night, dark background",
+   "seed": 502
+  },
+  {
+   "hi": "किसी की नई गाड़ी... किसी की विदेश की फ़ोटो... किसी की बड़ी नौकरी।",
+   "how": "dheema, chubhti hui",
+   "prompt": "a phone screen showing photos of a new car, a foreign trip and an office party, cartoon style",
+   "seed": 503
+  },
+  {
+   "hi": "और मैं सोचता... सब आगे निकल गए, बस मैं यहीं रह गया।",
+   "how": "udaas, dard ke saath",
+   "prompt": "a young man sitting alone looking down at his phone in a dim room, sad face",
+   "seed": 504
+  },
+  {
+   "hi": "फिर एक दिन मैंने एक नियम बनाया... और 30 दिन बाद मुझे खुद यकीन नहीं हुआ।",
+   "how": "raaz wali awaaz",
+   "prompt": "a notebook on a desk at night with a single big circle drawn on a page and a pen beside it, mysterious mood",
+   "seed": 505
+  },
+  {
+   "hi": "नियम बहुत छोटा था। पर असली बात अभी बाकी है।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "an alarm clock showing early morning on a desk with a notebook, first sunlight through the window",
+   "seed": 506,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "सुबह उठते ही... पहले फ़ोन नहीं, पहले अपना एक काम।",
+   "how": "steady, himmat",
+   "prompt": "a young man writing in a notebook at sunrise, a phone lying face down beside him",
+   "seed": 507
+  },
+  {
+   "hi": "तीस दिन बाद... मैंने किसी को पीछे नहीं छोड़ा, पर खुद से बहुत आगे निकल गया।",
+   "how": "hairani, muskaan",
+   "prompt": "a wall calendar with thirty days crossed off in sunlight and a notebook below it",
+   "seed": 508,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "दूसरों से मुकाबला मत करो... कल के खुद से करो।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "a young man standing on a hill at sunrise seen from behind, golden light over the fields",
+   "seed": 509,
+   "seekh": true
+  },
+  {
+   "hi": "तुम किससे तुलना करते हो? कमेंट में लिखो, मैं कल के खुद से जीतूँगा... और फॉलो कर लो।",
+   "how": "emotional, dheere, dil se",
+   "prompt": "a small green plant growing out of a crack in stone with a sunrise behind it, hopeful mood",
+   "seed": 510,
+   "cta": true
+  }
+ ]
+}
