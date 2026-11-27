@@ -17,8 +17,8 @@
   {
    "hi": "मैं भी रोज़ रात यही करता था... स्क्रॉल, स्क्रॉल, और स्क्रॉल।",
    "how": "kahani, thaka hua",
-   "prompt": "close-up of a thumb scrolling on a glowing phone screen at night, dark background",
-   "seed": 502
+   "prompt": "close-up of a thumb scrolling a smartphone showing colourful photos, dark room, only a hand and the phone",
+   "seed": 5021
   },
   {
    "hi": "किसी की नई गाड़ी... किसी की विदेश की फ़ोटो... किसी की बड़ी नौकरी।",
@@ -35,8 +35,8 @@
   {
    "hi": "फिर एक दिन मैंने एक नियम बनाया... और 30 दिन बाद मुझे खुद यकीन नहीं हुआ।",
    "how": "raaz wali awaaz",
-   "prompt": "a notebook on a desk at night with a single big circle drawn on a page and a pen beside it, mysterious mood",
-   "seed": 505
+   "prompt": "a notebook with one large circle drawn on the open page and a pen next to it, a desk lamp glowing at night, no people",
+   "seed": 5051
   },
   {
    "hi": "नियम बहुत छोटा था। पर असली बात अभी बाकी है।",

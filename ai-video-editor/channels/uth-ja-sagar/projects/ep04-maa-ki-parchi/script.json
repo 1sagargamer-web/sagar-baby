@@ -11,8 +11,8 @@
   {
    "hi": "सोचो... माँ ने जाते वक़्त टिफ़िन में एक पर्ची रखी थी। उसमें क्या लिखा था?",
    "how": "hook sawaal, rahasya jaisa",
-   "prompt": "a steel tiffin box with a small folded paper peeking out from under the lid, warm light, no people",
-   "seed": 401
+   "prompt": "a closed steel tiffin box on a table with a small white paper note tucked under its handle, warm kitchen light, only the box, no people",
+   "seed": 4011
   },
   {
    "hi": "मैं पहली बार घर छोड़कर शहर जा रहा था... पढ़ाई के लिए।",
@@ -21,13 +21,13 @@
    "seed": 402
   },
   {
-   "hi": "स्टेशन पर माँ रो नहीं रही थी... बस मेरा बैग बार-बार ठीक कर रही थी।",
+   "hi": "स्टेशन पर माँ रोई नहीं... बस मेरा बैग ठीक करती रही।",
    "how": "bhaavuk, dheere",
-   "prompt": "an Indian mother in a simple saree adjusting her son's bag on a railway platform, tender mood",
-   "seed": 403
+   "prompt": "an Indian mother in a simple saree and her grown-up son with a travel bag standing on a railway platform, she is fixing his bag strap, two people only",
+   "seed": 4031
   },
   {
-   "hi": "शहर में पहला महीना बहुत भारी था... अकेला कमरा, कच्ची रोटी, और रोज़ घर की याद।",
+   "hi": "पहला महीना भारी था... अकेला कमरा, कच्ची रोटी, और घर की याद।",
    "how": "udaas, dheema",
    "prompt": "a small lonely rented room at night, a young man sitting on the bed, city lights in the window",
    "seed": 404
@@ -46,7 +46,7 @@
    "motion": "zoom-in"
   },
   {
-   "hi": "टिफ़िन के नीचे माँ की पर्ची थी... लिखा था, बेटा, खाना ठंडा हो जाए तो चलेगा, पर तू हार मत मानना।",
+   "hi": "टिफ़िन के नीचे माँ की पर्ची थी... बेटा, खाना ठंडा हो जाए तो चलेगा, पर तू हार मत मानना।",
    "how": "emotional, dil se, dheere",
    "prompt": "two hands opening a steel tiffin box with a handwritten note underneath, warm light",
    "seed": 407,
@@ -61,7 +61,7 @@
    "seekh": true
   },
   {
-   "hi": "तुमने भी घर छोड़ा है? कमेंट में माँ लिखो... और फॉलो कर लो, तुम्हारी मेहनत उन्हीं के नाम है।",
+   "hi": "घर छोड़ा है? कमेंट में माँ लिखो... और फॉलो कर लो, तुम्हारी मेहनत उन्हीं के नाम है।",
    "how": "emotional, dheere, dil se",
    "prompt": "a mother's hands holding a steaming glass of chai at a home window in evening light, hopeful mood",
    "seed": 409,
