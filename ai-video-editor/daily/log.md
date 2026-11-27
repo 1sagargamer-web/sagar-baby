@@ -73,3 +73,11 @@ Already made (do not repeat these topics):
 - Ep18 Almari full pehenne ko kuch nahi: YouTube id FAoISpo7O3Q, "Almari Full, Pehenne Ko Kuch Nahi 😭 #shorts #funny #relatable", slot 20:00 IST (14:30Z), scene yamuna, 18.2 s
 - Title research: almari niche top title "Kiya phnu... Pehenne Ko Kuch Nahi?!" 36 chars 1.4M; charger niche top titles 11 to 48 chars, mostly under 0.7M.
 - NEW (Sagar, 26 Nov): reference reels ref-6/7/8 saved in sagar-private/reels, queue in daily/queue.md (F2, F3, F4 formats). From tomorrow: 2 videos a day made from the oldest reels in the queue, tell Sagar how many are left. Builder features still to add: top caption, tick-list overlay, situation scenes (exam hall, bedroom), sleep pose, meme-clip ending.
+
+## 2026-11-27 (Fri)
+- Status check 27 Nov ~11:35 IST: Ep17 public (263 views), Ep18 public (249), Ep16 Group seen 9 views (weak topic). Scheduled uploads become public by themselves.
+- Run 1: built from queue reels. Builder now has: meme-clip ending, top_caption, ticks (green tick list), sleep (Zzz), krishna_present (Krishna with Sagar from frame 0), exam_hall scene.
+- Ep19 "Itna kaam kyun?" (ref-6, F2): YouTube qqWaVCzzc-4, slot 13:30 IST (08:00Z), scene room, 18.6 s, meme-ref6 ending.
+- Ep20 "Exam hall, padhna bhool gaya" (ref-8, F4): YouTube b0YkHrAu3xA, slot 20:00 IST (14:30Z), scene exam_hall, 14.3 s, meme-ref8 ending.
+- Run 2: no recordings arrived, clone + AI Bhagwan (synthetic label). Titles "Itna kaam kyun? 😴" and "Exam Hall 📝😭". Thumbnails: make_thumb erase area now starts at y=160 (top caption).
+- Queue: 1 reel left (ref-7, F3). Next: ref-7 (Krishna teases, Sagar hides under blanket; may need blanket pose) + 1 original video.

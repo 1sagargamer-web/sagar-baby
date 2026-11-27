@@ -25,7 +25,7 @@ def main() -> None:
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(dur * at), "-i", video, "-frames:v", "1", t.name], check=True)
         im = Image.open(t.name).convert("RGB").resize((720, 1280))
     px = im.load()
-    for y in range(195, 480):                      # erase the caption box: copy each row's colour from the left edge
+    for y in range(160, 480):                      # erase the caption box: copy each row's colour from the left edge
         c = px[20, y]
         for x in range(60, 665):
             px[x, y] = c
