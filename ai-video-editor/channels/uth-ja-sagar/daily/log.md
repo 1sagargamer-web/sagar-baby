@@ -52,3 +52,4 @@ Already made (do not repeat these topics):
 - Ep07 "Reject Mail" (video A): YouTube id THTr1VS3EVs, scheduled tomorrow 29 Nov 08:00 IST (02:30Z), 42.3 s, -14.1 LUFS.
 - PROBLEM: thumbnails.set returned 429 uploadRateLimitExceeded ("too many thumbnails recently") for both, caused by my 8 test uploads on 27 Nov (4 x 2). Videos are uploaded and scheduled WITHOUT thumbnail. Thumbnails ready: assets/brand/thumbs/ep06.jpg, ep07.jpg. Retry with scripts/yt_set_thumb.py. LESSON: never re-upload thumbnails for testing; set each thumbnail once.
 - Rule (Sagar): never publish without thumbnail. If Ep06 still has no thumbnail close to 18:00 IST, move its publishAt to tomorrow 18:00 IST (12:30Z on 29 Nov) instead of publishing without one.
+- Thumbnail retry OK at 13:40 IST (28 Nov): Ep06 BNuHV322Emw and Ep07 THTr1VS3EVs both have their thumbnail now (YouTube returned shortsAspectRatio too). Rate limit had cleared within about 6 hours. Ep06 keeps its 18:00 IST slot.
