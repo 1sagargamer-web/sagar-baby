@@ -284,6 +284,12 @@ def build(script_path: Path) -> None:
         z0 = sleeps[0]["start"]
         zzz_block = (f'      <div id="zzz" class="clip" data-start="{z0}" data-duration="{round(content_end - z0, 2)}" '
                      f'data-track-index="12" data-layout-allow-overlap><span id="zz1">Z z z</span><span id="zz2">Z z z</span></div>')
+    # blanket: {"blanket": true} on a line pulls a blanket over Sagar's head (hides under the quilt) until the end
+    blanket_at = next((l["start"] for l in lines if l.get("blanket")), None)
+    blanket_block = ""
+    if blanket_at is not None:
+        blanket_block = (f'      <div id="blanket" class="clip" data-start="{blanket_at}" data-duration="{round(content_end - blanket_at, 2)}" '
+                         f'data-track-index="13" data-layout-allow-overlap></div>')
     topcap = spec.get("top_caption")
     topcap_block = ""
     if topcap:
@@ -371,7 +377,7 @@ def build(script_path: Path) -> None:
         krishna=krishna_svg,
         audio="\n".join(audio_tags),
         captions="\n".join(caption_tags),
-        extra_blocks="\n".join(b for b in [topcap_block, ticks_block, zzz_block, meme_block] if b),
+        extra_blocks="\n".join(b for b in [topcap_block, ticks_block, zzz_block, blanket_block, meme_block] if b),
         data=json.dumps(data, ensure_ascii=False),
     )
     (proj / "index.html").write_text(html)
@@ -412,6 +418,9 @@ TEMPLATE = """<!doctype html>
       #zzz span {{ position: absolute; font-weight: 900; font-size: 64px; color: #ffffff; opacity: 0; letter-spacing: 6px;
         text-shadow: 0 3px 6px rgba(0,0,0,0.6); }}
       #zz1 {{ left: 200px; top: 700px; }} #zz2 {{ left: 780px; top: 700px; }}
+      #blanket {{ position: absolute; left: -10px; top: 880px; width: 580px; height: 780px; z-index: 25; opacity: 0;
+        border-radius: 280px 280px 30px 30px; border: 6px solid #0f5a58;
+        background: repeating-linear-gradient(45deg, #1f9a96 0 46px, #2fb7b1 46px 92px, #f4c542 92px 100px); }}
       #meme {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; z-index: 40; }}
       #watermark {{ position: absolute; left: 0; top: 196px; width: 1080px; text-align: center; z-index: 60; }}
       #watermark span {{
@@ -513,6 +522,11 @@ TEMPLATE = """<!doctype html>
       for (const sl of D.sleeps) for (const id of ["#zz1", "#zz2"]) {{
         tl.fromTo(id, {{ opacity: 0, y: 40 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }}, sl.start);
         tl.to(id, {{ y: -60, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 3 }}, sl.start + 0.5);
+      }}
+      // blanket slides up over Sagar
+      if (document.getElementById("blanket")) {{
+        const bs = parseFloat(document.getElementById("blanket").dataset.start);
+        tl.fromTo("#blanket", {{ opacity: 1, y: 900 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }}, bs);
       }}
       // captions pop in
       document.querySelectorAll(".cap").forEach((el) => {{

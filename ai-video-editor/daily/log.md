@@ -81,3 +81,8 @@ Already made (do not repeat these topics):
 - Ep20 "Exam hall, padhna bhool gaya" (ref-8, F4): YouTube b0YkHrAu3xA, slot 20:00 IST (14:30Z), scene exam_hall, 14.3 s, meme-ref8 ending.
 - Run 2: no recordings arrived, clone + AI Bhagwan (synthetic label). Titles "Itna kaam kyun? 😴" and "Exam Hall 📝😭". Thumbnails: make_thumb erase area now starts at y=160 (top caption).
 - Queue: 1 reel left (ref-7, F3). Next: ref-7 (Krishna teases, Sagar hides under blanket; may need blanket pose) + 1 original video.
+
+## 2026-11-28 (Sat)
+- Run 1: queue reels used: ref-9 (Ep21 "Chappal", scene yamuna, Krishna laughs, no meme) and ref-7 (Ep22 "Dost ki sacchi mohabbat", scene room, new `blanket` option: Sagar hides under quilt, Krishna teases, Krishna laughs). Reels ref-9..14 (sent 27 Nov) studied by transcript + frames, formats noted in queue.md.
+- Builder: new line option `blanket`. Top caption must stay one line (<= ~28 chars) or it overlaps the line caption.
+- Queue after today: 5 reels left (ref-10..14).

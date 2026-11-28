@@ -1,0 +1,73 @@
+{
+  "title": "Ep 21 - Chappal",
+  "scene": "yamuna",
+  "krishna_present": true,
+  "allow_clone": true,
+  "allow_ai_bhagwan": true,
+  "top_caption": "Chappal 🩴",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, हम चप्पल के बिना चल सकते हैं, तो चप्पल हमारे बिना क्यों नहीं चल सकती?",
+      "caption": "Prabhu, hum chappal ke bina chal sakte hain, toh chappal hamare bina kyun nahi chal sakti?",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "krishna_face": {
+        "eyes": "open"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "हम्म... वत्स, ये प्रश्न तो मैंने भी कभी नहीं सोचा।",
+      "caption": "Hmm... Vatsa, ye prashn toh maine bhi kabhi nahi socha.",
+      "face": {
+        "eyes": "half"
+      },
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "closed"
+      },
+      "pause_before": 0.25
+    },
+    {
+      "who": "sagar",
+      "hi": "तो फिर चप्पल अकेली क्यों नहीं जाती? कहीं चोरी तो नहीं हो गई?",
+      "caption": "Toh phir chappal akeli kyun nahi jaati? Kahin chori toh nahi ho gayi?",
+      "face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "अरे बाप रे! वैज्ञानिक जी, ये ज्ञान आपको कहाँ से मिला?",
+      "caption": "Are baap re! Vaigyanik ji, ye gyaan aapko kahan se mila?",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true,
+      "sagar_face": {
+        "eyes": "open",
+        "brows": "normal",
+        "mouth": "smirk"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false
+    }
+  ]
+}

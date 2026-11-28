@@ -1,0 +1,63 @@
+{
+  "title": "Ep 22 - Dost ki mohabbat",
+  "scene": "room",
+  "krishna_present": true,
+  "allow_clone": true,
+  "allow_ai_bhagwan": true,
+  "top_caption": "Dost ki sacchi mohabbat 😭",
+  "gap": 0.25,
+  "lines": [
+    {
+      "who": "sagar",
+      "hi": "प्रभु, सोने जा रहा था... दोस्त की सच्ची मोहब्बत याद आ गई।",
+      "caption": "Prabhu, sone ja raha tha... dost ki sacchi mohabbat yaad aa gayi.",
+      "face": {
+        "eyes": "open",
+        "brows": "sad",
+        "mouth": "closed"
+      },
+      "krishna_face": {
+        "eyes": "open"
+      }
+    },
+    {
+      "who": "krishna",
+      "hi": "क्या हुआ वत्स, तेरी गर्लफ्रेंड खा गई क्या? भाभी-भाभी बहुत बुलवाता था!",
+      "caption": "Kya hua Vatsa, teri girlfriend kha gayi kya? Bhabhi-bhabhi bahut bulwata tha!",
+      "face": {
+        "eyes": "wink"
+      },
+      "punch": true,
+      "sagar_face": {
+        "eyes": "shock",
+        "brows": "sad",
+        "mouth": "o",
+        "sweat": true
+      }
+    },
+    {
+      "who": "sagar",
+      "hi": "प्रभु! ऐसे मत बोलो... बहुत बुरा काट के गई है।",
+      "caption": "Prabhu! Aise mat bolo... bahut bura kaat ke gayi hai.",
+      "face": {
+        "eyes": "closed",
+        "brows": "sad",
+        "mouth": "sad",
+        "tears": true
+      },
+      "blanket": true,
+      "shake": true
+    },
+    {
+      "who": "krishna",
+      "hi": "हे हे हा हा",
+      "caption": "😂",
+      "face": {
+        "eyes": "closed"
+      },
+      "audio": "sfx/laugh-bhagwan.wav",
+      "vc": false
+    }
+  ],
+  "keep_audio": true
+}
