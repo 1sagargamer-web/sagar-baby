@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="hi" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 100%; height: 100%; font-family: "Baloo2", "Noto Color Emoji", sans-serif; }
+      #title { position: absolute; top: 250px; left: 0; width: 1080px; text-align: center; color: #fff; font-weight: 800;
+        font-size: 84px; line-height: 1.05; }
+      #title b { color: #ffcf3a; }
+      #frame { position: absolute; top: 420px; left: 0; width: 1080px; height: 1080px; overflow: hidden; background: #111;
+        z-index: 0; }  /* own stacking context, so the pictures never cover the watermark */
+      .pic { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+      @font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"), local("NotoColorEmoji"); }
+      #watermark { position: absolute; top: 1436px; left: 0; width: 1080px; text-align: center; z-index: 5; }
+      #watermark span { display: inline-block; font-weight: 600; font-size: 30px; color: rgba(255,255,255,0.92);
+        background: rgba(0,0,0,0.42); padding: 2px 20px; border-radius: 30px; }
+      .cap { position: absolute; top: 1560px; left: 0; width: 1080px; padding: 0 70px; text-align: center;
+        font-weight: 800; font-size: 62px; line-height: 1.3; }
+      .cap span { color: rgba(255,255,255,0.28); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="40.04" data-width="1080" data-height="1920">
+      <div id="title" class="clip" data-start="0" data-duration="40.04" data-track-index="1"><b>Papa Ki</b> Cycle 🚲</div>
+      <div id="frame" class="clip" data-start="0" data-duration="40.04" data-track-index="0" data-layout-allow-overlap>
+          <img id="pic-1" class="pic" src="assets/images/scene-01-s601.png" alt="">
+          <img id="pic-2" class="pic" src="assets/images/scene-02-s602.png" alt="">
+          <img id="pic-3" class="pic" src="assets/images/scene-03-s603.png" alt="">
+          <img id="pic-4" class="pic" src="assets/images/scene-04-s604.png" alt="">
+          <img id="pic-5" class="pic" src="assets/images/scene-05-s605.png" alt="">
+          <img id="pic-6" class="pic" src="assets/images/scene-06-s606.png" alt="">
+          <img id="pic-7" class="pic" src="assets/images/scene-07-s607.png" alt="">
+          <img id="pic-8" class="pic" src="assets/images/scene-08-s608.png" alt="">
+          <img id="pic-9" class="pic" src="assets/images/scene-09-s609.png" alt="">
+      </div>
+      <div id="watermark" class="clip" data-start="0" data-duration="40.04" data-track-index="8"><span>Made By Sagar Mishra</span></div>
+      <div id="captions" class="clip" data-start="0" data-duration="40.04" data-track-index="2" data-layout-allow-overlap>
+        <div id="cap-1-1" class="clip cap" data-start="0.0" data-duration="2.08" data-track-index="5"><span id="cap-1-1-w0">सोचो...</span> <span id="cap-1-1-w1">पापा</span> <span id="cap-1-1-w2">ने</span> <span id="cap-1-1-w3">बीस</span> <span id="cap-1-1-w4">साल</span> <span id="cap-1-1-w5">एक</span></div>
+        <div id="cap-1-2" class="clip cap" data-start="2.08" data-duration="1.14" data-track-index="5"><span id="cap-1-2-w6">ही</span> <span id="cap-1-2-w7">पुरानी</span> <span id="cap-1-2-w8">साइकिल</span> <span id="cap-1-2-w9">क्यों</span> <span id="cap-1-2-w10">नहीं</span></div>
+        <div id="cap-1-3" class="clip cap" data-start="3.22" data-duration="0.88" data-track-index="5"><span id="cap-1-3-w11">बदली?</span></div>
+        <div id="cap-2-1" class="clip cap" data-start="4.1" data-duration="1.73" data-track-index="5"><span id="cap-2-1-w0">हर</span> <span id="cap-2-1-w1">सुबह</span> <span id="cap-2-1-w2">पापा</span> <span id="cap-2-1-w3">उसी</span> <span id="cap-2-1-w4">साइकिल</span> <span id="cap-2-1-w5">से</span></div>
+        <div id="cap-2-2" class="clip cap" data-start="5.83" data-duration="1.6" data-track-index="5"><span id="cap-2-2-w6">दुकान</span> <span id="cap-2-2-w7">जाते</span> <span id="cap-2-2-w8">थे...</span> <span id="cap-2-2-w9">चेन</span> <span id="cap-2-2-w10">की</span> <span id="cap-2-2-w11">आवाज़</span></div>
+        <div id="cap-2-3" class="clip cap" data-start="7.43" data-duration="0.851" data-track-index="5"><span id="cap-2-3-w12">के</span> <span id="cap-2-3-w13">साथ।</span></div>
+        <div id="cap-3-1" class="clip cap" data-start="8.281" data-duration="1.731" data-track-index="5"><span id="cap-3-1-w0">मैंने</span> <span id="cap-3-1-w1">कहा,</span> <span id="cap-3-1-w2">पापा</span> <span id="cap-3-1-w3">नई</span> <span id="cap-3-1-w4">साइकिल</span> <span id="cap-3-1-w5">ले</span></div>
+        <div id="cap-3-2" class="clip cap" data-start="10.012" data-duration="2.499" data-track-index="5"><span id="cap-3-2-w6">लो...</span> <span id="cap-3-2-w7">वो</span> <span id="cap-3-2-w8">हँसकर</span> <span id="cap-3-2-w9">टाल</span> <span id="cap-3-2-w10">देते।</span></div>
+        <div id="cap-4-1" class="clip cap" data-start="12.511" data-duration="1.43" data-track-index="5"><span id="cap-4-1-w0">मुझे</span> <span id="cap-4-1-w1">शर्म</span> <span id="cap-4-1-w2">आती</span> <span id="cap-4-1-w3">थी...</span> <span id="cap-4-1-w4">दोस्तों</span> <span id="cap-4-1-w5">के</span></div>
+        <div id="cap-4-2" class="clip cap" data-start="13.941" data-duration="1.7" data-track-index="5"><span id="cap-4-2-w6">पापा</span> <span id="cap-4-2-w7">बाइक</span> <span id="cap-4-2-w8">पर</span> <span id="cap-4-2-w9">आते</span> <span id="cap-4-2-w10">थे।</span></div>
+        <div id="cap-5-1" class="clip cap" data-start="15.641" data-duration="2.09" data-track-index="5"><span id="cap-5-1-w0">फिर</span> <span id="cap-5-1-w1">कॉलेज</span> <span id="cap-5-1-w2">का</span> <span id="cap-5-1-w3">दाखिला</span> <span id="cap-5-1-w4">आया...</span> <span id="cap-5-1-w5">और</span></div>
+        <div id="cap-5-2" class="clip cap" data-start="17.731" data-duration="1.78" data-track-index="5"><span id="cap-5-2-w6">फ़ीस</span> <span id="cap-5-2-w7">के</span> <span id="cap-5-2-w8">पैसे</span> <span id="cap-5-2-w9">पूरे</span> <span id="cap-5-2-w10">थे।</span> <span id="cap-5-2-w11">पर</span></div>
+        <div id="cap-5-3" class="clip cap" data-start="19.511" data-duration="1.937" data-track-index="5"><span id="cap-5-3-w12">असली</span> <span id="cap-5-3-w13">बात</span> <span id="cap-5-3-w14">अभी</span> <span id="cap-5-3-w15">बाकी</span> <span id="cap-5-3-w16">है।</span></div>
+        <div id="cap-6-1" class="clip cap" data-start="21.448" data-duration="2.25" data-track-index="5"><span id="cap-6-1-w0">मैंने</span> <span id="cap-6-1-w1">पूछा,</span> <span id="cap-6-1-w2">इतने</span> <span id="cap-6-1-w3">पैसे</span> <span id="cap-6-1-w4">कहाँ</span> <span id="cap-6-1-w5">से</span></div>
+        <div id="cap-6-2" class="clip cap" data-start="23.698" data-duration="1.94" data-track-index="5"><span id="cap-6-2-w6">आए?</span> <span id="cap-6-2-w7">पापा</span> <span id="cap-6-2-w8">चुप</span> <span id="cap-6-2-w9">रहे।</span></div>
+        <div id="cap-7-1" class="clip cap" data-start="25.638" data-duration="2.09" data-track-index="5"><span id="cap-7-1-w0">उनकी</span> <span id="cap-7-1-w1">डायरी</span> <span id="cap-7-1-w2">खुली</span> <span id="cap-7-1-w3">मिली...</span> <span id="cap-7-1-w4">हर</span> <span id="cap-7-1-w5">साल</span></div>
+        <div id="cap-7-2" class="clip cap" data-start="27.728" data-duration="1.76" data-track-index="5"><span id="cap-7-2-w6">एक</span> <span id="cap-7-2-w7">लाइन</span> <span id="cap-7-2-w8">थी,</span> <span id="cap-7-2-w9">साइकिल</span> <span id="cap-7-2-w10">नहीं...</span> <span id="cap-7-2-w11">बेटे</span></div>
+        <div id="cap-7-3" class="clip cap" data-start="29.488" data-duration="1.057" data-track-index="5"><span id="cap-7-3-w12">की</span> <span id="cap-7-3-w13">पढ़ाई।</span></div>
+        <div id="cap-8-1" class="clip cap" data-start="30.545" data-duration="1.714" data-track-index="5"><span id="cap-8-1-w0">जो</span> <span id="cap-8-1-w1">अपने</span> <span id="cap-8-1-w2">लिए</span> <span id="cap-8-1-w3">कम</span> <span id="cap-8-1-w4">खर्च</span> <span id="cap-8-1-w5">करते</span></div>
+        <div id="cap-8-2" class="clip cap" data-start="32.259" data-duration="1.852" data-track-index="5"><span id="cap-8-2-w6">हैं...</span> <span id="cap-8-2-w7">वो</span> <span id="cap-8-2-w8">तुम्हारे</span> <span id="cap-8-2-w9">लिए</span> <span id="cap-8-2-w10">सब</span> <span id="cap-8-2-w11">कुछ</span></div>
+        <div id="cap-8-3" class="clip cap" data-start="34.111" data-duration="1.204" data-track-index="5"><span id="cap-8-3-w12">बचाते</span> <span id="cap-8-3-w13">हैं।</span></div>
+        <div id="cap-9-1" class="clip cap" data-start="35.315" data-duration="1.25" data-track-index="5"><span id="cap-9-1-w0">पापा</span> <span id="cap-9-1-w1">ने</span> <span id="cap-9-1-w2">भी</span> <span id="cap-9-1-w3">कुछ</span> <span id="cap-9-1-w4">छोड़ा</span> <span id="cap-9-1-w5">है?</span></div>
+        <div id="cap-9-2" class="clip cap" data-start="36.565" data-duration="2.14" data-track-index="5"><span id="cap-9-2-w6">कमेंट</span> <span id="cap-9-2-w7">में</span> <span id="cap-9-2-w8">पापा</span> <span id="cap-9-2-w9">लिखो...</span> <span id="cap-9-2-w10">और</span> <span id="cap-9-2-w11">फॉलो</span></div>
+        <div id="cap-9-3" class="clip cap" data-start="38.705" data-duration="1.335" data-track-index="5"><span id="cap-9-3-w12">कर</span> <span id="cap-9-3-w13">लो।</span></div>
+      </div>
+      <audio id="vo-1" class="clip" src="assets/audio/line-01.wav" data-start="0.2" data-duration="3.7" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-2" class="clip" src="assets/audio/line-02.wav" data-start="4.25" data-duration="3.831" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-3" class="clip" src="assets/audio/line-03.wav" data-start="8.431" data-duration="3.88" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-4" class="clip" src="assets/audio/line-04.wav" data-start="12.661" data-duration="2.78" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-5" class="clip" src="assets/audio/line-05.wav" data-start="15.791" data-duration="5.457" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-6" class="clip" src="assets/audio/line-06.wav" data-start="21.598" data-duration="3.54" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-7" class="clip" src="assets/audio/line-07.wav" data-start="25.788" data-duration="4.557" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-8" class="clip" src="assets/audio/line-08.wav" data-start="30.695" data-duration="4.42" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo-9" class="clip" src="assets/audio/line-09.wav" data-start="35.465" data-duration="3.973" data-track-index="3" data-volume="1"></audio>
+      <audio id="music" class="clip" src="assets/audio/music.wav" data-start="0" data-duration="40.04" data-track-index="6" data-volume="0.6"></audio>
+      <audio id="sfx-1" class="clip" src="assets/audio/sfx-soft-whoosh.wav" data-start="3.75" data-duration="0.9" data-track-index="7" data-volume="0.5"></audio>
+      <audio id="sfx-2" class="clip" src="assets/audio/sfx-soft-whoosh.wav" data-start="25.438" data-duration="0.9" data-track-index="7" data-volume="0.5"></audio>
+      <audio id="sfx-3" class="clip" src="assets/audio/sfx-riser.wav" data-start="28.495" data-duration="2.2" data-track-index="7" data-volume="0.45"></audio>
+      <audio id="sfx-4" class="clip" src="assets/audio/sfx-soft-bell.wav" data-start="30.745" data-duration="2.54" data-track-index="7" data-volume="0.45"></audio>
+    </div>
+    <script>
+      const D = {"total": 40.04, "pics": [{"id": "pic-1", "start": 0.0, "end": 4.4, "motion": "zoom-in"}, {"id": "pic-2", "start": 4.1, "end": 8.581, "motion": "pan-left"}, {"id": "pic-3", "start": 8.281, "end": 12.811, "motion": "zoom-out"}, {"id": "pic-4", "start": 12.511, "end": 15.941, "motion": "pan-right"}, {"id": "pic-5", "start": 15.641, "end": 21.748, "motion": "zoom-in"}, {"id": "pic-6", "start": 21.448, "end": 25.938, "motion": "pan-left"}, {"id": "pic-7", "start": 25.638, "end": 30.845, "motion": "zoom-out"}, {"id": "pic-8", "start": 30.545, "end": 35.615, "motion": "pan-right"}, {"id": "pic-9", "start": 35.315, "end": 40.04, "motion": "zoom-in"}], "caps": [{"id": "cap-1-1", "words": [["cap-1-1-w0", 0.2], ["cap-1-1-w1", 0.66], ["cap-1-1-w2", 1.32], ["cap-1-1-w3", 1.5], ["cap-1-1-w4", 1.66], ["cap-1-1-w5", 1.98]], "start": 0.0}, {"id": "cap-1-2", "words": [["cap-1-2-w6", 2.16], ["cap-1-2-w7", 2.3], ["cap-1-2-w8", 2.58], ["cap-1-2-w9", 2.92], ["cap-1-2-w10", 3.12]], "start": 2.08}, {"id": "cap-1-3", "words": [["cap-1-3-w11", 3.3]], "start": 3.22}, {"id": "cap-2-1", "words": [["cap-2-1-w0", 4.25], ["cap-2-1-w1", 4.47], ["cap-2-1-w2", 4.71], ["cap-2-1-w3", 5.13], ["cap-2-1-w4", 5.31], ["cap-2-1-w5", 5.69]], "start": 4.1}, {"id": "cap-2-2", "words": [["cap-2-2-w6", 5.91], ["cap-2-2-w7", 6.19], ["cap-2-2-w8", 6.49], ["cap-2-2-w9", 6.67], ["cap-2-2-w10", 7.01], ["cap-2-2-w11", 7.19]], "start": 5.83}, {"id": "cap-2-3", "words": [["cap-2-3-w12", 7.51], ["cap-2-3-w13", 7.65]], "start": 7.43}, {"id": "cap-3-1", "words": [["cap-3-1-w0", 8.431], ["cap-3-1-w1", 8.68], ["cap-3-1-w2", 8.987], ["cap-3-1-w3", 9.254], ["cap-3-1-w4", 9.493], ["cap-3-1-w5", 9.916]], "start": 8.281}, {"id": "cap-3-2", "words": [["cap-3-2-w6", 10.092], ["cap-3-2-w7", 10.508], ["cap-3-2-w8", 11.068], ["cap-3-2-w9", 11.472], ["cap-3-2-w10", 11.705]], "start": 10.012}, {"id": "cap-4-1", "words": [["cap-4-1-w0", 12.661], ["cap-4-1-w1", 12.841], ["cap-4-1-w2", 13.161], ["cap-4-1-w3", 13.321], ["cap-4-1-w4", 13.521], ["cap-4-1-w5", 13.921]], "start": 12.511}, {"id": "cap-4-2", "words": [["cap-4-2-w6", 14.021], ["cap-4-2-w7", 14.241], ["cap-4-2-w8", 14.541], ["cap-4-2-w9", 14.721], ["cap-4-2-w10", 14.941]], "start": 13.941}, {"id": "cap-5-1", "words": [["cap-5-1-w0", 15.791], ["cap-5-1-w1", 16.031], ["cap-5-1-w2", 16.411], ["cap-5-1-w3", 16.571], ["cap-5-1-w4", 16.971], ["cap-5-1-w5", 17.291]], "start": 15.641}, {"id": "cap-5-2", "words": [["cap-5-2-w6", 17.811], ["cap-5-2-w7", 18.091], ["cap-5-2-w8", 18.211], ["cap-5-2-w9", 18.491], ["cap-5-2-w10", 18.751], ["cap-5-2-w11", 19.031]], "start": 17.731}, {"id": "cap-5-3", "words": [["cap-5-3-w12", 19.591], ["cap-5-3-w13", 19.951], ["cap-5-3-w14", 20.251], ["cap-5-3-w15", 20.431], ["cap-5-3-w16", 20.851]], "start": 19.511}, {"id": "cap-6-1", "words": [["cap-6-1-w0", 21.598], ["cap-6-1-w1", 21.878], ["cap-6-1-w2", 22.258], ["cap-6-1-w3", 23.038], ["cap-6-1-w4", 23.338], ["cap-6-1-w5", 23.598]], "start": 21.448}, {"id": "cap-6-2", "words": [["cap-6-2-w6", 23.778], ["cap-6-2-w7", 23.918], ["cap-6-2-w8", 24.418], ["cap-6-2-w9", 24.658]], "start": 23.698}, {"id": "cap-7-1", "words": [["cap-7-1-w0", 25.788], ["cap-7-1-w1", 26.088], ["cap-7-1-w2", 26.448], ["cap-7-1-w3", 26.728], ["cap-7-1-w4", 27.008], ["cap-7-1-w5", 27.548]], "start": 25.638}, {"id": "cap-7-2", "words": [["cap-7-2-w6", 27.808], ["cap-7-2-w7", 27.948], ["cap-7-2-w8", 28.148], ["cap-7-2-w9", 28.388], ["cap-7-2-w10", 28.968], ["cap-7-2-w11", 29.208]], "start": 27.728}, {"id": "cap-7-3", "words": [["cap-7-3-w12", 29.568], ["cap-7-3-w13", 29.768]], "start": 29.488}, {"id": "cap-8-1", "words": [["cap-8-1-w0", 30.695], ["cap-8-1-w1", 30.908], ["cap-8-1-w2", 31.259], ["cap-8-1-w3", 31.509], ["cap-8-1-w4", 31.743], ["cap-8-1-w5", 32.003]], "start": 30.545}, {"id": "cap-8-2", "words": [["cap-8-2-w6", 32.339], ["cap-8-2-w7", 32.515], ["cap-8-2-w8", 32.85], ["cap-8-2-w9", 33.478], ["cap-8-2-w10", 33.727], ["cap-8-2-w11", 33.959]], "start": 32.259}, {"id": "cap-8-3", "words": [["cap-8-3-w12", 34.191], ["cap-8-3-w13", 34.543]], "start": 34.111}, {"id": "cap-9-1", "words": [["cap-9-1-w0", 35.465], ["cap-9-1-w1", 35.725], ["cap-9-1-w2", 35.885], ["cap-9-1-w3", 36.025], ["cap-9-1-w4", 36.145], ["cap-9-1-w5", 36.485]], "start": 35.315}, {"id": "cap-9-2", "words": [["cap-9-2-w6", 36.645], ["cap-9-2-w7", 37.505], ["cap-9-2-w8", 37.625], ["cap-9-2-w9", 37.865], ["cap-9-2-w10", 38.185], ["cap-9-2-w11", 38.585]], "start": 36.565}, {"id": "cap-9-3", "words": [["cap-9-3-w12", 38.785], ["cap-9-3-w13", 39.005]], "start": 38.705}]};
+      const tl = gsap.timeline({ paused: true });
+      // pictures: crossfade in, slow Ken Burns move for the whole time on screen
+      D.pics.forEach((p, i) => {
+        const el = "#" + p.id, d = p.end - p.start;
+        tl.set(el, { zIndex: i + 1 }, 0);
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: i ? 0.3 : 0.01, ease: "none" }, p.start);
+        const m = {
+          "zoom-in": [{ scale: 1.0, x: 0 }, { scale: 1.1, x: 0 }],
+          "zoom-out": [{ scale: 1.1, x: 0 }, { scale: 1.0, x: 0 }],
+          "pan-left": [{ scale: 1.1, x: 35 }, { scale: 1.1, x: -35 }],
+          "pan-right": [{ scale: 1.1, x: -35 }, { scale: 1.1, x: 35 }],
+        }[p.motion] || [{ scale: 1, x: 0 }, { scale: 1.08, x: 0 }];
+        tl.fromTo(el, m[0], { ...m[1], duration: d, ease: "none" }, p.start);
+        if (i < D.pics.length - 1) tl.set(el, { opacity: 0 }, p.end);
+      });
+      // captions: words go white when spoken, the current word is yellow
+      D.caps.forEach((c) => {
+        tl.fromTo("#" + c.id, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }, c.start);
+        c.words.forEach(([id, t], k) => {
+          tl.set("#" + id, { color: "#ffcf3a" }, t);
+          const next = c.words[k + 1];
+          if (next) tl.set("#" + id, { color: "#ffffff" }, next[1]);
+        });
+      });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

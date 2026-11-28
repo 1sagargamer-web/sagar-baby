@@ -47,3 +47,8 @@ Already made (do not repeat these topics):
 - Check: Ep02 1 view, Ep03 1, Ep04 1, Ep05 0; channel total 2 views, 0 subscribers, 4 videos (all 4 public). Analytics (impressions) not readable: token has no yt-analytics scope.
 - Run 1 done (08:30 IST). Trends: Daddy Cool (SRK), Avengers, comedy/nostalgia shorts, Mummy ki galti.
 - Video B (today 18:00): Ep06 "Papa Ki Cycle". Video A (tomorrow 08:00): Ep07 "Reject Mail". Pictures generating; waiting for recordings until 12:10 IST.
+- Run 2 done (12:10 IST, 28 Nov). No recordings, clone (option A), synthetic.
+- Ep06 "Papa Ki Cycle" (video B): YouTube id BNuHV322Emw, scheduled today 18:00 IST (12:30Z), 40.1 s, -14.1 LUFS.
+- Ep07 "Reject Mail" (video A): YouTube id THTr1VS3EVs, scheduled tomorrow 29 Nov 08:00 IST (02:30Z), 42.3 s, -14.1 LUFS.
+- PROBLEM: thumbnails.set returned 429 uploadRateLimitExceeded ("too many thumbnails recently") for both, caused by my 8 test uploads on 27 Nov (4 x 2). Videos are uploaded and scheduled WITHOUT thumbnail. Thumbnails ready: assets/brand/thumbs/ep06.jpg, ep07.jpg. Retry with scripts/yt_set_thumb.py. LESSON: never re-upload thumbnails for testing; set each thumbnail once.
+- Rule (Sagar): never publish without thumbnail. If Ep06 still has no thumbnail close to 18:00 IST, move its publishAt to tomorrow 18:00 IST (12:30Z on 29 Nov) instead of publishing without one.
