@@ -1,0 +1,77 @@
+{
+ "title": "ep07-reject-mail",
+ "heading": {
+  "yellow": "Reject",
+  "white": "Mail",
+  "emoji": "📧"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "क्या तुम्हें भी कभी रिजेक्ट किया गया है? और फिर एक ऐसा मेल आया, जिसने सब बदल दिया।",
+   "how": "hook sawaal, seedha viewer se",
+   "prompt": "a nervous young Indian man in a formal shirt sitting in front of a laptop in a dim room",
+   "seed": 701
+  },
+  {
+   "hi": "मैं छह राउंड पार करके आख़िरी इंटरव्यू तक पहुँचा था।",
+   "how": "kahani, umeed",
+   "prompt": "a young man in a formal shirt walking into a glass office building for an interview, morning light",
+   "seed": 702
+  },
+  {
+   "hi": "और शाम को मेल आया... आपका सिलेक्शन नहीं हुआ।",
+   "how": "dheema, dard",
+   "prompt": "a sad young man looking at a laptop screen in a dim room in the evening",
+   "seed": 703
+  },
+  {
+   "hi": "उस रात मैं खाना भी नहीं खा पाया... लगा सब ख़त्म।",
+   "how": "udaas",
+   "prompt": "a young man lying awake on a bed at night with an untouched plate of food beside him",
+   "seed": 704
+  },
+  {
+   "hi": "अगली सुबह मैंने वो मेल पूरा पढ़ा... और असली बात आख़िरी लाइन में थी।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "a laptop in morning sunlight with a young man leaning closer to read, mysterious hopeful mood",
+   "seed": 705,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "लिखा था... आप बहुत करीब थे। छह महीने बाद फिर आइए।",
+   "how": "hairani, umeed",
+   "prompt": "a hand highlighting the last line of a printed letter with a yellow marker, close-up, no readable text",
+   "seed": 706,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "मैंने रोज़ तीन घंटे लगाए... और छह महीने बाद दोबारा गया।",
+   "how": "himmat, steady",
+   "prompt": "a young man studying at a desk with a stack of books and a clock, determined, warm lamp light",
+   "seed": 707
+  },
+  {
+   "hi": "इस बार जवाब आया... आपका सिलेक्शन हो गया है।",
+   "how": "khushi, muskaan",
+   "prompt": "a young man in formal clothes smiling and shaking hands with an interviewer in a bright office",
+   "seed": 708,
+   "pause_before": 0.3
+  },
+  {
+   "hi": "ना का मतलब हमेशा नहीं... कई बार सिर्फ़ अभी नहीं होता है।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "a closed wooden door slowly opening with warm light pouring through, hopeful mood, no people",
+   "seed": 709,
+   "seekh": true
+  },
+  {
+   "hi": "रिजेक्ट हुए हो? कमेंट में लिखो, अभी नहीं... और फॉलो कर लो।",
+   "how": "emotional, dheere",
+   "prompt": "a small green plant growing from a crack in a wall at sunrise, hopeful mood",
+   "seed": 710,
+   "cta": true
+  }
+ ]
+}

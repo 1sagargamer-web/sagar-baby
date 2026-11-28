@@ -42,3 +42,8 @@ Already made (do not repeat these topics):
 - Quota estimate today: 2 x 1,650 = 3,300 + research 200 here; first channel 3,300 => about 6,800 / 10,000. Uploads today: 4 (limit 6).
 - Check tomorrow: did Ep04 become public at 18:00 and Ep05 at 08:00? Look at views/likes/comments of all Uth Ja Sagar videos.
 - Thumbnail fix (27 Nov, Sagar: thumbnails must be clickbait and on every video): the tall 1080x1920 thumbnails were cropped by YouTube (it also makes a 9:16 shortsAspectRatio 405x720 from the centre). New centre layout 1280x720 (make_thumb_story.py), set on Ep02/03/04/05 (API returned maxres 1280x720 + shortsAspectRatio 405x720). Could not download them back from ytimg (blocked), so not seen on YouTube itself. yt_upload.py got --require-thumb; runbook says never upload without thumbnail.
+
+## 2026-11-28
+- Check: Ep02 1 view, Ep03 1, Ep04 1, Ep05 0; channel total 2 views, 0 subscribers, 4 videos (all 4 public). Analytics (impressions) not readable: token has no yt-analytics scope.
+- Run 1 done (08:30 IST). Trends: Daddy Cool (SRK), Avengers, comedy/nostalgia shorts, Mummy ki galti.
+- Video B (today 18:00): Ep06 "Papa Ki Cycle". Video A (tomorrow 08:00): Ep07 "Reject Mail". Pictures generating; waiting for recordings until 12:10 IST.

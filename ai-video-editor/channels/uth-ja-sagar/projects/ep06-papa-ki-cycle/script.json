@@ -1,0 +1,71 @@
+{
+ "title": "ep06-papa-ki-cycle",
+ "heading": {
+  "yellow": "Papa Ki",
+  "white": "Cycle",
+  "emoji": "🚲"
+ },
+ "watermark": "Made By Sagar Mishra",
+ "allow_clone": false,
+ "lines": [
+  {
+   "hi": "सोचो... पापा ने बीस साल एक ही पुरानी साइकिल क्यों नहीं बदली?",
+   "how": "hook sawaal, rahasya jaisa",
+   "prompt": "an old rusty Indian bicycle leaning against the wall of a small house, golden morning light, no people",
+   "seed": 601
+  },
+  {
+   "hi": "हर सुबह पापा उसी साइकिल से दुकान जाते थे... चेन की आवाज़ के साथ।",
+   "how": "kahani, shaant",
+   "prompt": "an Indian father in a simple shirt riding an old bicycle on a village road at sunrise, seen from the side",
+   "seed": 602
+  },
+  {
+   "hi": "मैंने कहा, पापा नई साइकिल ले लो... वो हँसकर टाल देते।",
+   "how": "pyaar se",
+   "prompt": "a young Indian man talking to his smiling father beside an old bicycle, evening light, two people only",
+   "seed": 603
+  },
+  {
+   "hi": "मुझे शर्म आती थी... दोस्तों के पापा बाइक पर आते थे।",
+   "how": "udaas, dheema",
+   "prompt": "a young Indian man standing at a college gate looking embarrassed while students arrive on motorbikes",
+   "seed": 604
+  },
+  {
+   "hi": "फिर कॉलेज का दाखिला आया... और फ़ीस के पैसे पूरे थे। पर असली बात अभी बाकी है।",
+   "how": "teaser, thoda ruk ke",
+   "prompt": "an Indian family counting money notes on a table near a sunlit window, hopeful mood",
+   "seed": 605,
+   "motion": "zoom-in"
+  },
+  {
+   "hi": "मैंने पूछा, इतने पैसे कहाँ से आए? पापा चुप रहे।",
+   "how": "dheere, bhaavuk",
+   "prompt": "a young man asking his silent father a question at a dining table, father looking away, warm light",
+   "seed": 606
+  },
+  {
+   "hi": "उनकी डायरी खुली मिली... हर साल एक लाइन थी, साइकिल नहीं... बेटे की पढ़ाई।",
+   "how": "emotional, dil se, dheere",
+   "prompt": "an open old diary on a wooden table with handwritten lines and a pen on it, warm light, no people",
+   "seed": 607,
+   "pause_before": 0.3,
+   "sfx": "soft-whoosh"
+  },
+  {
+   "hi": "जो अपने लिए कम खर्च करते हैं... वो तुम्हारे लिए सब कुछ बचाते हैं।",
+   "how": "seekh, dil se, dheere",
+   "prompt": "an old bicycle in golden sunlight with a college bag hanging on the handlebar, no people, hopeful",
+   "seed": 608,
+   "seekh": true
+  },
+  {
+   "hi": "पापा ने भी कुछ छोड़ा है? कमेंट में पापा लिखो... और फॉलो कर लो।",
+   "how": "emotional, dheere",
+   "prompt": "a weathered father's hand holding a young man's hand, warm sunset light, close-up",
+   "seed": 609,
+   "cta": true
+  }
+ ]
+}
