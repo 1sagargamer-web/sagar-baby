@@ -86,3 +86,6 @@ Already made (do not repeat these topics):
 - Run 1: queue reels used: ref-9 (Ep21 "Chappal", scene yamuna, Krishna laughs, no meme) and ref-7 (Ep22 "Dost ki sacchi mohabbat", scene room, new `blanket` option: Sagar hides under quilt, Krishna teases, Krishna laughs). Reels ref-9..14 (sent 27 Nov) studied by transcript + frames, formats noted in queue.md.
 - Builder: new line option `blanket`. Top caption must stay one line (<= ~28 chars) or it overlaps the line caption.
 - Queue after today: 5 reels left (ref-10..14).
+- Status 28 Nov ~11:40 IST: Ep19 public (279 views), Ep20 public (373). Scheduled uploads become public by themselves.
+- Ep21 "Chappal ka sawal": YouTube WRSMcNpSOEM, slot 13:30 IST (08:00Z), 18.8 s. Ep22 "Girlfriend kha gayi?": rpPBDhCtV50, slot 20:00 IST (14:30Z), 16.5 s. No recordings arrived: clone + AI Bhagwan (synthetic label), Krishna's fixed laugh.
+- Title research: "Bhai ka Breakup hogya 😔" 23 ch 20.7M; "Mummy Ka Flying Chappal 2" 27 ch 14M; top-20 median 33 chars. Thumb note: make_thumb erase leaves a patch on tree backgrounds; pick a frame where the patch is on plain sky.
